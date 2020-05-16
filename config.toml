@@ -1,0 +1,77 @@
+baseurl = "https://aveeksaha.gitlab.io/"
+# baseurl = "https://home.aveek.io/blog/"
+contentdir    = "content"
+layoutdir     = "layouts"
+publishdir    = "public"
+title = "Aveek Saha"
+canonifyurls  = true
+
+DefaultContentLanguage = "en"
+theme = "beautifulhugo"
+metaDataFormat = "yaml"
+pygmentsUseClasses = true
+# pygmentsStyle = "dracula"
+pygmentCodeFences = true
+disqusShortname = "aveekblog"
+googleAnalytics = "UA-120301630-5"
+# googleAnalytics = "UA-120301630-1"
+
+[sitemap]
+  changefreq = "monthly"
+  filename = "sitemap.xml"
+  priority = 0.8
+  
+[Params]
+  subtitle = "My Tech Blog"
+  logo = "img/avatar-icon.png"
+  favicon = "img/favicon.ico"
+  dateFormat = "January 2, 2006"
+  commit = false
+  rss = true
+  comments = true
+#  gcse = "012345678901234567890:abcdefghijk" # Get your code from google.com/cse. Make sure to go to "Look and Feel" and change Layout to "Full Width" and Theme to "Classic"
+
+[[Params.bigimg]]
+  src = "img/front.jpg"
+  desc = "That's me"
+
+[Author]
+  name = "Aveek Saha"
+  email = "aveek.s98@gmail.com"
+  facebook = "profile.php?id=100001098414449"
+  #googleplus = "+username" # or xxxxxxxxxxxxxxxxxxxxx
+  gitlab = "AveekSaha"
+  github = "Aveek-saha"
+  #twitter = "username"
+  #reddit = "username"
+  linkedin = "aveek-saha"
+  #xing = "username"
+  #stackoverflow = "users/XXXXXXX/username"
+  #snapchat = "username"
+  instagram = "aveek68"
+  #youtube = "user/username" # or channel/channelname
+  #soundcloud = "username"
+  #spotify = "username"
+  #bandcamp = "username"
+  itchio = "aveek-saha"
+
+
+[[menu.main]]
+    name = "Blog"
+    url = ""
+    weight = 1
+
+[[menu.main]]
+    name = "Portfolio"
+    url = "https://aveek-saha.github.io/"
+    weight = 2
+
+[[menu.main]]
+    name = "About"
+    url = "page/about/"
+    weight = 3
+
+[[menu.main]]
+    name = "Tags"
+    url = "tags"
+    weight = 3
