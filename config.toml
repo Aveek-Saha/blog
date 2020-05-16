@@ -1,5 +1,5 @@
-baseurl = "https://aveeksaha.gitlab.io/"
-# baseurl = "https://home.aveek.io/blog/"
+# baseurl = "https://aveeksaha.gitlab.io/"
+baseurl = "https://home.aveek.io/blog/"
 contentdir    = "content"
 layoutdir     = "layouts"
 publishdir    = "public"
@@ -13,8 +13,8 @@ pygmentsUseClasses = true
 # pygmentsStyle = "dracula"
 pygmentCodeFences = true
 disqusShortname = "aveekblog"
-googleAnalytics = "UA-120301630-5"
-# googleAnalytics = "UA-120301630-1"
+# googleAnalytics = "UA-120301630-5"
+googleAnalytics = "UA-120301630-1"
 
 [sitemap]
   changefreq = "monthly"
@@ -42,7 +42,7 @@ googleAnalytics = "UA-120301630-5"
   #googleplus = "+username" # or xxxxxxxxxxxxxxxxxxxxx
   gitlab = "AveekSaha"
   github = "Aveek-saha"
-  #twitter = "username"
+  twitter = "SahaAveek"
   #reddit = "username"
   linkedin = "aveek-saha"
   #xing = "username"
