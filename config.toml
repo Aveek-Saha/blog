@@ -29,7 +29,7 @@ googleAnalytics = "UA-120301630-1"
   commit = false
   rss = true
   comments = true
-  gcse = "007855675461602301027:9exophy7g26" # Get your code from google.com/cse. Make sure to go to "Look and Feel" and change Layout to "Full Width" and Theme to "Classic"
+  gcse = "007744503769812934866:q7tdd35ztx8" # Get your code from google.com/cse. Make sure to go to "Look and Feel" and change Layout to "Full Width" and Theme to "Classic"
 
 [[Params.bigimg]]
   src = "img/front.jpg"
