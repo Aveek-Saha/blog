@@ -3,7 +3,7 @@ baseurl = "https://home.aveek.io/blog/"
 contentdir    = "content"
 layoutdir     = "layouts"
 publishdir    = "public"
-title = "Aveek Saha"
+title = "Aveek's Blog"
 canonifyurls  = true
 
 DefaultContentLanguage = "en"
