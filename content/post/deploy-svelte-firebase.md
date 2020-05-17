@@ -1,50 +1,226 @@
 ---
 title: Deploying Svelte apps to Firebase with GitHub actions
 subtitle: Use GitHub actions to automate deployment of Svelte applications to Firebase hosting
-date: 2021-04-17
+date: 2020-05-16
 # bigimg: [{src: "/svelte/svelte.svg", desc: "Svelte"}]
 tags: [ "Svelte", "website", "Firebase", "github actions" ]
 ---
 
+Check the final application here - [`pix2ascii`](pix2ascii.web.app).
+ 
+The full code for this project can be found on [`GitHub`](https://github.com/Aveek-Saha/pix2ascii) 
+or read the previous part here: [`Getting started with Firebase Functions`](https://home.aveek.io/blog/post/getting-started-with-firebase-functions/)
 
 <!--more-->
 
 # Introduction
-In this tutorial we'll be deploying a Svelte application to firebase hosting. We'll also be automating the deploy process using GitHub actions so that it deploys every time we push changes to GitHub. 
+In this tutorial we'll be deploying a Svelte application to Firebase hosting. We'll also be automating the deploy process using GitHub actions so that it deploys every time we push changes to GitHub. For those of you not familiar with Svelte, I've already written a beginners guide on Svelte that you can check out [here](https://home.aveek.io/blog/post/get-started-with-svelte/). It's fairly easy to learn the basics so be sure to go through that first.
 
-If you havent checked it out already, read the [first part]() of this series where I set up a Firebase cloud function as a backend for our application. Even if your use case is different and you're only interested in Automating the deploy process to firebase hosting you can still follow along and modify the steps to suit you choice of frontend framework. Alternatively you can also skip ahead to the [Automation]() section.
+If you haven't checked it out already, read the [first part](https://home.aveek.io/blog/post/getting-started-with-firebase-functions/) of this series where I set up a Firebase cloud function as a backend for our application. 
 
+Even if your use case is different and you're only interested in Automating the deploy process to firebase hosting you can still follow along and modify the steps to suit you choice of frontend framework. Alternatively you can also skip ahead to the Continuous Deployment section below.
 
-For those of you not familiar with Svelte, I've already written a beginners guide on Svelte that you can check out [here](). It's fairly easy to learn the basics so be sure to go through that first.
-
-# Frontend
+## Recap
+In the last part we created a backend Firebase function that accepts an image along with a few other parameters in order to convert that image into ascii art and sends it back as a string.
 
 Now that we have our cloud function set up, let's create the frontend from where we can upload the image and get the converted result. For this we'll first need to set up firebase hosting to deploy the frontend.
 
+# Setting up Firebase
 
-## Set up Firebase Hosting
+0. Initial setup- If you've come here from the previous part you can skip step 0, otherwise first follow these steps:
+    1. Create a Firebase project- 
+Go to the firebase console and create a new project. You can choose to set up Google analytics for the project, but it's not really important for this application.
+ 
+    2. Set up Firebase CLI- 
+You'll need to have Node.js installed already on your system. Install the cli through npm by running `npm install -g firebase-tools`
+ 
+    3. Initialize the Firebase SDK-
+Run `firebase login` to log in to the CLI via the browser using the account your new project is linked to.
+ 
 
 1. Check your directory- 
+
 Go to the root directory of your Firebase project.
 
 2. Run Firebase init- 
-Once in the root directory, run `firebase init`, it'll tell you that you're already in a firebase project but that's fine, setting up hosting wont affect the function we've just created. When prompted for which features you want to set up, select hosting.
 
-3. Config options- `What do you want to use as your public directory?` `Configure as a single-page app?`, yes 
+Once in the root directory, run `firebase init`, If you've been following along from the previous article it'll tell you that you're already in a firebase project but that's fine, setting up hosting won't affect the function you created. When prompted for which features you want to set up, select `hosting`.
+
+3. Config options- 
+
+`What do you want to use as your public directory?`. leave as default (public). `Configure as a single-page app?`, yes 
 
 
-During the setup, Use an existing project, and select the project you'd created through the console in the step before. Select JavaScript as the language and pick install dependencies using npm when it offers you the option. Once all the dependencies have finished isntalling you're ready for the next step!
 
-## Setup Svelte
+# Svelte Setup
+We'll be using a tool called `degit` to get the basic template for our Svelte app, so first install that if you don't already have it installed.
+```bash
+npm install -g degit
+```
 
 Create a svelte application in the Firebase project directory
 ```bash
 npx degit sveltejs/template client
+cd client
+npm i
 ```
 
-change working direcory
-isntall dependencies
+To run the dev server run
+```bash
+npm run dev
+```
 
-replace the  public folder created by firebase hosting with the one generated by svelte
-change rollup config
-change sirv folder
+If you visit http://localhost:5000 the default startup page should be displayed and this means your setup was successful.
+
+## Configure Svelte
+In order to deploy Svelte to Firebase hosting we need to make some changes first.
+
+If you look at your file structure, you should see two `public` folders that are placed something like this.
+```
+|--client/
+|   |--public/
+|
+|--public/
+```
+The public folder created by firebase hosting needs to be replaced by the one generated by Svelte. That means replace `./public` with `./client/public`. This is done because the `./public` folder is the one deployed to Firebase hosting and we want this to be our compiled Svelte code.
+
+Just copying the folder won't do however, we need to configure the rollup script `client/client/rollup.config.js` so that Svelte compiles 0ur frontend to the new `public/build/` folder. To do this replace this section of the config file-
+
+```javascript
+..
+export default {
+    ...
+    ...
+}
+..
+```
+
+With this-
+
+{{< highlight javascript >}}
+export default {
+	input: 'src/main.js',
+	output: {
+		sourcemap: true,
+		format: 'iife',
+		name: 'app',
+        // Change Js bundle location
+		file: '../public/build/bundle.js'
+	},
+	plugins: [
+		svelte({
+			dev: !production,
+			// Change css bundle location
+			css: css => {
+				css.write('../public/build/bundle.css');
+			}
+		}),
+		resolve({
+			browser: true,
+			dedupe: ['svelte']
+		}),
+		commonjs(),
+		!production && serve(),
+
+		// Watch the new `public` directory and refresh
+		// the browser on changes
+		!production && livereload('../public'),
+
+		production && terser()
+	],
+	watch: {
+		clearScreen: false
+	}
+};
+{{< / highlight >}}
+
+Svelte uses `sirv` to host the application on your localhost and we'll have to change the target folder that `sirv` serves. To do this go to the `scripts` section of `client/package.json` and look for the `"start"`script. Replace it with the following-
+
+```
+"scripts": {
+    ...
+    "start": "sirv ../public"
+    ...
+}
+```
+
+Now if you run `npm run dev` to serve your application again you should see the same default starting page when you visit http://localhost:5000 if everything is set up correctly.
+
+## Frontend code
+
+I will not be explaining the code for the frontend in detail as the main objective of this post is to show you how to set up and deploy the application. The frontend is basically a multipart form where the user has to upload the image, specify the number of characters used to represent one row of the resulting ascii image(width) and select the set of characters that the ascii art will be made from(charset). 
+
+Once all this information has been submitted by the user, an AJAX request is sent to the cloud function at `https://us-central1-pix2ascii.cloudfunctions.net/ascii` and the resulting ascii art string in the response is printed on the screen.
+
+You can see a demo of this in action at [`Pix2Ascii`](https://pix2ascii.web.app/) or check out the Code on [GitHub](https://github.com/Aveek-Saha/pix2ascii/blob/master/client/src/App.svelte). You can very easily implement this functionality using another framework or your own UI.
+
+This ends the Svelte portion of this tutorial.
+
+
+# Continuous Deployment
+
+Now we'll be looking at how we can deploy our code automatically on every push by using GitHub actions so obviously you'll be needing a GitHub repository for this. To set up a GitHub action we need to create a new workflow, and there are 2 ways to do this-
+
+1. In your github repository, go to the actions tab, and select `set up a workflow yourself`. This will take you to an editor with a basic workflow that you can replace with the workflow we'll be creating below.
+
+2. If it doesn't already exist, in your repository directory, create a `.github` folder and then a folder called `workflows` in it. Create a workflow file there under `.github/workflows/` and name it `deploy.yml`.
+
+In order to authenticate our deploys to firebase, we'll need an auth token from firebase first. To get the token, run `firebase login:ci` in your terminal and copy the token it returns. Then add this token to your repository by  going to `Settings > Secrets > New secret`. Name the token `FIREBASE_TOKEN` and paste the token you copied from the terminal.
+
+In the `.yml` file we'll specify the steps for our workflow.
+
+```yaml
+name: CI/CD
+
+# When the workflow will run, in this case
+# on push or pull request to the master branch
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+# Jobs are a sequence of steps
+jobs:
+  # This workflow has only one Job, build
+  build:
+    # The type of container the workflow will run on 
+    runs-on: ubuntu-latest
+
+    # The sequence of steps for this job
+    steps:
+    # Checks-out your repository so your job can access it
+    - uses: actions/checkout@v2
+
+    # First install dependencies for the front end and then 
+    # for the cloud function. If you only have frontend remove the lines 
+    # from after "npm run build" till the next step i.e. "Firebase Deploy"
+    - name: Build
+      run: |
+        cd client
+        npm i
+        npm run build
+        cd ..
+        cd functions
+        npm i
+
+    # Install firebase tools and deploy to firebase
+    # using the token we created earlier
+    - name: Firebase Deploy
+      run: |
+        sudo npm install -g firebase-tools
+        firebase deploy --token ${{ secrets.FIREBASE_TOKEN }}
+```
+
+# Conclusion
+
+Now everytime you push changes to your Github repository a new job will be started to deploy your application to Firebase. Though this example is for Cloud functions and Hosting you can use the same logic to automatically deploy changes to other Firebase services too.
+
+The website will be hosted at `<your-project-name>.web.app` after it's been deployed successfully and you can view the final result there.
+
+
+<!-- {{< highlight javascript >}}
+{{< / highlight >}} -->
+<br>
+
+

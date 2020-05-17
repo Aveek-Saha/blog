@@ -6,10 +6,10 @@ date: 2020-03-12
 tags: [ "Firebase", "Cloud", "Function", "Javascript" ]
 ---
  
-Check the final application here - [`pix2ascii`](pix2ascii.web.app).
+Check the final application out here - [`pix2ascii`](pix2ascii.web.app).
  
 The full code for this project can be found on [`GitHub`](https://github.com/Aveek-Saha/pix2ascii) 
-<!-- or read the next part here: [`Deploying Svelte apps to Firebase with GitHub actions`]() -->
+or read the next part here: [`Deploying Svelte apps to Firebase with GitHub actions`](https://home.aveek.io/blog/post/deploy-svelte-firebase/)
  
 <!--more-->
  
@@ -20,7 +20,7 @@ From the [documentation](https://firebase.google.com/docs/functions):
  
 What this means is essentially you can write code that will run when certain events take place. These events can be http requests or an event triggered by another firebase service, like their database or storage solution. This means that you can essentially write server side code without having to worry about the specifics of managing and scaling servers, which makes life a lot easier as a developer.
  
-Not all servers can be replaced by cloud functions especially since only Javascript or Typescript is supported. However there are a lot of simple tasks that you might have been considering using a server for, that can be handled by a cloud function.
+Not all servers can be replaced by cloud functions especially since only Javascript or Typescript is supported for Firebase as of now. However there are a lot of simple tasks that you might have been considering using a server for, that can be handled by a cloud function.
  
 To demonstrate how to use Firebase cloud functions we'll be creating a simple application. In this application you can upload an image which will be converted to [ascii art](). Probably not the most useful application in the world, but a fun project to help you get started with firebase functions. The backend of this application will only use Firebase cloud functions and for the frontend we'll be using [Svelte](). 
  
@@ -150,7 +150,7 @@ const Jimp = require('jimp');
 // The function takes the filepath, the dimensions of the image 
 // and the kind of ascii art as parameters
  
-exports.convert = function (file, dim, options) {
+exports.convert = function (file, width, options) {
  
     // Different kinds of character sets for visually different ends results
     var greyscale = {
@@ -195,7 +195,7 @@ exports.convert = function (file, dim, options) {
  
             var matrix = [];
             // Reshape the array
-            while (arr.length) matrix.push(arr.splice(0, dim.width));
+            while (arr.length) matrix.push(arr.splice(0, width));
  
             var toWrite = ""
  
