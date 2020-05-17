@@ -27,28 +27,28 @@ Now that we have our cloud function set up, let's create the frontend from where
 
 # Setting up Firebase
 
-0. Initial setup- If you've come here from the previous part you can skip step 0, otherwise first follow these steps:
-    1. Create a Firebase project- 
+### 0. Initial setup- 
+  If you've come here from the previous part you can skip step 0, otherwise first follow these steps:
+  1. Create a Firebase project- 
 Go to the firebase console and create a new project. You can choose to set up Google analytics for the project, but it's not really important for this application.
  
-    2. Set up Firebase CLI- 
+  2. Set up Firebase CLI- 
 You'll need to have Node.js installed already on your system. Install the cli through npm by running `npm install -g firebase-tools`
  
-    3. Initialize the Firebase SDK-
+  3. Initialize the Firebase SDK-
 Run `firebase login` to log in to the CLI via the browser using the account your new project is linked to.
  
 
-1. Check your directory- 
+### 1. Check your directory- 
+  Go to the root directory of your Firebase project.
 
-Go to the root directory of your Firebase project.
+### 2. Run Firebase init- 
 
-2. Run Firebase init- 
+  Once in the root directory, run `firebase init`, If you've been following along from the previous article it'll tell you that you're already in a firebase project but that's fine, setting up hosting won't affect the function you created. When prompted for which features you want to set up, select `hosting`.
 
-Once in the root directory, run `firebase init`, If you've been following along from the previous article it'll tell you that you're already in a firebase project but that's fine, setting up hosting won't affect the function you created. When prompted for which features you want to set up, select `hosting`.
+### 3. Config options- 
 
-3. Config options- 
-
-`What do you want to use as your public directory?`. leave as default (public). `Configure as a single-page app?`, yes 
+  `What do you want to use as your public directory?`, leave as default (public). `Configure as a single-page app?`, yes 
 
 
 
@@ -104,7 +104,7 @@ export default {
 		sourcemap: true,
 		format: 'iife',
 		name: 'app',
-        // Change Js bundle location
+    // Change Js bundle location
 		file: '../public/build/bundle.js'
 	},
 	plugins: [
@@ -134,7 +134,7 @@ export default {
 };
 {{< / highlight >}}
 
-Svelte uses `sirv` to host the application on your localhost and we'll have to change the target folder that `sirv` serves. To do this go to the `scripts` section of `client/package.json` and look for the `"start"`script. Replace it with the following-
+Svelte uses `sirv` to host the application on your localhost and we'll have to change the target folder that `sirv` serves to the new `public` folder. To do this go to the `scripts` section of `client/package.json` and look for the `"start"`script. Replace it with the following-
 
 ```
 "scripts": {
@@ -150,9 +150,9 @@ Now if you run `npm run dev` to serve your application again you should see the 
 
 I will not be explaining the code for the frontend in detail as the main objective of this post is to show you how to set up and deploy the application. The frontend is basically a multipart form where the user has to upload the image, specify the number of characters used to represent one row of the resulting ascii image(width) and select the set of characters that the ascii art will be made from(charset). 
 
-Once all this information has been submitted by the user, an AJAX request is sent to the cloud function at `https://us-central1-pix2ascii.cloudfunctions.net/ascii` and the resulting ascii art string in the response is printed on the screen.
+Once all this information has been submitted by the user, an AJAX request is sent to the cloud function at `https://us-central1-<project>.cloudfunctions.net/ascii` and the resulting ascii art string in the response is printed on the screen.
 
-You can see a demo of this in action at [`Pix2Ascii`](https://pix2ascii.web.app/) or check out the Code on [GitHub](https://github.com/Aveek-Saha/pix2ascii/blob/master/client/src/App.svelte). You can very easily implement this functionality using another framework or your own UI.
+You can see a demo of this in action at [Pix2Ascii](https://pix2ascii.web.app/) or check out the Code on [GitHub](https://github.com/Aveek-Saha/pix2ascii/blob/master/client/src/App.svelte). You can very easily implement this functionality using another framework or your own UI.
 
 This ends the Svelte portion of this tutorial.
 
