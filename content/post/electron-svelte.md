@@ -1,6 +1,6 @@
 ---
 title: Getting started with Svelte and Electron
-subtitle: A guide on setting up Svelte with electron to create desktop apps 
+subtitle: A guide on setting up Svelte with Electron to create desktop apps 
 date: 2020-05-24
 # bigimg: [{src: "/img/duskplayer.png", desc: "Screenshot"}]
 tags: [ "Svelte", "Desktop" , "Electron" ]
@@ -11,31 +11,31 @@ The code for this tutorial can be found [`here`](https://gitlab.com/aveeksaha/el
 <!--more-->
  
 # Introduction
-This is a guide to get you up and running with Svelte + Electron. We'll just be going through the basic setup process to give you a starting point to develop desktop applications with Svelte by using Electron. If you want to learn more about Svelte basicks you can check out this tutorial here: [Get started with Svelte](https://home.aveek.io/blog/post/get-started-with-svelte/).
+This is a guide to get you up and running with [`Svelte`](https://svelte.dev/) + [`Electron`](https://www.electronjs.org/). We'll just be going through the basic setup process to give you a starting point to develop desktop applications with Svelte by using Electron. If you want to learn more about Svelte basics you can check out this tutorial here: [Get started with Svelte](https://home.aveek.io/blog/post/get-started-with-svelte/).
  
 You can follow this tutorial even if you're not too familiar with Svelte because we'll just be setting things up for the project here.
 
 # Create a Svelte app
-To get started we'll first be cloning the Svelte boilerplate using a tool called degit. Let's start by installing `degit` using
+To get started we'll first be cloning the Svelte boilerplate using a tool called `degit`. Let's start by installing `degit` using
 
-```bash
+```
 npm install -g degit
 ```
 
 Then we install the boilerplate and install all the dependencies.
 
-```bash
+```
 npx degit sveltejs/template svelte_electron
 cd svelte_electron
 npm install
 ```
 
-To run the dev server run
-```bash
+To run the dev server run:
+```
 npm run dev
 ```
 
-Then open http://localhost:5000, you should see a default web page. This means that the setup was successful
+When you open http://localhost:5000, you should see a default web page. This means that the setup was successful!
 
 # Set up Electron
 Now we'll install `electron` as a development dependency.
@@ -55,6 +55,7 @@ Now we need to create an entry point for our electron app. Create a file called 
 ```javascript
 const { app, BrowserWindow } = require('electron')
 const path = require('path')
+const url = require('url')
 
 const isDev = require('electron-is-dev');
 
@@ -67,7 +68,6 @@ if (isDev) {
 }
 
 function createWindow() {
-
     // Create the browser window with node integration
     const win = new BrowserWindow({
         width: 800,
@@ -93,7 +93,6 @@ function createWindow() {
 
 app.whenReady().then(() => {
     createWindow()
-
     app.on('activate', function () {
         if (BrowserWindow.getAllWindows().length === 0) createWindow()
     })
@@ -105,7 +104,7 @@ app.on('window-all-closed', function () {
 
 ```
 
-Now we need to set up some scripts in our `package.json` and define the electron entry point.
+Now we need to set up some scripts in our `package.json` and define the Electron entry point.
 ```json
 {   ....
     "main": "main.js",
@@ -118,7 +117,7 @@ Now we need to set up some scripts in our `package.json` and define the electron
 }
 ```
 
-There's one last step before your application can be rendered. In `public/index.html` we need to make the urls absolute so that Electron can find them.
+There's one last step before your application can be rendered. In `public/index.html` we need to make the urls absolute so that Electron doesn't give us a resource not found error while loading the page.
 
 ```html
 <!DOCTYPE html>
@@ -140,14 +139,15 @@ There's one last step before your application can be rendered. In `public/index.
 </body>
 </html>
 ```
-Now run `npm run build` to create the compiled JavaScript and CSS files in the `public/build/` directory.
 
-Now if you run `npm run app` you should see the same default welcome page you saw on your browser in an electron window.
+Run `npm run build` to create the compiled JavaScript and CSS files in the `public/build/` directory.
+
+Now if you run `npm run app` you should see the same default welcome page you saw on your browser in an Electron window.
 
 # Live reload both electron and Svelte
-The way the application is set up now, You could run `npm run dev` in one terminal to enable live reload for Svelte, and `npm run app` in another terminal to live reload the electron app. This is a little inconvenient and we can combine both these functions and run them simultaneously.
+The way the application is set up now, You could run `npm run dev` in one terminal to enable live reload for Svelte, and `npm run app` in another terminal to load the electron app. This is a little inconvenient and we can combine both these functions and run them simultaneously.
 
-For this we'll be using `concurrently`. So we'll first install it and then update our scripts in `package.json`.
+For this we'll be using [`concurrently`](https://www.npmjs.com/package/concurrently). So we'll first install it and then update our scripts in `package.json`.
 
 ```
 npm i -D concurrently
