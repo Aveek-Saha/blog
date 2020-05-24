@@ -16,7 +16,7 @@ This is a guide to get you up and running with Svelte + Electron. We'll just be 
 You can follow this tutorial even if you're not too familiar with Svelte because we'll just be setting things up for the project here.
 
 # Create a Svelte app
-To get started we'll first be cloning the Svelte boilerplate using a tool called degit. Lets start by installing `degit` using
+To get started we'll first be cloning the Svelte boilerplate using a tool called degit. Let's start by installing `degit` using
 
 ```bash
 npm install -g degit
@@ -35,7 +35,7 @@ To run the dev server run
 npm run dev
 ```
 
-Then open http://localhost:5000, you should see a defalut web page. This means that the setup was successful
+Then open http://localhost:5000, you should see a default web page. This means that the setup was successful
 
 # Set up Electron
 Now we'll install `electron` as a development dependency.
@@ -44,7 +44,7 @@ Now we'll install `electron` as a development dependency.
 npm i -D electron@latest
 ```
 
-Then we'll install `electron-reload` and `electron-is-dev` for some qualuty of life improvement during development. `electron-reload` will let us watch files and reload the electron app automatically to reflect changes we make to the code. `electron-is-dev` will allow us to detect if the application is running in production or development.
+Then we'll install `electron-reload` and `electron-is-dev` for some quality of life improvement during development. `electron-reload` will let us watch files and reload the electron app automatically to reflect changes we make to the code. `electron-is-dev` will allow us to detect if the application is running in production or development.
 
 ```
 npm i -D electron-reload electron-is-dev
@@ -86,7 +86,7 @@ function createWindow() {
     )
 
     // Open the DevTools only if app is in development
-    // If in production, dont show.
+    // If in production, don't show.
     if (isDev)
         win.webContents.openDevTools()
 }
@@ -118,7 +118,7 @@ Now we need to set up some scripts in our `package.json` and define the electron
 }
 ```
 
-There's one last step before your application can be rendered. In `public/index.html` we need to make the urls absolute so that electron can find them.
+There's one last step before your application can be rendered. In `public/index.html` we need to make the urls absolute so that Electron can find them.
 
 ```html
 <!DOCTYPE html>
@@ -145,7 +145,7 @@ Now run `npm run build` to create the compiled JavaScript and CSS files in the `
 Now if you run `npm run app` you should see the same default welcome page you saw on your browser in an electron window.
 
 # Live reload both electron and Svelte
-The way the application is set up now, You could run `npm run dev` in one terminal to enable live reload for Svelte, and `npm run app` in another terminal to live reload the electron app. This is a little incovenient and we can combine both these functions and run them simultaneously.
+The way the application is set up now, You could run `npm run dev` in one terminal to enable live reload for Svelte, and `npm run app` in another terminal to live reload the electron app. This is a little inconvenient and we can combine both these functions and run them simultaneously.
 
 For this we'll be using `concurrently`. So we'll first install it and then update our scripts in `package.json`.
 
@@ -153,7 +153,7 @@ For this we'll be using `concurrently`. So we'll first install it and then updat
 npm i -D concurrently
 ```
 
-Then we'll create a script to run both Svelte and Electron paralelly.
+Then we'll create a script to run both Svelte and Electron parallelly.
 
 ```json
 {
@@ -168,9 +168,9 @@ Then we'll create a script to run both Svelte and Electron paralelly.
 By running `npm run app-dev` you can live reload both Electron and Svelte!
 
 # Conclusion
-Now you have a starting point to start building your Electron apps with Svelte at the frontend. While there are some starter templates available, the setup process for this is pretty straight forward and easy to do by yourself.
+Now you have a starting point to start building your Electron apps with Svelte at the frontend. While there are some starter templates available, the setup process for this is pretty straightforward and easy to do by yourself.
 
-If you're intersted in learning Svelte you can check out this tutorial here: [Get started with Svelte](https://home.aveek.io/blog/post/get-started-with-svelte/).
+If you're interested in learning Svelte you can check out this tutorial here: [Get started with Svelte](https://home.aveek.io/blog/post/get-started-with-svelte/).
 
 <!-- {{< highlight javascript >}}
 {{< / highlight >}} -->
