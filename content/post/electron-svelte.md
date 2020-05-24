@@ -6,7 +6,7 @@ date: 2020-05-24
 tags: [ "Svelte", "Desktop" , "Electron" ]
 ---
 
-The code for this tutorial can be found [here](https://gitlab.com/aveeksaha/electron-svelte)
+The code for this tutorial can be found [`here`](https://gitlab.com/aveeksaha/electron-svelte)
 
 <!--more-->
  
