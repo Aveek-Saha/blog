@@ -1,7 +1,7 @@
 ---
 title: Deploying Svelte apps to Firebase with GitHub actions
 subtitle: Use GitHub actions to automate deployment of Svelte applications to Firebase hosting
-date: 2020-05-16
+date: 2020-05-01
 # bigimg: [{src: "/svelte/svelte.svg", desc: "Svelte"}]
 tags: [ "Svelte", "website", "Firebase", "github actions" ]
 ---

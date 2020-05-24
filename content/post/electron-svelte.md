@@ -1,7 +1,7 @@
 ---
 title: Getting started with Svelte and Electron
 subtitle: A guide on setting up Svelte with electron to create desktop apps 
-date: 2021-03-18
+date: 2020-05-24
 # bigimg: [{src: "/img/duskplayer.png", desc: "Screenshot"}]
 tags: [ "Svelte", "Desktop" , "Electron" ]
 ---
