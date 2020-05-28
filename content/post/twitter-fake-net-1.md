@@ -96,6 +96,7 @@ TO start with, lets check some basic statistics from both groups of users, verif
 | min    | 0.0        | -73.00       | 0.0        | 0.0         |
 | max    | 998039.00  | 6037107.00   | 21171.00   | 4047961.00  |
 
+From a quick glance is evident that the average verified account has far more reach that an unverified user.
 
 ## Trends on account creation by year
 <!-- {{< gallery caption-position="center" caption-effect="fade" >}}
@@ -110,7 +111,7 @@ TO start with, lets check some basic statistics from both groups of users, verif
 ### For unverified users
 ![Unverified users](/twitterfakenet/unverified_by_year.png)
 
-For unverified users, the decline we saw after 2009 is present, but is not as prominent as for verified users, since the slowdown in verficatiion of accounts does not affect unverified users
+For unverified users, the decline we saw after 2009 is present, but is not as prominent as for verified users. This is because twitter has slowed down the verification of accounts and the slowdown in verficatiion of accounts does not affect unverified users
 
 <!-- {{< highlight javascript >}}
 {{< / highlight >}} -->
