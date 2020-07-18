@@ -1,6 +1,6 @@
 ---
 title: How to create a GitHub profile Readme 
-subtitle: Create a README that acts as an introductions to your github profile
+subtitle: Create a README that acts as an introduction to your GitHub profile
 date: 2020-07-18
 #bigimg: [{src: "/img/wordSearch.png", desc: "Screenshot"}]
 tags: [ "GitHub" , "feature" , "readme" ]
@@ -18,8 +18,6 @@ This can be helpful because the GitHub bios have a character limit and you might
  
 # Steps
 To get this About me section, follow these steps:
-
-![Screenshot1](/githubprofile/screenshot1.png)
  
 1. Create a new repository
 2. Set the repository name to your github username
@@ -27,6 +25,8 @@ To get this About me section, follow these steps:
 4. Select the option to initialize the repository with a README
 5. Create Repository
  
+![Screenshot1](/githubprofile/screenshot1.png)
+
 Now if you check your Github profile, you should see something like this above your pinned repos.
 
 ![Screenshot2](/githubprofile/screenshot2.png)
