@@ -2,7 +2,7 @@
 title: Making an online chess website with Socket.io
 subtitle: A tutorial on client server communication using Sockets
 date: 2018-10-20
-bigimg: [{src: "/img/chess-cover.jpg", desc: ""}]
+bigimg: [{src: "/img/chess-cover.jpg", desc: "Screenshot"}]
 tags: [ "websockets" , "NodeJS" , "JavaScript" , "Website" ]
 ---
  
