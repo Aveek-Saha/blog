@@ -1,7 +1,7 @@
 ---
 title: How to prepare for the TensorFlow Developer Certificate Exam
 subtitle: A brief summary of what materials to study from and my experience giving the exam.
-date: 2020-09-27
+date: 2020-09-28
 # bigimg: [{src: "/img/duskplayer.png", desc: "Screenshot"}]
 tags: [ "TensorFlow" , "study guide", "Machine learning" ]
 ---
@@ -45,8 +45,8 @@ To summarise, there are 4 main topics covered in the exam:
  
 Now depending on how familiar you are with Neural networks and deep learning your approach to the test will vary.
  
-# 1. Already familiar with deep learning concepts
+## 1. Already familiar with deep learning concepts
  
  
-# 2. Complete beginner to deep learning
+## 2. Complete beginner to deep learning
 
