@@ -30,3 +30,8 @@ However there are a few things to keep in mind before you decide to pursue this 
 - It's not cheap. At a 100 USD it's fairly expensive and might be inacessable to a lot of people. There might be more cost effective ways to display your competence in TensoFlow.
 - This certification does not test Machine learning and deep learning fundamentals, only your competence in implimenting theseconcepts using TensorFlow.
 
+If you're okay with the caveats I've listed above and you want to build your profile, then it's a great certification to have. I personally wrote the exam because I'm always looking for a new challenge and I'm passionate about Machine learning and it's applications. Also this one of the only machine learning specific professional certifications around, and if you're going to be using TensorFlow might as well get your certification from the people that created it.
+
+# How should I prepare?
+
+The TensorFlow Developer Certificate tests your ability to use TensorFlow to solve a subset of machine learning problems
