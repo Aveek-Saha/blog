@@ -1,7 +1,7 @@
 ---
 title: How to prepare for the TensorFlow Developer Certificate Exam
 subtitle: A brief summary of what materials to study from and my experience giving the exam.
-date: 2020-09-28
+date: 2020-09-30
 # bigimg: [{src: "/img/duskplayer.png", desc: "Screenshot"}]
 tags: [ "TensorFlow" , "study guide", "Machine learning" ]
 ---
@@ -46,7 +46,21 @@ To summarise, there are 4 main topics covered in the exam:
 Now depending on how familiar you are with Neural networks and deep learning your approach to the test will vary.
  
 ## 1. Already familiar with deep learning concepts
+
+Start with the DeepLearning.AI TensorFlow Developer course on Coursera. It covers basically every topic you need to know for this exam. 
+
+Hands-On Machine Learning with Scikit-Learn, Keras, and TensorFlow, 2nd Edition. The second edition is important because it is updated for tensorflow 2.x. Only half the book is useful
  
  
 ## 2. Complete beginner to deep learning
 
+Start with deep learning Specialization from deeplearning.ai.
+
+MIT videos
+
+Then do DeepLearning.AI TensorFlow Developer course on Coursera. It covers basically every topic you need to know for this exam. 
+
+Hands-On Machine Learning with Scikit-Learn, Keras, and TensorFlow, 2nd Edition. The second edition is important because it is updated for tensorflow 2.x. Only half the book is useful
+
+
+# Test day pointers
