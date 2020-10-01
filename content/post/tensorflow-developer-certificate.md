@@ -5,7 +5,7 @@ date: 2020-09-30
 # bigimg: [{src: "/img/duskplayer.png", desc: "Screenshot"}]
 tags: [ "TensorFlow" , "study guide", "Machine learning" ]
 ---
-A brief summary of what materials to study from and a list of free practice tests to prepare for the TensorFlow Developer Certificate Exam.
+A brief summary of what materials to study from and some pointers to prepare for the TensorFlow Developer Certificate Exam.
  
 <!--more-->
  
@@ -30,7 +30,9 @@ However there are a few things to keep in mind before you decide to pursue this 
 - It's not cheap. At 100 USD it's fairly expensive and might be inaccessible to a lot of people. There might be more cost effective ways to display your competence in TensorFlow.
 - This certification does not test Machine learning and deep learning fundamentals, only your competence in implementing these concepts using TensorFlow.
  
-If you're okay with the caveats I've listed above and you want to build your profile, then it's a great certification to have. I personally wrote the exam because I'm always looking for a new challenge and I'm passionate about Machine learning and its applications. Also this one of the only machine learning specific professional certifications around, and if you're going to be using TensorFlow might as well get your certification from the people that created it.
+If you're okay with the caveats I've listed above and you want to build your profile, then it's a great certification to have. I personally wrote the exam because I'm always looking for a new challenge and I'm passionate about Machine learning and its applications. 
+
+This is one of the only machine learning specific professional certifications around, and if you're going to be using TensorFlow might as well get your certification from the people that created it.
  
 # How should I prepare?
  
@@ -45,7 +47,7 @@ To summarise, there are 4 main topics covered in the exam:
  
 Now depending on how familiar you are with Neural networks and deep learning your approach to the test will vary. For both cases you'll need a healthy dose of reading mixed with coding. Ideally you want to be implementing as many concepts you read about using code as possible.
  
-## 1. Already familiar with deep learning concepts
+### 1. Already familiar with deep learning concepts
  
 Start with the DeepLearning.AI TensorFlow Developer specialization on Coursera. The course is taught by Laurence Moroney and covers basically all the details you'll need for the exam over the 4 course specialization
  
@@ -56,7 +58,7 @@ A useful textbook to refer to for this is Hands-On Machine Learning with Scikit-
 You can find an early release of the 2nd Edition of the textbook [here](https://www.knowledgeisle.com/wp-content/uploads/2019/12/2-Aur%C3%A9lien-G%C3%A9ron-Hands-On-Machine-Learning-with-Scikit-Learn-Keras-and-Tensorflow_-Concepts-Tools-and-Techniques-to-Build-Intelligent-Systems-O%E2%80%99Reilly-Media-2019.pdf)
  
  
-## 2. Complete beginner to deep learning
+### 2. Complete beginner to deep learning
  
 If you are a complete novice to this field I'd recommend you start off with the fundamentals and mathematics behind deep learning before diving into TensorFlow. A good place to begin is the Deep Learning Specialization from deeplearning.ai on Coursera.
  
