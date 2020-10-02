@@ -130,7 +130,9 @@ Now we have scraped all of today's trending hashtags from the website.
  
 # Conclusion
  
-This is just one of the ways that you can scrape information from websites. Another method is to use something like [Selenium](https://www.selenium.dev/) that allows you to emulate a browser instance and automate tasks with code. Here's an article you can refer to, if you want to get started with Selenium: https://www.toptal.com/python/web-scraping-with-python
+This is just one of the ways that you can scrape information from websites. Another method is to use something like [Selenium](https://www.selenium.dev/) that allows you to emulate a browser instance and automate tasks with code. 
+
+Here's an article you can refer to, if you want to get started with Selenium: https://www.toptal.com/python/web-scraping-with-python
  
  
 <!-- {{< highlight python >}}
