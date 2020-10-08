@@ -1,2 +1,22 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>feature on Aveek's Blog</title><link>https://home.aveek.io/blog/tags/feature/</link><description>Recent content in feature on Aveek's Blog</description><generator>Hugo -- gohugo.io</generator><managingEditor>aveek.s98@gmail.com (Aveek Saha)</managingEditor><webMaster>aveek.s98@gmail.com (Aveek Saha)</webMaster><lastBuildDate>Sat, 18 Jul 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://home.aveek.io/blog/tags/feature/index.xml" rel="self" type="application/rss+xml"/><item><title>How to create a GitHub profile Readme</title><link>https://home.aveek.io/blog/post/create-github-profile-readme/</link><pubDate>Sat, 18 Jul 2020 00:00:00 +0000</pubDate><author>aveek.s98@gmail.com (Aveek Saha)</author><guid>https://home.aveek.io/blog/post/create-github-profile-readme/</guid><description>&lt;p>If you want to see what this looks like - &lt;a href="https://github.com/Aveek-Sahar">&lt;code>My gitHub Profile&lt;/code>&lt;/a> &lt;!-- raw HTML omitted -->
-You can also check out the repository here - &lt;a href="https://github.com/Aveek-Saha/aveek-saha">&lt;code>Aveek-Saha&lt;/code>&lt;/a>&lt;/p></description></item></channel></rss>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>feature on Aveek's Blog</title><link>https://home.aveek.io/blog/tags/feature/</link><description>Recent content in feature on Aveek's Blog</description><generator>Hugo -- gohugo.io</generator><managingEditor>aveek.s98@gmail.com (Aveek Saha)</managingEditor><webMaster>aveek.s98@gmail.com (Aveek Saha)</webMaster><lastBuildDate>Sat, 18 Jul 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://home.aveek.io/blog/tags/feature/index.xml" rel="self" type="application/rss+xml"/><item><title>How to create a GitHub profile Readme</title><link>https://home.aveek.io/blog/post/create-github-profile-readme/</link><pubDate>Sat, 18 Jul 2020 00:00:00 +0000</pubDate><author>aveek.s98@gmail.com (Aveek Saha)</author><guid>https://home.aveek.io/blog/post/create-github-profile-readme/</guid><description>
+&lt;p>If you want to see what this looks like - &lt;a href="https://github.com/Aveek-Sahar">&lt;code>My gitHub Profile&lt;/code>&lt;/a> &lt;!-- raw HTML omitted -->
+You can also check out the repository here - &lt;a href="https://github.com/Aveek-Saha/aveek-saha">&lt;code>Aveek-Saha&lt;/code>&lt;/a>&lt;/p>
+&lt;p>If you want to see what this looks like - &lt;a href="https://github.com/Aveek-Sahar">&lt;code>My gitHub Profile&lt;/code>&lt;/a> &lt;!-- raw HTML omitted -->
+You can also check out the repository here - &lt;a href="https://github.com/Aveek-Saha/aveek-saha">&lt;code>Aveek-Saha&lt;/code>&lt;/a>&lt;/p>
+&lt;h1 id="introduction">Introduction&lt;/h1>
+&lt;p>GitHub has recently added the ability to create a README for your profile that acts as an About Me section or an Introduction to your profile.&lt;/p>
+&lt;p>This can be helpful because the GitHub bios have a character limit and you might not be able to fit everything you want in there. So your profile readme is a good way to show visitors to your profile everything you need to introduce yourself.&lt;/p>
+&lt;h1 id="steps">Steps&lt;/h1>
+&lt;p>To get this About me section, follow these steps:&lt;/p>
+&lt;ol>
+&lt;li>Create a new repository&lt;/li>
+&lt;li>Set the repository name to your github username&lt;/li>
+&lt;li>Make sure the repository is public&lt;/li>
+&lt;li>Select the option to initialize the repository with a README&lt;/li>
+&lt;li>Create Repository&lt;/li>
+&lt;/ol>
+&lt;p>&lt;img src="https://home.aveek.io/blog/githubprofile/screenshot1.png" alt="Screenshot1">&lt;/p>
+&lt;p>Now if you check your Github profile, you should see something like this above your pinned repos.&lt;/p>
+&lt;p>&lt;img src="https://home.aveek.io/blog/githubprofile/screenshot2.png" alt="Screenshot2">&lt;/p>
+&lt;p>You can look around and find some really interesting things to do with your bio, your imagination is your only limitation.&lt;/p>
+&lt;!-- raw HTML omitted --></description></item></channel></rss>

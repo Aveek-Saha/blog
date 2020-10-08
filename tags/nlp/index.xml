@@ -1,1 +1,103 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>NLP on Aveek's Blog</title><link>https://home.aveek.io/blog/tags/nlp/</link><description>Recent content in NLP on Aveek's Blog</description><generator>Hugo -- gohugo.io</generator><managingEditor>aveek.s98@gmail.com (Aveek Saha)</managingEditor><webMaster>aveek.s98@gmail.com (Aveek Saha)</webMaster><lastBuildDate>Thu, 31 Oct 2019 00:00:00 +0000</lastBuildDate><atom:link href="https://home.aveek.io/blog/tags/nlp/index.xml" rel="self" type="application/rss+xml"/><item><title>Finding the main characters in a novel</title><link>https://home.aveek.io/blog/post/finding-main-characters/</link><pubDate>Thu, 31 Oct 2019 00:00:00 +0000</pubDate><author>aveek.s98@gmail.com (Aveek Saha)</author><guid>https://home.aveek.io/blog/post/finding-main-characters/</guid><description>&lt;p>Find the code &lt;a href="https://colab.research.google.com/drive/10lrWpC3BF2Lan7LHrNZXs6H0oqTZW19_">&lt;code>here&lt;/code>&lt;/a>&lt;/p></description></item></channel></rss>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>NLP on Aveek's Blog</title><link>https://home.aveek.io/blog/tags/nlp/</link><description>Recent content in NLP on Aveek's Blog</description><generator>Hugo -- gohugo.io</generator><managingEditor>aveek.s98@gmail.com (Aveek Saha)</managingEditor><webMaster>aveek.s98@gmail.com (Aveek Saha)</webMaster><lastBuildDate>Thu, 31 Oct 2019 00:00:00 +0000</lastBuildDate><atom:link href="https://home.aveek.io/blog/tags/nlp/index.xml" rel="self" type="application/rss+xml"/><item><title>Finding the main characters in a novel</title><link>https://home.aveek.io/blog/post/finding-main-characters/</link><pubDate>Thu, 31 Oct 2019 00:00:00 +0000</pubDate><author>aveek.s98@gmail.com (Aveek Saha)</author><guid>https://home.aveek.io/blog/post/finding-main-characters/</guid><description>
+&lt;p>Find the code &lt;a href="https://colab.research.google.com/drive/10lrWpC3BF2Lan7LHrNZXs6H0oqTZW19_">&lt;code>here&lt;/code>&lt;/a>&lt;/p>
+&lt;p>Find the code &lt;a href="https://colab.research.google.com/drive/10lrWpC3BF2Lan7LHrNZXs6H0oqTZW19_">&lt;code>here&lt;/code>&lt;/a>&lt;/p>
+&lt;h1 id="introduction">Introduction&lt;/h1>
+&lt;p>In this tutorial we&amp;rsquo;ll be learning how to extract the names of all the main characters from a book.&lt;/p>
+&lt;h1 id="setup">Setup&lt;/h1>
+&lt;p>All the code for this tutorial will be executed on a &lt;a href="https://colab.research.google.com">&lt;code>Google Colab notebook&lt;/code>&lt;/a>. Go to the link and create a new Python 3 notebook and change the runtime type to GPU.&lt;/p>
+&lt;h1 id="strategy">Strategy&lt;/h1>
+&lt;p>The novel we&amp;rsquo;ll be using can be any book from the &lt;a href="https://www.gutenberg.org/browse/scores/top#books-last30">&lt;code>Gutenberg Project&lt;/code>&lt;/a> in raw UTF-8 format. To extract the names of all the main characters first we need to remove all &lt;code>\n&lt;/code> and &lt;code>\r&lt;/code> characters from the raw text.&lt;/p>
+&lt;p>To identify all characters, we&amp;rsquo;ll be using Named Entity Recognition. A named entity is a real world object, like a place, person, organisation, etc.&lt;/p>
+&lt;p>The text needs to be tokenized into sentences and all the named entities in those sentences need to be identified. We&amp;rsquo;ll only be looking at entities tagged as people because we&amp;rsquo;re only interested in the characters.&lt;/p>
+&lt;p>Then these characters can be listed in the order of their frequency of occurrence in the text.&lt;/p>
+&lt;h1 id="implementation">Implementation&lt;/h1>
+&lt;p>For named entity recognition we&amp;rsquo;ll use a library called &lt;a href="https://github.com/zalandoresearch/flair">&lt;code>flair&lt;/code>&lt;/a>. To install flair run&lt;/p>
+&lt;pre>&lt;code>!pip install flair
+&lt;/code>&lt;/pre>&lt;p>Next we&amp;rsquo;ll import NLTK, flair and a few other python libraries
+&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-python" data-lang="python">&lt;span class="kn">import&lt;/span> &lt;span class="nn">nltk&lt;/span>
+&lt;span class="kn">from&lt;/span> &lt;span class="nn">nltk&lt;/span> &lt;span class="kn">import&lt;/span> &lt;span class="n">pos_tag&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">word_tokenize&lt;/span>
+&lt;span class="kn">from&lt;/span> &lt;span class="nn">nltk.tokenize&lt;/span> &lt;span class="kn">import&lt;/span> &lt;span class="n">sent_tokenize&lt;/span>
+&lt;span class="kn">from&lt;/span> &lt;span class="nn">nltk.corpus&lt;/span> &lt;span class="kn">import&lt;/span> &lt;span class="n">stopwords&lt;/span>
+&lt;span class="n">nltk&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">download&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s1">&amp;#39;stopwords&amp;#39;&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;span class="n">nltk&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">download&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s1">&amp;#39;punkt&amp;#39;&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;span class="n">nltk&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">download&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s1">&amp;#39;gutenberg&amp;#39;&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;span class="kn">from&lt;/span> &lt;span class="nn">tqdm&lt;/span> &lt;span class="kn">import&lt;/span> &lt;span class="n">tqdm&lt;/span>
+&lt;span class="kn">import&lt;/span> &lt;span class="nn">re&lt;/span>
+&lt;span class="kn">import&lt;/span> &lt;span class="nn">string&lt;/span>
+&lt;span class="kn">from&lt;/span> &lt;span class="nn">itertools&lt;/span> &lt;span class="kn">import&lt;/span> &lt;span class="n">combinations&lt;/span>
+&lt;span class="kn">from&lt;/span> &lt;span class="nn">collections&lt;/span> &lt;span class="kn">import&lt;/span> &lt;span class="n">Counter&lt;/span>
+&lt;span class="kn">from&lt;/span> &lt;span class="nn">flair.models&lt;/span> &lt;span class="kn">import&lt;/span> &lt;span class="n">SequenceTagger&lt;/span>
+&lt;span class="kn">from&lt;/span> &lt;span class="nn">flair.data&lt;/span> &lt;span class="kn">import&lt;/span> &lt;span class="n">Sentence&lt;/span>
+&lt;/code>&lt;/pre>&lt;/div>&lt;/p>
+&lt;p>The book can be downloaded and read as a text file. NLTK already comes with a few Project Gutenberg books so we&amp;rsquo;ll be using one of those for convenience&lt;/p>
+&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-python" data-lang="python">&lt;span class="n">book&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">nltk&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">corpus&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">gutenberg&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">raw&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s1">&amp;#39;carroll-alice.txt&amp;#39;&lt;/span>&lt;span class="p">)&lt;/span>&lt;/code>&lt;/pre>&lt;/div>
+&lt;p>The book variable is a string that looks like this&lt;/p>
+&lt;pre>&lt;code>Alice\'s Adventures in Wonderland by Lewis Carroll 1865]\n\nCHAPTER I. Down the Rabbit-Hole\n\nAlice was beginning to get very tired of sitting by her sister on the\nbank, and of having nothing to do: once or twice she had peeped into the\nbook her sister was reading, but it had no pictures or conversations in\nit, \'and what is the use of a book ....
+&lt;/code>&lt;/pre>&lt;p>The text has to be cleaned to remove some unwanted characters
+&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-python" data-lang="python">
+&lt;span class="n">book&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">book&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">replace&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s1">&amp;#39;&lt;/span>&lt;span class="se">\n&lt;/span>&lt;span class="s1">&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="s1">&amp;#39; &amp;#39;&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;span class="n">book&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">book&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">replace&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s1">&amp;#39;&lt;/span>&lt;span class="se">\r&lt;/span>&lt;span class="s1">&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="s1">&amp;#39; &amp;#39;&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;span class="n">book&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">book&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">replace&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s1">&amp;#39;&lt;/span>&lt;span class="se">\&amp;#39;&lt;/span>&lt;span class="s1">&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="s1">&amp;#39; &amp;#39;&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/code>&lt;/pre>&lt;/div>&lt;/p>
+&lt;p>If we print book again it&amp;rsquo;ll look something like this&lt;/p>
+&lt;pre>&lt;code>[Alice s Adventures in Wonderland by Lewis Carroll 1865] CHAPTER I. Down the Rabbit-Hole Alice was beginning to get very tired of sitting by her sister on the bank, and of having nothing to do: once or twice she had peeped into the book her sister was reading, but it had no pictures or conversations in it, and what is the use of a book ...
+&lt;/code>&lt;/pre>&lt;p>Removing these characters will help us extract the character names more effectively.&lt;/p>
+&lt;p>After this the book is tokenized into sentences, the flair ner tagger is loaded and each sentence is tagged one by one. If an entity is tagged as a person, it&amp;rsquo;s stored in a separate array.&lt;/p>
+&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-python" data-lang="python">&lt;span class="c1"># Use flair named entity recognition&lt;/span>
+&lt;span class="n">tagger&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">SequenceTagger&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">load&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s1">&amp;#39;ner&amp;#39;&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;span class="c1"># Get all the names of entities tagged as people&lt;/span>
+&lt;span class="n">x&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="p">[]&lt;/span>
+&lt;span class="k">for&lt;/span> &lt;span class="n">line&lt;/span> &lt;span class="ow">in&lt;/span> &lt;span class="n">tqdm&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">sent&lt;/span>&lt;span class="p">):&lt;/span>
+&lt;span class="n">sentence&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">Sentence&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">line&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;span class="n">tagger&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">predict&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">sentence&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;span class="k">for&lt;/span> &lt;span class="n">entity&lt;/span> &lt;span class="ow">in&lt;/span> &lt;span class="n">sentence&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">to_dict&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">tag_type&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s1">&amp;#39;ner&amp;#39;&lt;/span>&lt;span class="p">)[&lt;/span>&lt;span class="s1">&amp;#39;entities&amp;#39;&lt;/span>&lt;span class="p">]:&lt;/span>
+&lt;span class="k">if&lt;/span> &lt;span class="n">entity&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="s1">&amp;#39;type&amp;#39;&lt;/span>&lt;span class="p">]&lt;/span> &lt;span class="o">==&lt;/span> &lt;span class="s1">&amp;#39;PER&amp;#39;&lt;/span>&lt;span class="p">:&lt;/span>
+&lt;span class="n">x&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">append&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">entity&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="s1">&amp;#39;text&amp;#39;&lt;/span>&lt;span class="p">])&lt;/span>&lt;/code>&lt;/pre>&lt;/div>
+&lt;p>The &lt;code>x&lt;/code> array contains all the occurences of characters mentioned in the book. Then the punctuation like commas and semicolons that might occour in the names is removed.&lt;/p>
+&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-python" data-lang="python">&lt;span class="c1"># Remove any punctuation within the names&lt;/span>
+&lt;span class="n">names&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="p">[]&lt;/span>
+&lt;span class="k">for&lt;/span> &lt;span class="n">name&lt;/span> &lt;span class="ow">in&lt;/span> &lt;span class="n">x&lt;/span>&lt;span class="p">:&lt;/span>
+&lt;span class="n">names&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">append&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">name&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">translate&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nb">str&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">maketrans&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s1">&amp;#39;&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="s1">&amp;#39;&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">string&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">punctuation&lt;/span>&lt;span class="p">)))&lt;/span>&lt;/code>&lt;/pre>&lt;/div>
+&lt;p>Let&amp;rsquo;s sort the list based on number of times the character is mentioned in the book and print it&lt;/p>
+&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-python" data-lang="python">&lt;span class="c1"># List characters by the frequency with which they are mentioned&lt;/span>
+&lt;span class="n">result&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="p">[&lt;/span>&lt;span class="n">item&lt;/span> &lt;span class="k">for&lt;/span> &lt;span class="n">items&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">c&lt;/span> &lt;span class="ow">in&lt;/span> &lt;span class="n">Counter&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">x&lt;/span>&lt;span class="p">)&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">most_common&lt;/span>&lt;span class="p">()&lt;/span>
+&lt;span class="k">for&lt;/span> &lt;span class="n">item&lt;/span> &lt;span class="ow">in&lt;/span> &lt;span class="p">[&lt;/span>&lt;span class="n">items&lt;/span>&lt;span class="p">]&lt;/span> &lt;span class="o">*&lt;/span> &lt;span class="n">c&lt;/span>&lt;span class="p">]&lt;/span>
+&lt;span class="k">print&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">Counter&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">names&lt;/span>&lt;span class="p">)&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">most_common&lt;/span>&lt;span class="p">())&lt;/span>&lt;/code>&lt;/pre>&lt;/div>
+&lt;p>The output should look something like this&lt;/p>
+&lt;pre>&lt;code>[('Alice', 346), ('Hatter', 52), ('Duchess', 28), ('Dormouse', 28), ('King', 28), ('Mouse', 21),
+('Queen', 18), ('Dinah', 13), ... ('Lory', 4), ('William', 4), ('Mary Ann', 4), ('Well', 4), ('Cat', 4)
+, ('Five', 3), ('Majesty', 3), ... ('Wow', 2), ('Treacle', 2), ('Miss', 2), ('Hush', 2), ('Yes', 2),
+....]
+&lt;/code>&lt;/pre>&lt;p>If we look at the output closely, we can see that some of the &amp;ldquo;names&amp;rdquo;, like Five, Hush, Yes, etc, don&amp;rsquo;t really seem like names of people or characters. This happens because of the way that NER works, sometimes words that are probably not names of characters can also be included in the &lt;code>name&lt;/code> list, these are generally few and can be removed manually.&lt;/p>
+&lt;p>We can also exclude characters whose names have been mentioned less than 5 times, as they aren&amp;rsquo;t likely to be important characters.&lt;/p>
+&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-python" data-lang="python">&lt;span class="n">common&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="p">[]&lt;/span>
+&lt;span class="n">main_freq&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="p">[]&lt;/span>
+&lt;span class="c1"># Manually remove words that are not character names from our list&lt;/span>
+&lt;span class="n">not_names&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="p">[&lt;/span>&lt;span class="s1">&amp;#39;Well&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="s1">&amp;#39;Ive&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="s1">&amp;#39;Five&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="s1">&amp;#39;Theyre&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="s1">&amp;#39;Dont&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="s1">&amp;#39;Wow&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="s1">&amp;#39;Ill&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="s1">&amp;#39;Miss&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="s1">&amp;#39;Hush&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="s1">&amp;#39;Yes&amp;#39;&lt;/span>&lt;span class="p">,]&lt;/span>
+&lt;span class="k">for&lt;/span> &lt;span class="n">n&lt;/span>&lt;span class="p">,&lt;/span>&lt;span class="n">c&lt;/span> &lt;span class="ow">in&lt;/span> &lt;span class="n">Counter&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">names&lt;/span>&lt;span class="p">)&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">most_common&lt;/span>&lt;span class="p">():&lt;/span>
+&lt;span class="c1"># if the character is mentioned less than 5 times, the name is not added to the main character list&lt;/span>
+&lt;span class="k">if&lt;/span> &lt;span class="n">c&lt;/span> &lt;span class="o">&amp;gt;&lt;/span> &lt;span class="mi">5&lt;/span> &lt;span class="ow">and&lt;/span> &lt;span class="n">n&lt;/span> &lt;span class="ow">not&lt;/span> &lt;span class="ow">in&lt;/span> &lt;span class="n">not_names&lt;/span>&lt;span class="p">:&lt;/span>
+&lt;span class="n">main_freq&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">append&lt;/span>&lt;span class="p">((&lt;/span>&lt;span class="n">n&lt;/span>&lt;span class="p">,&lt;/span>&lt;span class="n">c&lt;/span>&lt;span class="p">))&lt;/span>
+&lt;span class="n">common&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">append&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">n&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/code>&lt;/pre>&lt;/div>
+&lt;p>If we print the &lt;code>common&lt;/code> array, we get a list of main characters from Alice in Wonderland&lt;/p>
+&lt;pre>&lt;code>['Alice',
+'Hatter',
+'Duchess',
+'Dormouse',
+'King',
+'Mouse',
+'Queen',
+'Dinah',
+'Rabbit',
+'Gryphon',
+'Bill',
+'Hare',
+'Dodo',
+'Mock Turtle',
+'Footman']
+&lt;/code>&lt;/pre>&lt;h1 id="conclusion">Conclusion&lt;/h1>
+&lt;p>Although the method I&amp;rsquo;ve described here isn&amp;rsquo;t always 100% accurate, it generally provides a satisfactory list of main characters. This list can be useful for creating a co-occurrence matrix of character interactions, which in turn can be useful for network analysis of all the characters in the book.&lt;/p>
+&lt;p>While it&amp;rsquo;s beyond the scope of this post, the interaction network for all main characters can be explored in a future post.&lt;/p>
+&lt;!-- raw HTML omitted -->
+&lt;!-- raw HTML omitted --></description></item></channel></rss>

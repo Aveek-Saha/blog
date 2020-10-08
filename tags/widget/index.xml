@@ -1,2 +1,28 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Widget on Aveek's Blog</title><link>https://home.aveek.io/blog/tags/widget/</link><description>Recent content in Widget on Aveek's Blog</description><generator>Hugo -- gohugo.io</generator><managingEditor>aveek.s98@gmail.com (Aveek Saha)</managingEditor><webMaster>aveek.s98@gmail.com (Aveek Saha)</webMaster><lastBuildDate>Sun, 23 Jun 2019 00:00:00 +0000</lastBuildDate><atom:link href="https://home.aveek.io/blog/tags/widget/index.xml" rel="self" type="application/rss+xml"/><item><title>Pixel Weather</title><link>https://home.aveek.io/blog/post/pixel-weather/</link><pubDate>Sun, 23 Jun 2019 00:00:00 +0000</pubDate><author>aveek.s98@gmail.com (Aveek Saha)</author><guid>https://home.aveek.io/blog/post/pixel-weather/</guid><description>&lt;p>Get the code here - &lt;a href="https://github.com/Aveek-Saha/pixel-weather">&lt;code>Pixel Weather&lt;/code>&lt;/a> &lt;!-- raw HTML omitted -->
-To try it out, download it here - &lt;a href="https://github.com/Aveek-Saha/pixel-weather/releases">&lt;code>Downloads&lt;/code>&lt;/a>&lt;/p></description></item></channel></rss>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Widget on Aveek's Blog</title><link>https://home.aveek.io/blog/tags/widget/</link><description>Recent content in Widget on Aveek's Blog</description><generator>Hugo -- gohugo.io</generator><managingEditor>aveek.s98@gmail.com (Aveek Saha)</managingEditor><webMaster>aveek.s98@gmail.com (Aveek Saha)</webMaster><lastBuildDate>Sun, 23 Jun 2019 00:00:00 +0000</lastBuildDate><atom:link href="https://home.aveek.io/blog/tags/widget/index.xml" rel="self" type="application/rss+xml"/><item><title>Pixel Weather</title><link>https://home.aveek.io/blog/post/pixel-weather/</link><pubDate>Sun, 23 Jun 2019 00:00:00 +0000</pubDate><author>aveek.s98@gmail.com (Aveek Saha)</author><guid>https://home.aveek.io/blog/post/pixel-weather/</guid><description>
+&lt;p>Get the code here - &lt;a href="https://github.com/Aveek-Saha/pixel-weather">&lt;code>Pixel Weather&lt;/code>&lt;/a> &lt;!-- raw HTML omitted -->
+To try it out, download it here - &lt;a href="https://github.com/Aveek-Saha/pixel-weather/releases">&lt;code>Downloads&lt;/code>&lt;/a>&lt;/p>
+&lt;p>Get the code here - &lt;a href="https://github.com/Aveek-Saha/pixel-weather">&lt;code>Pixel Weather&lt;/code>&lt;/a> &lt;!-- raw HTML omitted -->
+To try it out, download it here - &lt;a href="https://github.com/Aveek-Saha/pixel-weather/releases">&lt;code>Downloads&lt;/code>&lt;/a>&lt;/p>
+&lt;h3 id="pixel-weather-is-a-small-and-compact-8-bit-style-weather-widget-designed-for-your-desktop">Pixel weather is a small and compact 8 bit style weather widget designed for your desktop.&lt;/h3>
+&lt;h1 id="features">Features&lt;/h1>
+&lt;ul>
+&lt;li>It&amp;rsquo;s transparent background allows it to blend in with your current setup&lt;/li>
+&lt;li>Always stays on your desktop so it won&amp;rsquo;t get in your way. This means it&amp;rsquo;s hidden when you switch windows with &lt;code>alt+tab&lt;/code>&lt;/li>
+&lt;li>Switch between dark mode and light mode, for lighter and darker backgrounds respectively.&lt;/li>
+&lt;li>Clean interface, with no clutter, all options can be accessed by right clicking.&lt;/li>
+&lt;/ul>
+&lt;h1 id="how-to-use">How to use&lt;/h1>
+&lt;ul>
+&lt;li>Install the package.&lt;/li>
+&lt;li>Sign up and get your API key from the &lt;a href="https://darksky.net/dev">&lt;code>Dark Sky&lt;/code>&lt;/a> console.&lt;/li>
+&lt;li>When you open the app for the first time, a settings menu pops up, paste your API key there.&lt;/li>
+&lt;li>You can also change how often the weather is updated.&lt;/li>
+&lt;li>After submitting the settings, right click, refresh and wait for the weather to update.&lt;/li>
+&lt;li>You can choose where to place the widget by choosing from the Position menu.&lt;/li>
+&lt;li>The menu can be accessed by right clicking anywhere on the widget.&lt;/li>
+&lt;/ul>
+&lt;h1 id="screenshots">Screenshots&lt;/h1>
+&lt;p>&lt;img src="https://home.aveek.io/blog/pixelweather/screenshot1.png" alt="Screenshot1">&lt;/p>
+&lt;p>&lt;img src="https://home.aveek.io/blog/pixelweather/screenshot2.png" alt="Screenshot2">&lt;/p>
+&lt;!-- raw HTML omitted -->
+&lt;!-- raw HTML omitted --></description></item></channel></rss>

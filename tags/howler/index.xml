@@ -1,2 +1,63 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Howler on Aveek's Blog</title><link>https://home.aveek.io/blog/tags/howler/</link><description>Recent content in Howler on Aveek's Blog</description><generator>Hugo -- gohugo.io</generator><managingEditor>aveek.s98@gmail.com (Aveek Saha)</managingEditor><webMaster>aveek.s98@gmail.com (Aveek Saha)</webMaster><lastBuildDate>Tue, 28 Aug 2018 00:00:00 +0000</lastBuildDate><atom:link href="https://home.aveek.io/blog/tags/howler/index.xml" rel="self" type="application/rss+xml"/><item><title>Dusk Player</title><link>https://home.aveek.io/blog/post/music-player/</link><pubDate>Tue, 28 Aug 2018 00:00:00 +0000</pubDate><author>aveek.s98@gmail.com (Aveek Saha)</author><guid>https://home.aveek.io/blog/post/music-player/</guid><description>&lt;p>If you want the code for this project, fork this GitHub repo - &lt;a href="https://github.com/Aveek-Saha/MusicPlayer">&lt;code>Music Player&lt;/code>&lt;/a> &lt;!-- raw HTML omitted -->
-If you want to see a live demo, Download it here - &lt;a href="https://github.com/Aveek-Saha/MusicPlayer/releases">&lt;code>Downloads&lt;/code>&lt;/a>&lt;/p></description></item></channel></rss>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Howler on Aveek's Blog</title><link>https://home.aveek.io/blog/tags/howler/</link><description>Recent content in Howler on Aveek's Blog</description><generator>Hugo -- gohugo.io</generator><managingEditor>aveek.s98@gmail.com (Aveek Saha)</managingEditor><webMaster>aveek.s98@gmail.com (Aveek Saha)</webMaster><lastBuildDate>Tue, 28 Aug 2018 00:00:00 +0000</lastBuildDate><atom:link href="https://home.aveek.io/blog/tags/howler/index.xml" rel="self" type="application/rss+xml"/><item><title>Dusk Player</title><link>https://home.aveek.io/blog/post/music-player/</link><pubDate>Tue, 28 Aug 2018 00:00:00 +0000</pubDate><author>aveek.s98@gmail.com (Aveek Saha)</author><guid>https://home.aveek.io/blog/post/music-player/</guid><description>
+&lt;p>If you want the code for this project, fork this GitHub repo - &lt;a href="https://github.com/Aveek-Saha/MusicPlayer">&lt;code>Music Player&lt;/code>&lt;/a> &lt;!-- raw HTML omitted -->
+If you want to see a live demo, Download it here - &lt;a href="https://github.com/Aveek-Saha/MusicPlayer/releases">&lt;code>Downloads&lt;/code>&lt;/a>&lt;/p>
+&lt;p>If you want the code for this project, fork this GitHub repo - &lt;a href="https://github.com/Aveek-Saha/MusicPlayer">&lt;code>Music Player&lt;/code>&lt;/a> &lt;!-- raw HTML omitted -->
+If you want to see a live demo, Download it here - &lt;a href="https://github.com/Aveek-Saha/MusicPlayer/releases">&lt;code>Downloads&lt;/code>&lt;/a>&lt;/p>
+&lt;h1 id="introduction">Introduction&lt;/h1>
+&lt;p>The idea for this music player was to keep things simple. you just load all your audio files from your music player, and start listening. The player always keeps the focus on the music.
+Apart from the essential music controls, like play, pause, skip and seek, there is a playlist menu so that you can quickly switch songs.
+It is built on Electron and uses Howler for handling music playback. AngularJS and Bootstrap are used for the UI, and JSmediatags to retrieve the ID3 tags, like album art, artist and title.&lt;/p>
+&lt;h1 id="using-the-player">Using the player&lt;/h1>
+&lt;p>On starting the music player, you’ll see an option called folder in the top menu, click on it. Select the folder with all your music, and your set to go. the player will automatically load all the supported audio files into a playlist. It also stores the location of the directory you last opened, and it&amp;rsquo;ll load your music from there when you open it next.&lt;/p>
+&lt;p>The UI is fairly intuitive, there are play pause and skip buttons. Clicking on the progress bar will seek playback to that position in the song. There is a volume slider to fine tune the volume. The hamburger menu button toggles the playlist. And the last button is to shuffle tracks.&lt;/p>
+&lt;h1 id="implementation">Implementation&lt;/h1>
+&lt;p>The entire implementation is too long, so I&amp;rsquo;ll just give an outline here. The full code is at &lt;a href="https://github.com/Aveek-Saha/MusicPlayer">&lt;code>Music Player&lt;/code>&lt;/a>&lt;/p>
+&lt;p>The user selects the folder with music in it via Electron’s dialog module. This is used to open a directory selector, when a directory is selected it returns a path to that directory which is then passed to a function. This function then uses the path to scan the directory and store the paths of all the files with supported extensions in a playList array.
+The path of the selected directory is stored in a file, which will be read in the future so that the user doesn&amp;rsquo;t have to select a directory everytime.&lt;/p>
+&lt;p>The actual audio playback is handled through Howler, which provides us with methods like Play, Pause, Seek, Skip and volume adjustment. These methods are implemented in the Player object prototype.
+The functions implemented are-&lt;/p>
+&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-javascript" data-lang="javascript">&lt;span class="nx">Player&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">prototype&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;span class="nx">play&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="kd">function&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="nx">index&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;span class="c1">// Play the song at playlist[index]
+&lt;/span>&lt;span class="c1">&lt;/span> &lt;span class="p">},&lt;/span>
+&lt;span class="nx">pause&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="kd">function&lt;/span> &lt;span class="p">()&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;span class="c1">// Pause all audio playback
+&lt;/span>&lt;span class="c1">&lt;/span> &lt;span class="p">},&lt;/span>
+&lt;span class="nx">skip&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="kd">function&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="nx">direction&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;span class="c1">// skip to the next/previous/random track,
+&lt;/span>&lt;span class="c1">&lt;/span> &lt;span class="c1">// calls skipTo
+&lt;/span>&lt;span class="c1">&lt;/span> &lt;span class="p">},&lt;/span>
+&lt;span class="nx">skipTo&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="kd">function&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="nx">index&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;span class="c1">// stop whatever song is playing and
+&lt;/span>&lt;span class="c1">&lt;/span> &lt;span class="c1">// play the song that has been skipped to
+&lt;/span>&lt;span class="c1">&lt;/span> &lt;span class="p">},&lt;/span>
+&lt;span class="nx">step&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="kd">function&lt;/span> &lt;span class="p">()&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;span class="c1">// as the song is playing, change the timer value
+&lt;/span>&lt;span class="c1">&lt;/span> &lt;span class="c1">// and move the progress bar
+&lt;/span>&lt;span class="c1">&lt;/span> &lt;span class="p">},&lt;/span>
+&lt;span class="nx">formatTime&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="kd">function&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="nx">secs&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;span class="c1">// by default the time is in seconds,
+&lt;/span>&lt;span class="c1">&lt;/span> &lt;span class="c1">// so convert it into mins:seconds format
+&lt;/span>&lt;span class="c1">&lt;/span> &lt;span class="p">},&lt;/span>
+&lt;span class="nx">volume&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="kd">function&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="nx">val&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;span class="c1">// volume tuning
+&lt;/span>&lt;span class="c1">&lt;/span> &lt;span class="p">},&lt;/span>
+&lt;span class="nx">seek&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="kd">function&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="nx">time&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;span class="c1">// move the song along to the place
+&lt;/span>&lt;span class="c1">&lt;/span> &lt;span class="c1">// the user clicked on the progressbar
+&lt;/span>&lt;span class="c1">&lt;/span> &lt;span class="p">}&lt;/span>
+&lt;span class="p">}&lt;/span>
+&lt;/code>&lt;/pre>&lt;/div>
+&lt;p>Most audio files have some kind of metadata attached to them in the form of media tags. This metadata includes things like Title, Artist, Album and Album art.&lt;/p>
+&lt;p>These tags are read using JSmediatags using which we retrieve the name of the song, the artist and the album art. the album art is decoded from base64 and displayed as an image. If there are no media tags for a file, it simply displays the file name.&lt;/p>
+&lt;h1 id="features">Features&lt;/h1>
+&lt;ul>
+&lt;li>Supports: mp3, opus, ogg, wav, aac, m4a, webm.&lt;/li>
+&lt;li>Quickly switch tracks in the same folder, from the playlist button.&lt;/li>
+&lt;li>Play tracks on shuffle.&lt;/li>
+&lt;li>Loads music from the last selected directory.&lt;/li>
+&lt;li>Fine tune the volume from the volume slider.&lt;/li>
+&lt;li>Reads ID3 tags and displays the artist and album art (if they exist).&lt;/li>
+&lt;/ul>
+&lt;!-- raw HTML omitted -->
+&lt;!-- raw HTML omitted --></description></item></channel></rss>

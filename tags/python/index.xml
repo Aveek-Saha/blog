@@ -1,1 +1,246 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Python on Aveek's Blog</title><link>https://home.aveek.io/blog/tags/python/</link><description>Recent content in Python on Aveek's Blog</description><generator>Hugo -- gohugo.io</generator><managingEditor>aveek.s98@gmail.com (Aveek Saha)</managingEditor><webMaster>aveek.s98@gmail.com (Aveek Saha)</webMaster><lastBuildDate>Thu, 31 Oct 2019 00:00:00 +0000</lastBuildDate><atom:link href="https://home.aveek.io/blog/tags/python/index.xml" rel="self" type="application/rss+xml"/><item><title>Finding the main characters in a novel</title><link>https://home.aveek.io/blog/post/finding-main-characters/</link><pubDate>Thu, 31 Oct 2019 00:00:00 +0000</pubDate><author>aveek.s98@gmail.com (Aveek Saha)</author><guid>https://home.aveek.io/blog/post/finding-main-characters/</guid><description>&lt;p>Find the code &lt;a href="https://colab.research.google.com/drive/10lrWpC3BF2Lan7LHrNZXs6H0oqTZW19_">&lt;code>here&lt;/code>&lt;/a>&lt;/p></description></item><item><title>Saving a Keras model to persistent storage</title><link>https://home.aveek.io/blog/post/checkpointing-keras-model/</link><pubDate>Mon, 24 Jun 2019 00:00:00 +0000</pubDate><author>aveek.s98@gmail.com (Aveek Saha)</author><guid>https://home.aveek.io/blog/post/checkpointing-keras-model/</guid><description>&lt;p>Learn how to save Keras models to persistent storage or your Google drive and resume training it from where you left off.&lt;/p></description></item><item><title>Web Scraping with Python</title><link>https://home.aveek.io/blog/post/web-scraping-with-python/</link><pubDate>Mon, 13 May 2019 00:00:00 +0000</pubDate><author>aveek.s98@gmail.com (Aveek Saha)</author><guid>https://home.aveek.io/blog/post/web-scraping-with-python/</guid><description>&lt;p>Code for this tutorial can be found on &lt;a href="https://gist.github.com/Aveek-Saha/860464a7b52c5bab781f870dcb73ed57">&lt;code>Github&lt;/code>&lt;/a>&lt;/p></description></item></channel></rss>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Python on Aveek's Blog</title><link>https://home.aveek.io/blog/tags/python/</link><description>Recent content in Python on Aveek's Blog</description><generator>Hugo -- gohugo.io</generator><managingEditor>aveek.s98@gmail.com (Aveek Saha)</managingEditor><webMaster>aveek.s98@gmail.com (Aveek Saha)</webMaster><lastBuildDate>Thu, 31 Oct 2019 00:00:00 +0000</lastBuildDate><atom:link href="https://home.aveek.io/blog/tags/python/index.xml" rel="self" type="application/rss+xml"/><item><title>Finding the main characters in a novel</title><link>https://home.aveek.io/blog/post/finding-main-characters/</link><pubDate>Thu, 31 Oct 2019 00:00:00 +0000</pubDate><author>aveek.s98@gmail.com (Aveek Saha)</author><guid>https://home.aveek.io/blog/post/finding-main-characters/</guid><description>
+&lt;p>Find the code &lt;a href="https://colab.research.google.com/drive/10lrWpC3BF2Lan7LHrNZXs6H0oqTZW19_">&lt;code>here&lt;/code>&lt;/a>&lt;/p>
+&lt;p>Find the code &lt;a href="https://colab.research.google.com/drive/10lrWpC3BF2Lan7LHrNZXs6H0oqTZW19_">&lt;code>here&lt;/code>&lt;/a>&lt;/p>
+&lt;h1 id="introduction">Introduction&lt;/h1>
+&lt;p>In this tutorial we&amp;rsquo;ll be learning how to extract the names of all the main characters from a book.&lt;/p>
+&lt;h1 id="setup">Setup&lt;/h1>
+&lt;p>All the code for this tutorial will be executed on a &lt;a href="https://colab.research.google.com">&lt;code>Google Colab notebook&lt;/code>&lt;/a>. Go to the link and create a new Python 3 notebook and change the runtime type to GPU.&lt;/p>
+&lt;h1 id="strategy">Strategy&lt;/h1>
+&lt;p>The novel we&amp;rsquo;ll be using can be any book from the &lt;a href="https://www.gutenberg.org/browse/scores/top#books-last30">&lt;code>Gutenberg Project&lt;/code>&lt;/a> in raw UTF-8 format. To extract the names of all the main characters first we need to remove all &lt;code>\n&lt;/code> and &lt;code>\r&lt;/code> characters from the raw text.&lt;/p>
+&lt;p>To identify all characters, we&amp;rsquo;ll be using Named Entity Recognition. A named entity is a real world object, like a place, person, organisation, etc.&lt;/p>
+&lt;p>The text needs to be tokenized into sentences and all the named entities in those sentences need to be identified. We&amp;rsquo;ll only be looking at entities tagged as people because we&amp;rsquo;re only interested in the characters.&lt;/p>
+&lt;p>Then these characters can be listed in the order of their frequency of occurrence in the text.&lt;/p>
+&lt;h1 id="implementation">Implementation&lt;/h1>
+&lt;p>For named entity recognition we&amp;rsquo;ll use a library called &lt;a href="https://github.com/zalandoresearch/flair">&lt;code>flair&lt;/code>&lt;/a>. To install flair run&lt;/p>
+&lt;pre>&lt;code>!pip install flair
+&lt;/code>&lt;/pre>&lt;p>Next we&amp;rsquo;ll import NLTK, flair and a few other python libraries
+&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-python" data-lang="python">&lt;span class="kn">import&lt;/span> &lt;span class="nn">nltk&lt;/span>
+&lt;span class="kn">from&lt;/span> &lt;span class="nn">nltk&lt;/span> &lt;span class="kn">import&lt;/span> &lt;span class="n">pos_tag&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">word_tokenize&lt;/span>
+&lt;span class="kn">from&lt;/span> &lt;span class="nn">nltk.tokenize&lt;/span> &lt;span class="kn">import&lt;/span> &lt;span class="n">sent_tokenize&lt;/span>
+&lt;span class="kn">from&lt;/span> &lt;span class="nn">nltk.corpus&lt;/span> &lt;span class="kn">import&lt;/span> &lt;span class="n">stopwords&lt;/span>
+&lt;span class="n">nltk&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">download&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s1">&amp;#39;stopwords&amp;#39;&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;span class="n">nltk&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">download&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s1">&amp;#39;punkt&amp;#39;&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;span class="n">nltk&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">download&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s1">&amp;#39;gutenberg&amp;#39;&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;span class="kn">from&lt;/span> &lt;span class="nn">tqdm&lt;/span> &lt;span class="kn">import&lt;/span> &lt;span class="n">tqdm&lt;/span>
+&lt;span class="kn">import&lt;/span> &lt;span class="nn">re&lt;/span>
+&lt;span class="kn">import&lt;/span> &lt;span class="nn">string&lt;/span>
+&lt;span class="kn">from&lt;/span> &lt;span class="nn">itertools&lt;/span> &lt;span class="kn">import&lt;/span> &lt;span class="n">combinations&lt;/span>
+&lt;span class="kn">from&lt;/span> &lt;span class="nn">collections&lt;/span> &lt;span class="kn">import&lt;/span> &lt;span class="n">Counter&lt;/span>
+&lt;span class="kn">from&lt;/span> &lt;span class="nn">flair.models&lt;/span> &lt;span class="kn">import&lt;/span> &lt;span class="n">SequenceTagger&lt;/span>
+&lt;span class="kn">from&lt;/span> &lt;span class="nn">flair.data&lt;/span> &lt;span class="kn">import&lt;/span> &lt;span class="n">Sentence&lt;/span>
+&lt;/code>&lt;/pre>&lt;/div>&lt;/p>
+&lt;p>The book can be downloaded and read as a text file. NLTK already comes with a few Project Gutenberg books so we&amp;rsquo;ll be using one of those for convenience&lt;/p>
+&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-python" data-lang="python">&lt;span class="n">book&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">nltk&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">corpus&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">gutenberg&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">raw&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s1">&amp;#39;carroll-alice.txt&amp;#39;&lt;/span>&lt;span class="p">)&lt;/span>&lt;/code>&lt;/pre>&lt;/div>
+&lt;p>The book variable is a string that looks like this&lt;/p>
+&lt;pre>&lt;code>Alice\'s Adventures in Wonderland by Lewis Carroll 1865]\n\nCHAPTER I. Down the Rabbit-Hole\n\nAlice was beginning to get very tired of sitting by her sister on the\nbank, and of having nothing to do: once or twice she had peeped into the\nbook her sister was reading, but it had no pictures or conversations in\nit, \'and what is the use of a book ....
+&lt;/code>&lt;/pre>&lt;p>The text has to be cleaned to remove some unwanted characters
+&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-python" data-lang="python">
+&lt;span class="n">book&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">book&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">replace&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s1">&amp;#39;&lt;/span>&lt;span class="se">\n&lt;/span>&lt;span class="s1">&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="s1">&amp;#39; &amp;#39;&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;span class="n">book&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">book&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">replace&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s1">&amp;#39;&lt;/span>&lt;span class="se">\r&lt;/span>&lt;span class="s1">&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="s1">&amp;#39; &amp;#39;&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;span class="n">book&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">book&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">replace&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s1">&amp;#39;&lt;/span>&lt;span class="se">\&amp;#39;&lt;/span>&lt;span class="s1">&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="s1">&amp;#39; &amp;#39;&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/code>&lt;/pre>&lt;/div>&lt;/p>
+&lt;p>If we print book again it&amp;rsquo;ll look something like this&lt;/p>
+&lt;pre>&lt;code>[Alice s Adventures in Wonderland by Lewis Carroll 1865] CHAPTER I. Down the Rabbit-Hole Alice was beginning to get very tired of sitting by her sister on the bank, and of having nothing to do: once or twice she had peeped into the book her sister was reading, but it had no pictures or conversations in it, and what is the use of a book ...
+&lt;/code>&lt;/pre>&lt;p>Removing these characters will help us extract the character names more effectively.&lt;/p>
+&lt;p>After this the book is tokenized into sentences, the flair ner tagger is loaded and each sentence is tagged one by one. If an entity is tagged as a person, it&amp;rsquo;s stored in a separate array.&lt;/p>
+&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-python" data-lang="python">&lt;span class="c1"># Use flair named entity recognition&lt;/span>
+&lt;span class="n">tagger&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">SequenceTagger&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">load&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s1">&amp;#39;ner&amp;#39;&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;span class="c1"># Get all the names of entities tagged as people&lt;/span>
+&lt;span class="n">x&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="p">[]&lt;/span>
+&lt;span class="k">for&lt;/span> &lt;span class="n">line&lt;/span> &lt;span class="ow">in&lt;/span> &lt;span class="n">tqdm&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">sent&lt;/span>&lt;span class="p">):&lt;/span>
+&lt;span class="n">sentence&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">Sentence&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">line&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;span class="n">tagger&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">predict&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">sentence&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;span class="k">for&lt;/span> &lt;span class="n">entity&lt;/span> &lt;span class="ow">in&lt;/span> &lt;span class="n">sentence&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">to_dict&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">tag_type&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s1">&amp;#39;ner&amp;#39;&lt;/span>&lt;span class="p">)[&lt;/span>&lt;span class="s1">&amp;#39;entities&amp;#39;&lt;/span>&lt;span class="p">]:&lt;/span>
+&lt;span class="k">if&lt;/span> &lt;span class="n">entity&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="s1">&amp;#39;type&amp;#39;&lt;/span>&lt;span class="p">]&lt;/span> &lt;span class="o">==&lt;/span> &lt;span class="s1">&amp;#39;PER&amp;#39;&lt;/span>&lt;span class="p">:&lt;/span>
+&lt;span class="n">x&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">append&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">entity&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="s1">&amp;#39;text&amp;#39;&lt;/span>&lt;span class="p">])&lt;/span>&lt;/code>&lt;/pre>&lt;/div>
+&lt;p>The &lt;code>x&lt;/code> array contains all the occurences of characters mentioned in the book. Then the punctuation like commas and semicolons that might occour in the names is removed.&lt;/p>
+&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-python" data-lang="python">&lt;span class="c1"># Remove any punctuation within the names&lt;/span>
+&lt;span class="n">names&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="p">[]&lt;/span>
+&lt;span class="k">for&lt;/span> &lt;span class="n">name&lt;/span> &lt;span class="ow">in&lt;/span> &lt;span class="n">x&lt;/span>&lt;span class="p">:&lt;/span>
+&lt;span class="n">names&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">append&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">name&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">translate&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nb">str&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">maketrans&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s1">&amp;#39;&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="s1">&amp;#39;&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">string&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">punctuation&lt;/span>&lt;span class="p">)))&lt;/span>&lt;/code>&lt;/pre>&lt;/div>
+&lt;p>Let&amp;rsquo;s sort the list based on number of times the character is mentioned in the book and print it&lt;/p>
+&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-python" data-lang="python">&lt;span class="c1"># List characters by the frequency with which they are mentioned&lt;/span>
+&lt;span class="n">result&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="p">[&lt;/span>&lt;span class="n">item&lt;/span> &lt;span class="k">for&lt;/span> &lt;span class="n">items&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">c&lt;/span> &lt;span class="ow">in&lt;/span> &lt;span class="n">Counter&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">x&lt;/span>&lt;span class="p">)&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">most_common&lt;/span>&lt;span class="p">()&lt;/span>
+&lt;span class="k">for&lt;/span> &lt;span class="n">item&lt;/span> &lt;span class="ow">in&lt;/span> &lt;span class="p">[&lt;/span>&lt;span class="n">items&lt;/span>&lt;span class="p">]&lt;/span> &lt;span class="o">*&lt;/span> &lt;span class="n">c&lt;/span>&lt;span class="p">]&lt;/span>
+&lt;span class="k">print&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">Counter&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">names&lt;/span>&lt;span class="p">)&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">most_common&lt;/span>&lt;span class="p">())&lt;/span>&lt;/code>&lt;/pre>&lt;/div>
+&lt;p>The output should look something like this&lt;/p>
+&lt;pre>&lt;code>[('Alice', 346), ('Hatter', 52), ('Duchess', 28), ('Dormouse', 28), ('King', 28), ('Mouse', 21),
+('Queen', 18), ('Dinah', 13), ... ('Lory', 4), ('William', 4), ('Mary Ann', 4), ('Well', 4), ('Cat', 4)
+, ('Five', 3), ('Majesty', 3), ... ('Wow', 2), ('Treacle', 2), ('Miss', 2), ('Hush', 2), ('Yes', 2),
+....]
+&lt;/code>&lt;/pre>&lt;p>If we look at the output closely, we can see that some of the &amp;ldquo;names&amp;rdquo;, like Five, Hush, Yes, etc, don&amp;rsquo;t really seem like names of people or characters. This happens because of the way that NER works, sometimes words that are probably not names of characters can also be included in the &lt;code>name&lt;/code> list, these are generally few and can be removed manually.&lt;/p>
+&lt;p>We can also exclude characters whose names have been mentioned less than 5 times, as they aren&amp;rsquo;t likely to be important characters.&lt;/p>
+&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-python" data-lang="python">&lt;span class="n">common&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="p">[]&lt;/span>
+&lt;span class="n">main_freq&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="p">[]&lt;/span>
+&lt;span class="c1"># Manually remove words that are not character names from our list&lt;/span>
+&lt;span class="n">not_names&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="p">[&lt;/span>&lt;span class="s1">&amp;#39;Well&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="s1">&amp;#39;Ive&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="s1">&amp;#39;Five&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="s1">&amp;#39;Theyre&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="s1">&amp;#39;Dont&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="s1">&amp;#39;Wow&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="s1">&amp;#39;Ill&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="s1">&amp;#39;Miss&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="s1">&amp;#39;Hush&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="s1">&amp;#39;Yes&amp;#39;&lt;/span>&lt;span class="p">,]&lt;/span>
+&lt;span class="k">for&lt;/span> &lt;span class="n">n&lt;/span>&lt;span class="p">,&lt;/span>&lt;span class="n">c&lt;/span> &lt;span class="ow">in&lt;/span> &lt;span class="n">Counter&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">names&lt;/span>&lt;span class="p">)&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">most_common&lt;/span>&lt;span class="p">():&lt;/span>
+&lt;span class="c1"># if the character is mentioned less than 5 times, the name is not added to the main character list&lt;/span>
+&lt;span class="k">if&lt;/span> &lt;span class="n">c&lt;/span> &lt;span class="o">&amp;gt;&lt;/span> &lt;span class="mi">5&lt;/span> &lt;span class="ow">and&lt;/span> &lt;span class="n">n&lt;/span> &lt;span class="ow">not&lt;/span> &lt;span class="ow">in&lt;/span> &lt;span class="n">not_names&lt;/span>&lt;span class="p">:&lt;/span>
+&lt;span class="n">main_freq&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">append&lt;/span>&lt;span class="p">((&lt;/span>&lt;span class="n">n&lt;/span>&lt;span class="p">,&lt;/span>&lt;span class="n">c&lt;/span>&lt;span class="p">))&lt;/span>
+&lt;span class="n">common&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">append&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">n&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/code>&lt;/pre>&lt;/div>
+&lt;p>If we print the &lt;code>common&lt;/code> array, we get a list of main characters from Alice in Wonderland&lt;/p>
+&lt;pre>&lt;code>['Alice',
+'Hatter',
+'Duchess',
+'Dormouse',
+'King',
+'Mouse',
+'Queen',
+'Dinah',
+'Rabbit',
+'Gryphon',
+'Bill',
+'Hare',
+'Dodo',
+'Mock Turtle',
+'Footman']
+&lt;/code>&lt;/pre>&lt;h1 id="conclusion">Conclusion&lt;/h1>
+&lt;p>Although the method I&amp;rsquo;ve described here isn&amp;rsquo;t always 100% accurate, it generally provides a satisfactory list of main characters. This list can be useful for creating a co-occurrence matrix of character interactions, which in turn can be useful for network analysis of all the characters in the book.&lt;/p>
+&lt;p>While it&amp;rsquo;s beyond the scope of this post, the interaction network for all main characters can be explored in a future post.&lt;/p>
+&lt;!-- raw HTML omitted -->
+&lt;!-- raw HTML omitted --></description></item><item><title>Saving a Keras model to persistent storage</title><link>https://home.aveek.io/blog/post/checkpointing-keras-model/</link><pubDate>Mon, 24 Jun 2019 00:00:00 +0000</pubDate><author>aveek.s98@gmail.com (Aveek Saha)</author><guid>https://home.aveek.io/blog/post/checkpointing-keras-model/</guid><description>
+&lt;p>Learn how to save Keras models to persistent storage or your Google drive and resume training it from where you left off.&lt;/p>
+&lt;p>Learn how to save Keras models to persistent storage or your Google drive and resume training it from where you left off.&lt;/p>
+&lt;h1 id="introduction">Introduction&lt;/h1>
+&lt;p>A lot of the time deep learning models can take several hours, days or weeks to train and if the machine that it&amp;rsquo;s running on shuts down unexpectedly before training is finished, it can lead to all that work going to waste. This introduces the need for a way to save and load models so that training can be continued from a certain checkpoint.&lt;/p>
+&lt;p>Luckily Keras has got us covered with the &lt;a href="https://keras.io/callbacks/#modelcheckpoint">&lt;code>ModelCheckpoint&lt;/code>&lt;/a> callback class.&lt;/p>
+&lt;h1 id="saving-a-model">Saving a model&lt;/h1>
+&lt;p>Lets say you have a simple neural network&lt;/p>
+&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-python" data-lang="python">&lt;span class="kn">from&lt;/span> &lt;span class="nn">keras&lt;/span> &lt;span class="kn">import&lt;/span> &lt;span class="n">Sequential&lt;/span>
+&lt;span class="kn">from&lt;/span> &lt;span class="nn">keras.layers&lt;/span> &lt;span class="kn">import&lt;/span> &lt;span class="n">Dense&lt;/span>
+&lt;span class="n">classifier&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">Sequential&lt;/span>&lt;span class="p">()&lt;/span>
+&lt;span class="n">classifier&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">add&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">Dense&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="mi">10&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">activation&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s1">&amp;#39;relu&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">input_dim&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="mi">56&lt;/span>&lt;span class="p">))&lt;/span>
+&lt;span class="n">classifier&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">add&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">Dense&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="mi">10&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">activation&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s1">&amp;#39;relu&amp;#39;&lt;/span>&lt;span class="p">))&lt;/span>
+&lt;span class="n">classifier&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">add&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">Dense&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="mi">1&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">activation&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s1">&amp;#39;sigmoid&amp;#39;&lt;/span>&lt;span class="p">))&lt;/span>
+&lt;span class="n">classifier&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">compile&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">optimizer&lt;/span> &lt;span class="o">=&lt;/span>&lt;span class="s1">&amp;#39;adam&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;span class="n">loss&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s1">&amp;#39;binary_crossentropy&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">metrics&lt;/span> &lt;span class="o">=&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="s1">&amp;#39;accuracy&amp;#39;&lt;/span>&lt;span class="p">])&lt;/span>&lt;/code>&lt;/pre>&lt;/div>
+&lt;p>Before fitting the model, create a ModelCheckpoint object, we&amp;rsquo;ll go over what each of the parameters do in a minute, but for now, in this example after each epoch the model will be saved to a &lt;code>hdf5&lt;/code> file in the current working directory.&lt;/p>
+&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-python" data-lang="python">&lt;span class="kn">from&lt;/span> &lt;span class="nn">keras.callbacks&lt;/span> &lt;span class="kn">import&lt;/span> &lt;span class="n">ModelCheckpoint&lt;/span>
+&lt;span class="n">filepath&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s2">&amp;#34;./weights-{epoch:02d}-{val_acc:.3f}.hdf5&amp;#34;&lt;/span>
+&lt;span class="n">checkpoint&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">ModelCheckpoint&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">filepath&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">monitor&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s1">&amp;#39;val_acc&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;span class="n">verbose&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="mi">1&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">mode&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s1">&amp;#39;max&amp;#39;&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;span class="n">callbacks_list&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="p">[&lt;/span>&lt;span class="n">checkpoint&lt;/span>&lt;span class="p">]&lt;/span>&lt;/code>&lt;/pre>&lt;/div>
+&lt;p>Now pass the callback list while fitting the model&lt;/p>
+&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-python" data-lang="python">&lt;span class="n">classifier&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">fit&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">X_train&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">Y_train&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">batch_size&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="mi">100&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">epochs&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="mi">20&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;span class="n">validation_data&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">X_validation&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">Y_validation&lt;/span>&lt;span class="p">),&lt;/span>
+&lt;span class="n">callbacks&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="n">callbacks_list&lt;/span>&lt;span class="p">)&lt;/span>&lt;/code>&lt;/pre>&lt;/div>
+&lt;p>Once the model finishes running, you&amp;rsquo;ll be able to see 20 &lt;code>hdf5&lt;/code> files labeled by their epoch number and validation accuracy in your working directory.&lt;/p>
+&lt;h1 id="parameters">Parameters&lt;/h1>
+&lt;p>There are several parameters that can be passed to ModelCheckpoint, we&amp;rsquo;ll go over them here&lt;/p>
+&lt;ul>
+&lt;li>&lt;strong>filepath&lt;/strong>: a string, the path where you want to save the model file.&lt;/li>
+&lt;li>&lt;strong>monitor&lt;/strong>: quantity to monitor. Eg: val_acc, acc, val_loss, loss, etc.&lt;/li>
+&lt;li>&lt;strong>verbose&lt;/strong>: verbosity mode, 0 or 1.&lt;/li>
+&lt;li>&lt;strong>save_best_only&lt;/strong>: if it&amp;rsquo;s True, then the model will only be saved if the new model improves over the last saved model in the monitored quantity.&lt;/li>
+&lt;li>&lt;strong>save_weights_only&lt;/strong>: if True, then only the model&amp;rsquo;s weights will be saved, else the full model is saved (including the optimizer state).&lt;/li>
+&lt;li>&lt;strong>mode&lt;/strong>: one of {auto, min, max}. If =True, the decision to overwrite the current save file is made based on either the maximization or the minimization of the monitored quantity. For val_acc, this should be max, for val_loss this should be min, etc. In auto mode, the direction is automatically inferred from the name of the monitored quantity.&lt;/li>
+&lt;li>&lt;strong>period&lt;/strong>: number of epochs between checkpoints.&lt;/li>
+&lt;/ul>
+&lt;h1 id="save-model-to-google-drive-on-colab-notebooks">Save model to Google Drive on Colab notebooks&lt;/h1>
+&lt;p>Google&amp;rsquo;s Colab notebooks are a great way to start prototyping and creating neural networks and machine learning models. If you choose a GPU runtime, you are given a free GPU that can greatly reduce your model training time.&lt;/p>
+&lt;p>As great is Colab is, it does have some caveats&lt;/p>
+&lt;ol>
+&lt;li>If you are disconnected from the internet or close the window for more than 90 minutes, the runtime automatically shuts down or gets recycled.&lt;/li>
+&lt;/ol>
+&lt;ul>
+&lt;li>You are given a maximum of 12 hours at a time on the VM instance.&lt;/li>
+&lt;/ul>
+&lt;p>In both these cases you may be able to reconnect to the instance but all your local variables will be lost.&lt;/p>
+&lt;p>Saving the model to Google Drive after every epoch makes it easy to just restart training from the last epoch that was saved.&lt;/p>
+&lt;p>Google makes it super easy to do this on Colab. First we have to allow Colab to access Google Drive.&lt;/p>
+&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-python" data-lang="python">&lt;span class="kn">from&lt;/span> &lt;span class="nn">google.colab&lt;/span> &lt;span class="kn">import&lt;/span> &lt;span class="n">drive&lt;/span>
+&lt;span class="n">drive&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">mount&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s1">&amp;#39;/content/gdrive&amp;#39;&lt;/span>&lt;span class="p">)&lt;/span>&lt;/code>&lt;/pre>&lt;/div>
+&lt;p>When you run this, it generates a link, click on it. Select the google account whose drive you want to mount. Then it takes you to a new tab that says &lt;code>Google Drive File Stream wants to access your Google Account&lt;/code>. On clicking &lt;code>allow&lt;/code> it generates an authorization code that you have to paste in a text box that appears bellow the code you just ran. Paste the code and hit &lt;code>enter&lt;/code>.&lt;/p>
+&lt;p>On refreshing your file browser, you should see a folder called &lt;code>gdrive&lt;/code>, that&amp;rsquo;s the mounted drive folder.&lt;/p>
+&lt;p>To save it to your drive, the code is almost the same as the example in the previous section, but the filename should be changed, so that the model is stored in drive.&lt;/p>
+&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-python" data-lang="python">&lt;span class="c1"># Create a folder in your drive called model before running this&lt;/span>
+&lt;span class="n">filepath&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s2">&amp;#34;/content/gdrive/My Drive/model/weights-{epoch:02d}-{val_acc:.3f}.hdf5&amp;#34;&lt;/span>&lt;/code>&lt;/pre>&lt;/div>
+&lt;h1 id="resume-training-from-a-saved-model">Resume training from a saved model&lt;/h1>
+&lt;p>If you saved the entire model (not just the weights) then the model can continue training from wherever it stopped.&lt;/p>
+&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-python" data-lang="python">&lt;span class="kn">from&lt;/span> &lt;span class="nn">keras.models&lt;/span> &lt;span class="kn">import&lt;/span> &lt;span class="n">load_model&lt;/span>
+&lt;span class="n">classifier&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">load_model&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s2">&amp;#34;/content/gdrive/My Drive/model/weights-15-0.815.hdf5&amp;#34;&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;span class="n">classifier&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">fit&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">X_train&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">Y_train&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">batch_size&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="mi">100&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">epochs&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="mi">20&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;span class="n">validation_data&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">X_validation&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">Y_validation&lt;/span>&lt;span class="p">),&lt;/span>
+&lt;span class="n">callbacks&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="n">callbacks_list&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;span class="n">initial_epoch&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="mi">15&lt;/span>&lt;span class="p">)&lt;/span>&lt;/code>&lt;/pre>&lt;/div>
+&lt;!-- raw HTML omitted -->
+&lt;!-- raw HTML omitted --></description></item><item><title>Web Scraping with Python</title><link>https://home.aveek.io/blog/post/web-scraping-with-python/</link><pubDate>Mon, 13 May 2019 00:00:00 +0000</pubDate><author>aveek.s98@gmail.com (Aveek Saha)</author><guid>https://home.aveek.io/blog/post/web-scraping-with-python/</guid><description>
+&lt;p>Code for this tutorial can be found on &lt;a href="https://gist.github.com/Aveek-Saha/860464a7b52c5bab781f870dcb73ed57">&lt;code>Github&lt;/code>&lt;/a>&lt;/p>
+&lt;p>Code for this tutorial can be found on &lt;a href="https://gist.github.com/Aveek-Saha/860464a7b52c5bab781f870dcb73ed57">&lt;code>Github&lt;/code>&lt;/a>&lt;/p>
+&lt;h1 id="introduction">Introduction&lt;/h1>
+&lt;p>Web scraping is a useful tool for extracting data from websites, especially those that don&amp;rsquo;t provide an API. In this post, I&amp;rsquo;ll show you how you can use web scraping to generate a dataset from a webpage.&lt;/p>
+&lt;p>For this example we will be using a website called &lt;a href="https://trendogate.com/place/23424977">trendogate&lt;/a> which is a website that displays trending twitter hashtags on a given day based on region. Our goal will be to retrieve hashtags that are currently trending in the US.&lt;/p>
+&lt;p>To do this we will primarily be using two libraries:&lt;/p>
+&lt;h2 id="1-urllib">1. Urllib&lt;/h2>
+&lt;blockquote>
+&lt;p>Urllib is a Python module that can be used for opening URLs. It defines functions and classes to help in URL actions. With Python you can also access and retrieve data from the internet like XML, HTML, JSON, etc.&lt;/p>
+&lt;/blockquote>
+&lt;p>Urllib is going to help us retrieve the web page we want to scrape.&lt;/p>
+&lt;p>To install Urllib-&lt;/p>
+&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-bash" data-lang="bash">pip install urllib
+&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="2-beautiful-soup">2. Beautiful Soup&lt;/h2>
+&lt;blockquote>
+&lt;p>Beautiful Soup is a Python package for parsing HTML and XML documents. It creates a parse tree for parsed pages that can be used to extract data from HTML, which is useful for web scraping&lt;/p>
+&lt;/blockquote>
+&lt;p>Once we have the page we need from Urllib, we&amp;rsquo;re going to use Beautiful Soup to create a parse tree and extract the information we need from the page.&lt;/p>
+&lt;p>To install Beautiful Soup&lt;/p>
+&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-bash" data-lang="bash">pip install BeautifulSoup4
+&lt;/code>&lt;/pre>&lt;/div>&lt;!-- raw HTML omitted -->
+&lt;h1 id="analysing-the-web-page">Analysing the web page&lt;/h1>
+&lt;p>To scrape a webpage you need to be familiar with the structure of the HTML tags in that page. So right click on the page you want to scrape and select Inspect.&lt;/p>
+&lt;p>The &lt;a href="https://trendogate.com/place/23424977">trendogate&lt;/a> webpage looks like this:&lt;/p>
+&lt;p>&lt;img src="https://home.aveek.io/blog/scraping/scraping_site.png" alt="Trendogate">&lt;/p>
+&lt;p>We are interested in the trending today section. If we inspect it we can see the HTML structure.&lt;/p>
+&lt;p>&lt;img src="https://home.aveek.io/blog/scraping/scrape_html_tag.png" alt="HTML tags">&lt;/p>
+&lt;p>Today&amp;rsquo;s trending hashtags are in an unordered list of class &lt;code>list-group&lt;/code> that looks something like this:
+&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-html" data-lang="html">&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">ul&lt;/span> &lt;span class="na">class&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;list-group&amp;#34;&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">li&lt;/span> &lt;span class="na">class&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;list-group-item&amp;#34;&lt;/span>&lt;span class="p">&amp;gt;&amp;lt;&lt;/span>&lt;span class="nt">a&lt;/span> &lt;span class="na">href&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;/trend/79334795&amp;#34;&lt;/span>&lt;span class="p">&amp;gt;&lt;/span> #TriviaTuesday&lt;span class="p">&amp;lt;/&lt;/span>&lt;span class="nt">a&lt;/span>&lt;span class="p">&amp;gt;&amp;lt;/&lt;/span>&lt;span class="nt">li&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">li&lt;/span> &lt;span class="na">class&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;list-group-item&amp;#34;&lt;/span>&lt;span class="p">&amp;gt;&amp;lt;&lt;/span>&lt;span class="nt">a&lt;/span> &lt;span class="na">href&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;/trend/79334794&amp;#34;&lt;/span>&lt;span class="p">&amp;gt;&lt;/span> #IA02&lt;span class="p">&amp;lt;/&lt;/span>&lt;span class="nt">a&lt;/span>&lt;span class="p">&amp;gt;&amp;lt;/&lt;/span>&lt;span class="nt">li&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">li&lt;/span> &lt;span class="na">class&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;list-group-item&amp;#34;&lt;/span>&lt;span class="p">&amp;gt;&amp;lt;&lt;/span>&lt;span class="nt">a&lt;/span> &lt;span class="na">href&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;/trend/79334793&amp;#34;&lt;/span>&lt;span class="p">&amp;gt;&lt;/span> #livelocaldigital&lt;span class="p">&amp;lt;/&lt;/span>&lt;span class="nt">a&lt;/span>&lt;span class="p">&amp;gt;&amp;lt;/&lt;/span>&lt;span class="nt">li&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">li&lt;/span> &lt;span class="na">class&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;list-group-item&amp;#34;&lt;/span>&lt;span class="p">&amp;gt;&amp;lt;&lt;/span>&lt;span class="nt">a&lt;/span> &lt;span class="na">href&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;/trend/79334792&amp;#34;&lt;/span>&lt;span class="p">&amp;gt;&lt;/span> #MLW19&lt;span class="p">&amp;lt;/&lt;/span>&lt;span class="nt">a&lt;/span>&lt;span class="p">&amp;gt;&amp;lt;/&lt;/span>&lt;span class="nt">li&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">li&lt;/span> &lt;span class="na">class&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;list-group-item&amp;#34;&lt;/span>&lt;span class="p">&amp;gt;&amp;lt;&lt;/span>&lt;span class="nt">a&lt;/span> &lt;span class="na">href&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;/trend/79334791&amp;#34;&lt;/span>&lt;span class="p">&amp;gt;&lt;/span> #TuesdayTip&lt;span class="p">&amp;lt;/&lt;/span>&lt;span class="nt">a&lt;/span>&lt;span class="p">&amp;gt;&amp;lt;/&lt;/span>&lt;span class="nt">li&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">li&lt;/span> &lt;span class="na">class&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;list-group-item&amp;#34;&lt;/span>&lt;span class="p">&amp;gt;&amp;lt;&lt;/span>&lt;span class="nt">a&lt;/span> &lt;span class="na">href&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;/trend/79334790&amp;#34;&lt;/span>&lt;span class="p">&amp;gt;&lt;/span> #VoteCox&lt;span class="p">&amp;lt;/&lt;/span>&lt;span class="nt">a&lt;/span>&lt;span class="p">&amp;gt;&amp;lt;/&lt;/span>&lt;span class="nt">li&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">li&lt;/span> &lt;span class="na">class&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;list-group-item&amp;#34;&lt;/span>&lt;span class="p">&amp;gt;&amp;lt;&lt;/span>&lt;span class="nt">a&lt;/span> &lt;span class="na">href&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;/trend/79334789&amp;#34;&lt;/span>&lt;span class="p">&amp;gt;&lt;/span> #OnePlus7Series&lt;span class="p">&amp;lt;/&lt;/span>&lt;span class="nt">a&lt;/span>&lt;span class="p">&amp;gt;&amp;lt;/&lt;/span>&lt;span class="nt">li&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">li&lt;/span> &lt;span class="na">class&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;list-group-item&amp;#34;&lt;/span>&lt;span class="p">&amp;gt;&amp;lt;&lt;/span>&lt;span class="nt">a&lt;/span> &lt;span class="na">href&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;/trend/79334788&amp;#34;&lt;/span>&lt;span class="p">&amp;gt;&lt;/span> #CelebrateWomen&lt;span class="p">&amp;lt;/&lt;/span>&lt;span class="nt">a&lt;/span>&lt;span class="p">&amp;gt;&amp;lt;/&lt;/span>&lt;span class="nt">li&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">li&lt;/span> &lt;span class="na">class&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;list-group-item&amp;#34;&lt;/span>&lt;span class="p">&amp;gt;&amp;lt;&lt;/span>&lt;span class="nt">a&lt;/span> &lt;span class="na">href&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;/trend/79334787&amp;#34;&lt;/span>&lt;span class="p">&amp;gt;&lt;/span> #FelizMartes&lt;span class="p">&amp;lt;/&lt;/span>&lt;span class="nt">a&lt;/span>&lt;span class="p">&amp;gt;&amp;lt;/&lt;/span>&lt;span class="nt">li&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">li&lt;/span> &lt;span class="na">class&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;list-group-item&amp;#34;&lt;/span>&lt;span class="p">&amp;gt;&amp;lt;&lt;/span>&lt;span class="nt">a&lt;/span> &lt;span class="na">href&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;/trend/79334786&amp;#34;&lt;/span>&lt;span class="p">&amp;gt;&lt;/span> #PESummit&lt;span class="p">&amp;lt;/&lt;/span>&lt;span class="nt">a&lt;/span>&lt;span class="p">&amp;gt;&amp;lt;/&lt;/span>&lt;span class="nt">li&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;span class="p">&amp;lt;/&lt;/span>&lt;span class="nt">ul&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;/p>
+&lt;!-- raw HTML omitted -->
+&lt;p>First we import the libraries we&amp;rsquo;ll need&lt;/p>
+&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-python" data-lang="python">&lt;span class="kn">from&lt;/span> &lt;span class="nn">bs4&lt;/span> &lt;span class="kn">import&lt;/span> &lt;span class="n">BeautifulSoup&lt;/span>
+&lt;span class="kn">import&lt;/span> &lt;span class="nn">urllib&lt;/span>&lt;/code>&lt;/pre>&lt;/div>
+&lt;p>Then we&amp;rsquo;ll use &lt;code>urllib&lt;/code> to get the webpage. Read more about &lt;a href="https://docs.python.org/3/library/urllib.html">urllib&lt;/a>&lt;/p>
+&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-python" data-lang="python">&lt;span class="n">URL&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s2">&amp;#34;https://trendogate.com/place/23424977&amp;#34;&lt;/span>
+&lt;span class="c1"># Open the URL&lt;/span>
+&lt;span class="n">page&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">urllib&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">request&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">Request&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">URL&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;span class="n">result&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">urllib&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">request&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">urlopen&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">page&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;span class="c1"># Store the HTML page in a variable&lt;/span>
+&lt;span class="n">resulttext&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">result&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">read&lt;/span>&lt;span class="p">()&lt;/span>
+&lt;/code>&lt;/pre>&lt;/div>
+&lt;p>Now we&amp;rsquo;ll create a &lt;code>BeautifulSoup&lt;/code> object from the HTML page we just retrieved. Read more about &lt;a href="https://www.crummy.com/software/BeautifulSoup/bs4/doc/">BeautifulSoup&lt;/a>&lt;/p>
+&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-python" data-lang="python">&lt;span class="c1"># Creates a nested data structure&lt;/span>
+&lt;span class="n">soup&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">BeautifulSoup&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">resulttext&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="s1">&amp;#39;html.parser&amp;#39;&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;span class="c1"># Since we are interested only in an element with class &amp;#34;list-group&amp;#34;&lt;/span>
+&lt;span class="c1"># We will search for all elements with that class in the soup&lt;/span>
+&lt;span class="n">soup&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">soup&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">find_all&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">class_&lt;/span>&lt;span class="o">=&lt;/span> &lt;span class="s2">&amp;#34;list-group&amp;#34;&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;span class="c1"># Soup now contains an array of all elements with the class &amp;#34;list-group&amp;#34;&lt;/span>
+&lt;span class="c1"># Since the Trending today list is the first on the page, it&amp;#39;s index is 0&lt;/span>
+&lt;span class="n">trending_list&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">soup&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="mi">0&lt;/span>&lt;span class="p">]&lt;/span>
+&lt;span class="c1"># Now we will iterate through the elements of the &amp;lt;ul&amp;gt; &lt;/span>
+&lt;span class="c1"># &amp;lt;ul&amp;gt; has &amp;lt;li&amp;gt; tags nested inside&lt;/span>
+&lt;span class="n">trending_tags&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="p">[]&lt;/span>
+&lt;span class="k">for&lt;/span> &lt;span class="n">li&lt;/span> &lt;span class="ow">in&lt;/span> &lt;span class="n">trending_list&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">contents&lt;/span>&lt;span class="p">:&lt;/span>
+&lt;span class="c1"># There is an &amp;lt;a&amp;gt; tag nested in each &amp;lt;li&amp;gt;&lt;/span>
+&lt;span class="n">a&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">li&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">contents&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="mi">0&lt;/span>&lt;span class="p">]&lt;/span>
+&lt;span class="c1"># The contents of &amp;#39;a&amp;#39; is just the text inside the tag&lt;/span>
+&lt;span class="n">tag&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">a&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">contents&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="mi">0&lt;/span>&lt;span class="p">]&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">strip&lt;/span>&lt;span class="p">()&lt;/span>
+&lt;span class="n">trending_tags&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">append&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">tag&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;span class="k">print&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">trending_tags&lt;/span>&lt;span class="p">)&lt;/span>&lt;/code>&lt;/pre>&lt;/div>
+&lt;p>Now we have scraped all of today&amp;rsquo;s trending hashtags from the website.&lt;/p>
+&lt;h1 id="conclusion">Conclusion&lt;/h1>
+&lt;p>This is just one of the ways that you can scrape information from websites. Another method is to use something like &lt;a href="https://www.selenium.dev/">Selenium&lt;/a> that allows you to emulate a browser instance and automate tasks with code.&lt;/p>
+&lt;p>Here&amp;rsquo;s an article you can refer to, if you want to get started with Selenium: &lt;a href="https://www.toptal.com/python/web-scraping-with-python">https://www.toptal.com/python/web-scraping-with-python&lt;/a>&lt;/p>
+&lt;!-- raw HTML omitted -->
+&lt;!-- raw HTML omitted --></description></item></channel></rss>

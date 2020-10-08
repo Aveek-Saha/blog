@@ -1,1 +1,91 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>study guide on Aveek's Blog</title><link>https://home.aveek.io/blog/tags/study-guide/</link><description>Recent content in study guide on Aveek's Blog</description><generator>Hugo -- gohugo.io</generator><managingEditor>aveek.s98@gmail.com (Aveek Saha)</managingEditor><webMaster>aveek.s98@gmail.com (Aveek Saha)</webMaster><lastBuildDate>Wed, 30 Sep 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://home.aveek.io/blog/tags/study-guide/index.xml" rel="self" type="application/rss+xml"/><item><title>How to prepare for the TensorFlow Developer Certificate Exam</title><link>https://home.aveek.io/blog/post/tensorflow-developer-certificate/</link><pubDate>Wed, 30 Sep 2020 00:00:00 +0000</pubDate><author>aveek.s98@gmail.com (Aveek Saha)</author><guid>https://home.aveek.io/blog/post/tensorflow-developer-certificate/</guid><description>&lt;p>A brief summary of what materials to study from and some pointers to prepare for the TensorFlow Developer Certificate Exam.&lt;/p></description></item><item><title>A study guide for the GRE</title><link>https://home.aveek.io/blog/post/gre-study-guide/</link><pubDate>Sun, 15 Sep 2019 00:00:00 +0000</pubDate><author>aveek.s98@gmail.com (Aveek Saha)</author><guid>https://home.aveek.io/blog/post/gre-study-guide/</guid><description>&lt;p>A brief summary of what materials to study from and a list of free practice tests to prepare for the GRE.&lt;/p></description></item></channel></rss>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>study guide on Aveek's Blog</title><link>https://home.aveek.io/blog/tags/study-guide/</link><description>Recent content in study guide on Aveek's Blog</description><generator>Hugo -- gohugo.io</generator><managingEditor>aveek.s98@gmail.com (Aveek Saha)</managingEditor><webMaster>aveek.s98@gmail.com (Aveek Saha)</webMaster><lastBuildDate>Wed, 30 Sep 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://home.aveek.io/blog/tags/study-guide/index.xml" rel="self" type="application/rss+xml"/><item><title>How to prepare for the TensorFlow Developer Certificate Exam</title><link>https://home.aveek.io/blog/post/tensorflow-developer-certificate/</link><pubDate>Wed, 30 Sep 2020 00:00:00 +0000</pubDate><author>aveek.s98@gmail.com (Aveek Saha)</author><guid>https://home.aveek.io/blog/post/tensorflow-developer-certificate/</guid><description>
+&lt;p>A brief summary of what materials to study from and some pointers to prepare for the TensorFlow Developer Certificate Exam.&lt;/p>
+&lt;p>A brief summary of what materials to study from and some pointers to prepare for the TensorFlow Developer Certificate Exam.&lt;/p>
+&lt;h1 id="introduction">Introduction&lt;/h1>
+&lt;p>In this guide I&amp;rsquo;ll be going over what the TensorFlow Developer Certificate is, why you might want to give the exam, what you need to study to do well on the test and finally some pointers for when you&amp;rsquo;re giving the test.&lt;/p>
+&lt;h1 id="what-is-it">What is it?&lt;/h1>
+&lt;p>The TensorFlow Developer Certificate is an exam that tests your proficiency in solving machine learning and deep learning problems using TensorFlow in python.&lt;/p>
+&lt;p>This is a coding based exam and the certificate you receive will be valid for 3 years from the date of issue. Apart from the certificate, your name will also be added to the &lt;a href="https://www.tensorflow.org/certificate-network">TensorFlow Certificate Network&lt;/a>, where you can see other developers who have cleared the test. You can also search for specific developers from this page, or narrow it down by location.&lt;/p>
+&lt;h1 id="why-should-i-get-this-certification">Why should I get this certification?&lt;/h1>
+&lt;p>The certification is basically a sign to potential employers or clients that you are able to formulate and solve ML or DL problems with TensorFlow. If you&amp;rsquo;re either looking to get into Artificial intelligence or switch roles to a ML engineer this might be a worthwhile endeavor to pursue.&lt;/p>
+&lt;p>However there are a few things to keep in mind before you decide to pursue this certification.&lt;/p>
+&lt;ul>
+&lt;li>This is a relatively new certification, at the time I&amp;rsquo;m writing this, and as such it&amp;rsquo;s importance in the industry might not be very high yet.&lt;/li>
+&lt;li>It&amp;rsquo;s not cheap. At 100 USD it&amp;rsquo;s fairly expensive and might be inaccessible to a lot of people. There might be more cost effective ways to display your competence in TensorFlow.&lt;/li>
+&lt;li>This certification does not test Machine learning and deep learning fundamentals, only your competence in implementing these concepts using TensorFlow.&lt;/li>
+&lt;/ul>
+&lt;p>If you&amp;rsquo;re okay with the caveats I&amp;rsquo;ve listed above and you want to build your profile, then it&amp;rsquo;s a great certification to have. I personally wrote the exam because I&amp;rsquo;m always looking for a new challenge and I&amp;rsquo;m passionate about Machine learning and its applications.&lt;/p>
+&lt;p>This is one of the only machine learning specific professional certifications around, and if you&amp;rsquo;re going to be using TensorFlow might as well get your certification from the people that created it.&lt;/p>
+&lt;h1 id="how-should-i-prepare">How should I prepare?&lt;/h1>
+&lt;p>The TensorFlow Developer Certificate tests your ability to use TensorFlow to solve a subset of machine learning problems. For the extensive list of topics check the &lt;a href="https://www.tensorflow.org/site-assets/downloads/marketing/cert/TF_Certificate_Candidate_Handbook.pdf">handbook&lt;/a>&lt;/p>
+&lt;p>To summarise, there are 4 main topics covered in the exam:&lt;/p>
+&lt;ol>
+&lt;li>Tensorflow basics&lt;/li>
+&lt;li>Image classification&lt;/li>
+&lt;li>Natural language processing&lt;/li>
+&lt;li>Time series and sequences&lt;/li>
+&lt;/ol>
+&lt;p>Now depending on how familiar you are with Neural networks and deep learning your approach to the test will vary. For both cases you&amp;rsquo;ll need a healthy dose of reading mixed with coding. Ideally you want to be implementing as many concepts you read about using code as possible.&lt;/p>
+&lt;h3 id="1-already-familiar-with-deep-learning-concepts">1. Already familiar with deep learning concepts&lt;/h3>
+&lt;p>Start with the DeepLearning.AI TensorFlow Developer specialization on Coursera. The course is taught by Laurence Moroney and covers basically all the details you&amp;rsquo;ll need for the exam over the 4 course specialization&lt;/p>
+&lt;p>Alternatively you can use Intro to TensorFlow for Deep Learning on Udemy which is free and has similar course content.&lt;/p>
+&lt;p>A useful textbook to refer to for this is Hands-On Machine Learning with Scikit-Learn, Keras, and TensorFlow, 2nd Edition. The second edition is important because it is updated for tensorflow 2.x. Only the second half of the book is useful, i.e, Part II.&lt;/p>
+&lt;p>You can find an early release of the 2nd Edition of the textbook &lt;a href="https://www.knowledgeisle.com/wp-content/uploads/2019/12/2-Aur%C3%A9lien-G%C3%A9ron-Hands-On-Machine-Learning-with-Scikit-Learn-Keras-and-Tensorflow_-Concepts-Tools-and-Techniques-to-Build-Intelligent-Systems-O%E2%80%99Reilly-Media-2019.pdf">here&lt;/a>&lt;/p>
+&lt;h3 id="2-complete-beginner-to-deep-learning">2. Complete beginner to deep learning&lt;/h3>
+&lt;p>If you are a complete novice to this field I&amp;rsquo;d recommend you start off with the fundamentals and mathematics behind deep learning before diving into TensorFlow. A good place to begin is the Deep Learning Specialization from deeplearning.ai on Coursera.&lt;/p>
+&lt;p>Another great resource is the Introduction to Deep Learning course from MIT, which you can find at &lt;a href="http://introtodeeplearning.com/">http://introtodeeplearning.com/&lt;/a>. Keep in mind that only the first few courses are required for the topics tested in this exam.&lt;/p>
+&lt;p>After this you can go through the materials I&amp;rsquo;ve mentioned in #1&lt;/p>
+&lt;h1 id="test-environment">Test Environment&lt;/h1>
+&lt;p>The test has to be taken on the PyCharm IDE and will require a specific version of Python to be installed. If you&amp;rsquo;re new to PyCharm like I was, I&amp;rsquo;d recommend you spend some time getting used to the layout of the editor. You can watch the videos at &lt;a href="https://www.jetbrains.com/pycharm/learning-center/">https://www.jetbrains.com/pycharm/learning-center/&lt;/a> in order to get familiarise yourself with the layout and features.&lt;/p>
+&lt;p>For specific instructuions on how to set up the environment check here &lt;a href="https://www.tensorflow.org/extras/cert/Setting_Up_TF_Developer_Certificate_Exam.pdf">https://www.tensorflow.org/extras/cert/Setting_Up_TF_Developer_Certificate_Exam.pdf&lt;/a>&lt;/p>
+&lt;h1 id="test-day-pointers">Test day pointers&lt;/h1>
+&lt;p>The test is 5 hours long and cannot be paused once it&amp;rsquo;s been started. I cannot give away exactly what&amp;rsquo;s asked in the exam because that would be cheating, but I can give some tips.&lt;/p>
+&lt;p>The exam can be comfortably finished in around 3 hours, this is how long it took me. Your test experience may vary based on how familiar you are with the IDE, Python and TensorFlow. After each question, you will have to submit your model for scoring and you need to be connected to the internet for this. The scores are out of 5 for each and not all questions have the same weightage, harder questions are given higher priority. You will be able to see how much you scored out of 5 once you submit the model.&lt;/p>
+&lt;p>Most of the models can be trained within the allotted time using a fairly modern CPU, if training is taking too long, you can always just train the model in Colab, and then download the model for submission.&lt;/p>
+&lt;h1 id="conclusion">Conclusion&lt;/h1>
+&lt;p>If you go through the materials I&amp;rsquo;ve listed above and practice coding the concepts regularly you should be able to sail through this test. I&amp;rsquo;ve purposely not mentioned a time frame for preparation because it&amp;rsquo;ll vary wildly based on your learning ability and previous experience in this field.&lt;/p>
+&lt;p>Good luck and happy testing!&lt;/p></description></item><item><title>A study guide for the GRE</title><link>https://home.aveek.io/blog/post/gre-study-guide/</link><pubDate>Sun, 15 Sep 2019 00:00:00 +0000</pubDate><author>aveek.s98@gmail.com (Aveek Saha)</author><guid>https://home.aveek.io/blog/post/gre-study-guide/</guid><description>
+&lt;p>A brief summary of what materials to study from and a list of free practice tests to prepare for the GRE.&lt;/p>
+&lt;p>A brief summary of what materials to study from and a list of free practice tests to prepare for the GRE.&lt;/p>
+&lt;h1 id="introduction">Introduction&lt;/h1>
+&lt;p>This may seem as a deviation from my usual tech content, but I recently wrote the GRE and I thought I&amp;rsquo;d share my study strategy here.&lt;/p>
+&lt;p>The GRE is a standardised test conducted by ETS (Educational Testing Services). GRE scores are accepted by most of the top graduate level schools for masters degree programs worldwide. Below you&amp;rsquo;ll find a guide on how to tackle each section and a list of practice tests you can take to measure your progress and identify weaknesses.&lt;/p>
+&lt;p>To find out more about the GRE visit the &lt;a href="https://www.ets.org/gre/revised_general/about/">&lt;code>ETS website&lt;/code>&lt;/a>&lt;/p>
+&lt;h1 id="section-wise-plan">Section wise plan&lt;/h1>
+&lt;h2 id="1-quantitative-reasoning">1. Quantitative Reasoning&lt;/h2>
+&lt;p>For Quantitative Reasoning the &lt;code>The 5 lb. Book of GRE Practice Problems by Manhattan Prep&lt;/code> has a chapter on every topic that you&amp;rsquo;ll find on the GRE. Each chapter has multiple problems covering all kinds of questions on that topic, along with different question formats you might encounter in your actual test. The book can be found as a PDF online, but try to buy it if you can.&lt;/p>
+&lt;p>Apart from this there are timed practice questions by &lt;a href="http://www.mhpracticeplus.com/tests/GRE2016/index.html">&lt;code>McGraw-Hill&lt;/code>&lt;/a>. These are available in sets of 20 questions each, just like the actual GRE. This can be a good way to practice time management for the final test.&lt;/p>
+&lt;h2 id="2-verbal-reasoning">2. Verbal Reasoning&lt;/h2>
+&lt;p>For vocabulary building, &lt;a href="https://gre.magoosh.com/flashcards/vocabulary/decks">&lt;code>Magoosh GRE Vocabulary Flashcards&lt;/code>&lt;/a> have around a 1000 words that are separated into categories based on their difficulty and frequency of occourance in the GRE. There are also companion apps for both iOS and Android so you can create an account and sync your progress across devices.&lt;/p>
+&lt;p>Another collection of common GRE words is &lt;a href="https://home.aveek.io/blog/gre/Barrons-333-High-Freq-Words-With-Meanings.pdf">&lt;code>Barrons 333 High Freq Words With Meanings&lt;/code>&lt;/a>&lt;/p>
+&lt;p>For the reading comprehension questions, there are YouTube videos on the strategy for tackling them, but other than that they only way to get a hang of RCs is through practice, either from the &lt;code>The 5 lb. Book&lt;/code> or the &lt;a href="http://www.mhpracticeplus.com/tests/GRE2016/index.html">&lt;code>McGraw-Hill&lt;/code>&lt;/a> timed practice.&lt;/p>
+&lt;h2 id="3-analytical-writing-assessment-awa">3. Analytical Writing Assessment (AWA)&lt;/h2>
+&lt;p>The AWA has one &amp;ldquo;Analyze an Issue&amp;rdquo; task and one &amp;ldquo;Analyze an Argument&amp;rdquo; task, you can find a sample answer for each writing task, read these to get an idea of what kind of points the evaluators are looking for when grading your essay.&lt;/p>
+&lt;h3 id="sample-responses">Sample responses&lt;/h3>
+&lt;ul>
+&lt;li>&lt;a href="https://www.ets.org/gre/revised_general/prepare/analytical_writing/issue/sample_responses">&lt;code>Analyse an Issue&lt;/code>&lt;/a>&lt;/li>
+&lt;li>&lt;a href="https://www.ets.org/gre/revised_general/prepare/analytical_writing/argument/sample_responses">&lt;code>Analyse an Arguement&lt;/code>&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;p>After that to practice, you can look at the entire pool of possible topics for both the tasks, pick a topic, time yourself for 30 minutes, and start writing.&lt;/p>
+&lt;h3 id="topic-pool">Topic pool&lt;/h3>
+&lt;ul>
+&lt;li>&lt;a href="https://www.ets.org/gre/revised_general/prepare/analytical_writing/argument/pool">&lt;code>Analyse an Issue&lt;/code>&lt;/a>&lt;/li>
+&lt;li>&lt;a href="https://www.ets.org/gre/revised_general/prepare/analytical_writing/argument/pool">&lt;code>Analyse an Arguement&lt;/code>&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;p>Generally the AWA section is given less importance during admissions so more time should be spent on Verbal and Quantitative Reasoning practice.&lt;/p>
+&lt;h1 id="free-practice-tests">Free practice tests&lt;/h1>
+&lt;p>Before you start preparing for the GRE you should take a diagnostic practice test to see what areas you need to pay more attention to. Then depending on the amount of time you have to prepare before your GRE, space out the remaining practice tests so that you can regularly keep track of your progress and see if your study is effective.&lt;/p>
+&lt;p>Also use these practice tests to become familiar with the rules and user interface as the actual test will have similar rules and UI to the ones you encounter in these mock tests.&lt;/p>
+&lt;h2 id="ets-powerprep-practice-tests">ETS PowerPrep Practice tests&lt;/h2>
+&lt;p>ETS provides 2 free full-length practice tests and these are probably the most accurate evaluation of your GRE preparation. In fact it&amp;rsquo;s so accurate that generally your actual GRE score won&amp;rsquo;t differ much from your score on these tests.&lt;/p>
+&lt;p>I&amp;rsquo;d recommend taking these tests towards the end of your preparation, so that they&amp;rsquo;re as representative of your real GRE performance as possible.
+You can find out more about them here &lt;a href="https://www.ets.org/gre/revised_general/prepare/powerprep/">&lt;code>ETS PowerPrep Practice Tests&lt;/code>&lt;/a>&lt;/p>
+&lt;h2 id="some-other-practice-tests">Some other practice tests&lt;/h2>
+&lt;p>Here are a few other full-length tests you can take for free, in no particular order&lt;/p>
+&lt;h3 id="princeton-reviewhttpswwwprincetonreviewcomgradfree-gre-practice-test">&lt;a href="https://www.princetonreview.com/grad/free-gre-practice-test">&lt;code>Princeton Review&lt;/code>&lt;/a>&lt;/h3>
+&lt;h3 id="manhattan-prephttpswwwmanhattanprepcomgrefree-gre-practice-test">&lt;a href="https://www.manhattanprep.com/gre/free-gre-practice-test/">&lt;code>Manhattan Prep&lt;/code>&lt;/a>&lt;/h3>
+&lt;h3 id="crunchprephttpsgrecrunchprepcomteststart">&lt;a href="https://gre.crunchprep.com/test/start">&lt;code>Crunchprep&lt;/code>&lt;/a>&lt;/h3>
+&lt;h3 id="kaplanhttpswwwkaptestcomgrefreegre-practice-test-options">&lt;a href="https://www.kaptest.com/gre/free/gre-practice-test-options">&lt;code>Kaplan&lt;/code>&lt;/a>&lt;/h3>
+&lt;h1 id="conclusion">Conclusion&lt;/h1>
+&lt;p>The study plan I&amp;rsquo;ve mentioned might not be the best way to prepare for everyone, but I found this plan useful while preparing for the GRE myself and thought I would share it.&lt;/p>
+&lt;p>If you feel like I&amp;rsquo;ve missed, or overlooked something, or if you have other materials that you found helpful feel free to leave a comment!&lt;/p></description></item></channel></rss>

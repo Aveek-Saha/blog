@@ -1,2 +1,30 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>YouTube on Aveek's Blog</title><link>https://home.aveek.io/blog/tags/youtube/</link><description>Recent content in YouTube on Aveek's Blog</description><generator>Hugo -- gohugo.io</generator><managingEditor>aveek.s98@gmail.com (Aveek Saha)</managingEditor><webMaster>aveek.s98@gmail.com (Aveek Saha)</webMaster><lastBuildDate>Wed, 19 Dec 2018 00:00:00 +0000</lastBuildDate><atom:link href="https://home.aveek.io/blog/tags/youtube/index.xml" rel="self" type="application/rss+xml"/><item><title>YTDX</title><link>https://home.aveek.io/blog/post/ytdx/</link><pubDate>Wed, 19 Dec 2018 00:00:00 +0000</pubDate><author>aveek.s98@gmail.com (Aveek Saha)</author><guid>https://home.aveek.io/blog/post/ytdx/</guid><description>&lt;p>If you want the code for this project, fork this GitHub repo - &lt;a href="https://github.com/Aveek-Saha/ytdx">&lt;code>YTDX&lt;/code>&lt;/a> &lt;!-- raw HTML omitted -->
-If you want to see a live demo, Download it here - &lt;a href="https://github.com/Aveek-Saha/ytdx/releases">&lt;code>Downloads&lt;/code>&lt;/a>&lt;/p></description></item></channel></rss>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>YouTube on Aveek's Blog</title><link>https://home.aveek.io/blog/tags/youtube/</link><description>Recent content in YouTube on Aveek's Blog</description><generator>Hugo -- gohugo.io</generator><managingEditor>aveek.s98@gmail.com (Aveek Saha)</managingEditor><webMaster>aveek.s98@gmail.com (Aveek Saha)</webMaster><lastBuildDate>Wed, 19 Dec 2018 00:00:00 +0000</lastBuildDate><atom:link href="https://home.aveek.io/blog/tags/youtube/index.xml" rel="self" type="application/rss+xml"/><item><title>YTDX</title><link>https://home.aveek.io/blog/post/ytdx/</link><pubDate>Wed, 19 Dec 2018 00:00:00 +0000</pubDate><author>aveek.s98@gmail.com (Aveek Saha)</author><guid>https://home.aveek.io/blog/post/ytdx/</guid><description>
+&lt;p>If you want the code for this project, fork this GitHub repo - &lt;a href="https://github.com/Aveek-Saha/ytdx">&lt;code>YTDX&lt;/code>&lt;/a> &lt;!-- raw HTML omitted -->
+If you want to see a live demo, Download it here - &lt;a href="https://github.com/Aveek-Saha/ytdx/releases">&lt;code>Downloads&lt;/code>&lt;/a>&lt;/p>
+&lt;p>If you want the code for this project, fork this GitHub repo - &lt;a href="https://github.com/Aveek-Saha/ytdx">&lt;code>YTDX&lt;/code>&lt;/a> &lt;!-- raw HTML omitted -->
+If you want to see a live demo, Download it here - &lt;a href="https://github.com/Aveek-Saha/ytdx/releases">&lt;code>Downloads&lt;/code>&lt;/a>&lt;/p>
+&lt;h1 id="introduction">Introduction&lt;/h1>
+&lt;p>YTDX or YouTube Downloader X is an application that allows you to download audio from YouTube videos.
+Paste any valid video link into the URL bar and download the audio from the video.&lt;/p>
+&lt;p>After the video is downloaded the application extracts the audio and stores it in the location you specified. The audio conversion is done by ffmpeg.&lt;/p>
+&lt;h2 id="main-ui">Main UI&lt;/h2>
+&lt;p>&lt;img src="https://home.aveek.io/blog/ytdx/screenshot1.png" alt="Screenshot1">&lt;/p>
+&lt;h2 id="notification">Notification&lt;/h2>
+&lt;p>&lt;img src="https://home.aveek.io/blog/ytdx/screenshot2.png" alt="Screenshot2">&lt;/p>
+&lt;h1 id="instructions">Instructions&lt;/h1>
+&lt;ul>
+&lt;li>Select a folder to save the downloaded file in.&lt;/li>
+&lt;li>Get a valid YouTube video URL and paste it in the URL bar.&lt;/li>
+&lt;li>Choose the desired audio format and click download.&lt;/li>
+&lt;li>When the file is finished downloading you&amp;rsquo;ll get a notification.&lt;/li>
+&lt;li>Clicking on the notification will take you to the download location.&lt;/li>
+&lt;/ul>
+&lt;h2 id="available-audio-formats">Available audio formats&lt;/h2>
+&lt;ul>
+&lt;li>mp3&lt;/li>
+&lt;li>flac&lt;/li>
+&lt;li>wav&lt;/li>
+&lt;li>Vorbis&lt;/li>
+&lt;/ul>
+&lt;!-- raw HTML omitted -->
+&lt;!-- raw HTML omitted --></description></item></channel></rss>

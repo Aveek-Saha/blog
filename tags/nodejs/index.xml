@@ -1,3 +1,493 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>NodeJS on Aveek's Blog</title><link>https://home.aveek.io/blog/tags/nodejs/</link><description>Recent content in NodeJS on Aveek's Blog</description><generator>Hugo -- gohugo.io</generator><managingEditor>aveek.s98@gmail.com (Aveek Saha)</managingEditor><webMaster>aveek.s98@gmail.com (Aveek Saha)</webMaster><lastBuildDate>Sat, 20 Oct 2018 00:00:00 +0000</lastBuildDate><atom:link href="https://home.aveek.io/blog/tags/nodejs/index.xml" rel="self" type="application/rss+xml"/><item><title>Making an online chess website with Socket.io</title><link>https://home.aveek.io/blog/post/making-an-online-chess-website-with-socketio/</link><pubDate>Sat, 20 Oct 2018 00:00:00 +0000</pubDate><author>aveek.s98@gmail.com (Aveek Saha)</author><guid>https://home.aveek.io/blog/post/making-an-online-chess-website-with-socketio/</guid><description>&lt;p>If you want the code for this project, fork this GitHub repo - &lt;a href="https://github.com/Aveek-Saha/Online-Chess">&lt;code>Online chess&lt;/code>&lt;/a> &lt;!-- raw HTML omitted -->
-Check out the code in action here, play it yourself - &lt;a href="https://chess0.herokuapp.com">&lt;code>Live demo&lt;/code>&lt;/a>&lt;/p></description></item><item><title>MEAN Todo app</title><link>https://home.aveek.io/blog/post/mean-todo-app/</link><pubDate>Thu, 09 Aug 2018 00:00:00 +0000</pubDate><author>aveek.s98@gmail.com (Aveek Saha)</author><guid>https://home.aveek.io/blog/post/mean-todo-app/</guid><description>&lt;p>If you want the code for this project, fork this GitHub repo - &lt;a href="https://github.com/Aveek-Saha/MEAN-todo-app">&lt;code>MEAN Todo app&lt;/code>&lt;/a> &lt;!-- raw HTML omitted -->
-If you want to see a live demoCheck it out here - &lt;a href="https://todo0.herokuapp.com/">&lt;code>Live demo&lt;/code>&lt;/a>&lt;/p></description></item></channel></rss>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>NodeJS on Aveek's Blog</title><link>https://home.aveek.io/blog/tags/nodejs/</link><description>Recent content in NodeJS on Aveek's Blog</description><generator>Hugo -- gohugo.io</generator><managingEditor>aveek.s98@gmail.com (Aveek Saha)</managingEditor><webMaster>aveek.s98@gmail.com (Aveek Saha)</webMaster><lastBuildDate>Sat, 20 Oct 2018 00:00:00 +0000</lastBuildDate><atom:link href="https://home.aveek.io/blog/tags/nodejs/index.xml" rel="self" type="application/rss+xml"/><item><title>Making an online chess website with Socket.io</title><link>https://home.aveek.io/blog/post/making-an-online-chess-website-with-socketio/</link><pubDate>Sat, 20 Oct 2018 00:00:00 +0000</pubDate><author>aveek.s98@gmail.com (Aveek Saha)</author><guid>https://home.aveek.io/blog/post/making-an-online-chess-website-with-socketio/</guid><description>
+&lt;p>If you want the code for this project, fork this GitHub repo - &lt;a href="https://github.com/Aveek-Saha/Online-Chess">&lt;code>Online chess&lt;/code>&lt;/a> &lt;!-- raw HTML omitted -->
+Check out the code in action here, play it yourself - &lt;a href="https://chess0.herokuapp.com">&lt;code>Live demo&lt;/code>&lt;/a>&lt;/p>
+&lt;p>If you want the code for this project, fork this GitHub repo - &lt;a href="https://github.com/Aveek-Saha/Online-Chess">&lt;code>Online chess&lt;/code>&lt;/a> &lt;!-- raw HTML omitted -->
+Check out the code in action here, play it yourself - &lt;a href="https://chess0.herokuapp.com">&lt;code>Live demo&lt;/code>&lt;/a>&lt;/p>
+&lt;h1 id="introduction">Introduction&lt;/h1>
+&lt;p>In this tutorial you&amp;rsquo;ll learn how to build a basic online Chess platform with multiple rooms, where people can play against each other. We will be using Sockets to communicate between the client and the server.&lt;/p>
+&lt;h1 id="socketio">Socket.io&lt;/h1>
+&lt;p>From the socket.io documentation -&lt;/p>
+&lt;blockquote>
+&lt;p>Socket.IO is a library that enables real-time, bidirectional and event-based communication between the browser and the server.&lt;/p>
+&lt;/blockquote>
+&lt;p>Two important methods that you need know are-&lt;/p>
+&lt;p>The &lt;code>emit&lt;/code> method emits an event and you can send data along with this event as long as it&amp;rsquo;s JSON encodable or binary data.&lt;/p>
+&lt;pre>&lt;code>socket.emit('test', msg);
+&lt;/code>&lt;/pre>&lt;p>The &lt;code>on&lt;/code> method listens for an event and it can receive data that has been emitted.&lt;/p>
+&lt;pre>&lt;code>socket.on('test', (msg) =&amp;gt; {
+console.log(msg);
+});
+&lt;/code>&lt;/pre>&lt;!-- raw HTML omitted -->
+&lt;h1 id="file-structure">File Structure&lt;/h1>
+&lt;p>&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-javascript" data-lang="javascript">
+&lt;span class="nx">chess&lt;/span>
+&lt;span class="o">|----&lt;/span>&lt;span class="nx">chessboard&lt;/span> &lt;span class="c1">// A folder for the chessboard.js library
+&lt;/span>&lt;span class="c1">&lt;/span> &lt;span class="o">|&lt;/span>
+&lt;span class="o">|----&lt;/span>&lt;span class="nx">img&lt;/span> &lt;span class="c1">// Images for the chess pieces
+&lt;/span>&lt;span class="c1">&lt;/span> &lt;span class="o">|&lt;/span>
+&lt;span class="o">|--&lt;/span>&lt;span class="nx">game&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">js&lt;/span> &lt;span class="c1">// The actual game
+&lt;/span>&lt;span class="c1">&lt;/span> &lt;span class="o">|--&lt;/span>&lt;span class="nx">index&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">js&lt;/span> &lt;span class="c1">// The node server
+&lt;/span>&lt;span class="c1">&lt;/span> &lt;span class="o">|&lt;/span>
+&lt;span class="o">|--&lt;/span>&lt;span class="nx">full&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">html&lt;/span>
+&lt;span class="o">|--&lt;/span>&lt;span class="nx">index&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">html&lt;/span>
+&lt;span class="o">|&lt;/span>
+&lt;span class="o">|--&lt;/span>&lt;span class="kr">package&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">json&lt;/span>
+&lt;/code>&lt;/pre>&lt;/div>
+&lt;!-- raw HTML omitted -->&lt;/p>
+&lt;h1 id="setup">Setup&lt;/h1>
+&lt;p>Create a new project folder, cd to that directory and then run&lt;/p>
+&lt;pre>&lt;code>npm init
+&lt;/code>&lt;/pre>&lt;p>After that go to &lt;a href="http://chessboardjs.com/">&lt;code>Chessboard.js&lt;/code>&lt;/a> and download the latest version. Extract the contents to the &lt;code>chessboard&lt;/code> folder. Copy the &lt;code>img&lt;/code> folder from &lt;code>chessboard&lt;/code> to the root directory . We&amp;rsquo;re going to use this library to display and interact with the chessboard and the pieces.&lt;/p>
+&lt;p>Now we&amp;rsquo;ll create the &lt;code>index.html&lt;/code> and &lt;code>game.js&lt;/code> files. Go to this &lt;a href="http://chessboardjs.com/examples#5003">&lt;code>Highlight Legal Moves&lt;/code>&lt;/a> example on the &lt;a href="http://chessboardjs.com/">&lt;code>Chessboard.js&lt;/code>&lt;/a> website.&lt;/p>
+&lt;p>For checking valid moves, piece placement and check/checkmate detection we&amp;rsquo;ll be using another library called &lt;a href="https://github.com/jhlywa/chess.js">&lt;code>Chess.js&lt;/code>&lt;/a>. We&amp;rsquo;re going to include this via CDN in &lt;code>index.html&lt;/code>&lt;/p>
+&lt;p>Copy the JavaScript section of the code into &lt;code>game.js&lt;/code>. Your File should look like this.&lt;/p>
+&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-javascript" data-lang="javascript">
+&lt;span class="kd">var&lt;/span> &lt;span class="nx">board&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;span class="nx">game&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="k">new&lt;/span> &lt;span class="nx">Chess&lt;/span>&lt;span class="p">();&lt;/span>
+&lt;span class="kd">var&lt;/span> &lt;span class="nx">removeGreySquares&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="kd">function&lt;/span>&lt;span class="p">()&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;span class="nx">$&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s1">&amp;#39;#board .square-55d63&amp;#39;&lt;/span>&lt;span class="p">).&lt;/span>&lt;span class="nx">css&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s1">&amp;#39;background&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="s1">&amp;#39;&amp;#39;&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;span class="p">};&lt;/span>
+&lt;span class="kd">var&lt;/span> &lt;span class="nx">greySquare&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="kd">function&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nx">square&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;span class="kd">var&lt;/span> &lt;span class="nx">squareEl&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="nx">$&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s1">&amp;#39;#board .square-&amp;#39;&lt;/span> &lt;span class="o">+&lt;/span> &lt;span class="nx">square&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;span class="kd">var&lt;/span> &lt;span class="nx">background&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s1">&amp;#39;#a9a9a9&amp;#39;&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;span class="k">if&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="nx">squareEl&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">hasClass&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s1">&amp;#39;black-3c85d&amp;#39;&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="o">===&lt;/span> &lt;span class="kc">true&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;span class="nx">background&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s1">&amp;#39;#696969&amp;#39;&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;span class="p">}&lt;/span>
+&lt;span class="nx">squareEl&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">css&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s1">&amp;#39;background&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nx">background&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;span class="p">};&lt;/span>
+&lt;span class="kd">var&lt;/span> &lt;span class="nx">onDragStart&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="kd">function&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nx">source&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nx">piece&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;span class="c1">// do not pick up pieces if the game is over
+&lt;/span>&lt;span class="c1">&lt;/span> &lt;span class="c1">// or if it&amp;#39;s not that side&amp;#39;s turn
+&lt;/span>&lt;span class="c1">&lt;/span> &lt;span class="k">if&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="nx">game&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">game_over&lt;/span>&lt;span class="p">()&lt;/span> &lt;span class="o">===&lt;/span> &lt;span class="kc">true&lt;/span> &lt;span class="o">||&lt;/span>
+&lt;span class="p">(&lt;/span>&lt;span class="nx">game&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">turn&lt;/span>&lt;span class="p">()&lt;/span> &lt;span class="o">===&lt;/span> &lt;span class="s1">&amp;#39;w&amp;#39;&lt;/span> &lt;span class="o">&amp;amp;&amp;amp;&lt;/span> &lt;span class="nx">piece&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">search&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="sr">/^b/&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="o">!==&lt;/span> &lt;span class="o">-&lt;/span>&lt;span class="mi">1&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="o">||&lt;/span>
+&lt;span class="p">(&lt;/span>&lt;span class="nx">game&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">turn&lt;/span>&lt;span class="p">()&lt;/span> &lt;span class="o">===&lt;/span> &lt;span class="s1">&amp;#39;b&amp;#39;&lt;/span> &lt;span class="o">&amp;amp;&amp;amp;&lt;/span> &lt;span class="nx">piece&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">search&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="sr">/^w/&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="o">!==&lt;/span> &lt;span class="o">-&lt;/span>&lt;span class="mi">1&lt;/span>&lt;span class="p">))&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;span class="k">return&lt;/span> &lt;span class="kc">false&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;span class="p">}&lt;/span>
+&lt;span class="p">};&lt;/span>
+&lt;span class="kd">var&lt;/span> &lt;span class="nx">onDrop&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="kd">function&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nx">source&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nx">target&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;span class="nx">removeGreySquares&lt;/span>&lt;span class="p">();&lt;/span>
+&lt;span class="c1">// see if the move is legal
+&lt;/span>&lt;span class="c1">&lt;/span> &lt;span class="kd">var&lt;/span> &lt;span class="nx">move&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="nx">game&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">move&lt;/span>&lt;span class="p">({&lt;/span>
+&lt;span class="nx">from&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="nx">source&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;span class="nx">to&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="nx">target&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;span class="nx">promotion&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="s1">&amp;#39;q&amp;#39;&lt;/span>
+&lt;span class="c1">// NOTE: always promote to a queen for example simplicity
+&lt;/span>&lt;span class="c1">&lt;/span> &lt;span class="p">});&lt;/span>
+&lt;span class="c1">// illegal move
+&lt;/span>&lt;span class="c1">&lt;/span> &lt;span class="k">if&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="nx">move&lt;/span> &lt;span class="o">===&lt;/span> &lt;span class="kc">null&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="k">return&lt;/span> &lt;span class="s1">&amp;#39;snapback&amp;#39;&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;span class="p">};&lt;/span>
+&lt;span class="kd">var&lt;/span> &lt;span class="nx">onMouseoverSquare&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="kd">function&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nx">square&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nx">piece&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;span class="c1">// get list of possible moves for this square
+&lt;/span>&lt;span class="c1">&lt;/span> &lt;span class="kd">var&lt;/span> &lt;span class="nx">moves&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="nx">game&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">moves&lt;/span>&lt;span class="p">({&lt;/span>
+&lt;span class="nx">square&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="nx">square&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;span class="nx">verbose&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="kc">true&lt;/span>
+&lt;span class="p">});&lt;/span>
+&lt;span class="c1">// exit if there are no moves available for this square
+&lt;/span>&lt;span class="c1">&lt;/span> &lt;span class="k">if&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="nx">moves&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">length&lt;/span> &lt;span class="o">===&lt;/span> &lt;span class="mi">0&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="k">return&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;span class="c1">// highlight the square they moused over
+&lt;/span>&lt;span class="c1">&lt;/span> &lt;span class="nx">greySquare&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nx">square&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;span class="c1">// highlight the possible squares for this piece
+&lt;/span>&lt;span class="c1">&lt;/span> &lt;span class="k">for&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="kd">var&lt;/span> &lt;span class="nx">i&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="mi">0&lt;/span>&lt;span class="p">;&lt;/span> &lt;span class="nx">i&lt;/span> &lt;span class="o">&amp;lt;&lt;/span> &lt;span class="nx">moves&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">length&lt;/span>&lt;span class="p">;&lt;/span> &lt;span class="nx">i&lt;/span>&lt;span class="o">++&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;span class="nx">greySquare&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nx">moves&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="nx">i&lt;/span>&lt;span class="p">].&lt;/span>&lt;span class="nx">to&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;span class="p">}&lt;/span>
+&lt;span class="p">};&lt;/span>
+&lt;span class="kd">var&lt;/span> &lt;span class="nx">onMouseoutSquare&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="kd">function&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nx">square&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nx">piece&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;span class="nx">removeGreySquares&lt;/span>&lt;span class="p">();&lt;/span>
+&lt;span class="p">};&lt;/span>
+&lt;span class="kd">var&lt;/span> &lt;span class="nx">onSnapEnd&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="kd">function&lt;/span>&lt;span class="p">()&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;span class="nx">board&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">position&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nx">game&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">fen&lt;/span>&lt;span class="p">());&lt;/span>
+&lt;span class="p">};&lt;/span>
+&lt;span class="kd">var&lt;/span> &lt;span class="nx">cfg&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;span class="nx">draggable&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="kc">true&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;span class="nx">position&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="s1">&amp;#39;start&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;span class="nx">onDragStart&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="nx">onDragStart&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;span class="nx">onDrop&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="nx">onDrop&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;span class="nx">onMouseoutSquare&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="nx">onMouseoutSquare&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;span class="nx">onMouseoverSquare&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="nx">onMouseoverSquare&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;span class="nx">onSnapEnd&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="nx">onSnapEnd&lt;/span>
+&lt;span class="p">};&lt;/span>
+&lt;span class="nx">board&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="nx">ChessBoard&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s1">&amp;#39;board&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nx">cfg&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>Next up is &lt;code>index.html&lt;/code>.&lt;/p>
+&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-html" data-lang="html">&lt;span class="cp">&amp;lt;!doctype html&amp;gt;&lt;/span>
+&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">html&lt;/span> &lt;span class="na">lang&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;en&amp;#34;&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">head&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">meta&lt;/span> &lt;span class="na">charset&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;UTF-8&amp;#34;&lt;/span> &lt;span class="p">/&amp;gt;&lt;/span>
+&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">title&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>Chess 0&lt;span class="p">&amp;lt;/&lt;/span>&lt;span class="nt">title&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">script&lt;/span> &lt;span class="na">src&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js&amp;#34;&lt;/span>&lt;span class="p">&amp;gt;&amp;lt;/&lt;/span>&lt;span class="nt">script&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">script&lt;/span> &lt;span class="na">src&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;https://cdnjs.cloudflare.com/ajax/libs/chess.js/0.10.2/chess.js&amp;#34;&lt;/span>&lt;span class="p">&amp;gt;&amp;lt;/&lt;/span>&lt;span class="nt">script&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">script&lt;/span> &lt;span class="na">src&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;./chessboard/js/chessboard-1.0.0.js&amp;#34;&lt;/span>&lt;span class="p">&amp;gt;&amp;lt;/&lt;/span>&lt;span class="nt">script&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">link&lt;/span> &lt;span class="na">rel&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;stylesheet&amp;#34;&lt;/span> &lt;span class="na">type&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;text/css&amp;#34;&lt;/span> &lt;span class="na">href&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;./chessboard/css/chessboard-1.0.0.min.css&amp;#34;&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;span class="p">&amp;lt;/&lt;/span>&lt;span class="nt">head&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">body&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">script&lt;/span> &lt;span class="na">src&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.1.1/socket.io.js&amp;#34;&lt;/span>&lt;span class="p">&amp;gt;&amp;lt;/&lt;/span>&lt;span class="nt">script&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">div&lt;/span> &lt;span class="na">class&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;container&amp;#34;&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;span class="c">&amp;lt;!-- The chess board --&amp;gt;&lt;/span>
+&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">div&lt;/span> &lt;span class="na">id&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;board&amp;#34;&lt;/span> &lt;span class="na">style&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;width: 500px; margin: auto&amp;#34;&lt;/span>&lt;span class="p">&amp;gt;&amp;lt;/&lt;/span>&lt;span class="nt">div&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;span class="p">&amp;lt;/&lt;/span>&lt;span class="nt">div&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">script&lt;/span> &lt;span class="na">src&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;./game.js&amp;#34;&lt;/span>&lt;span class="p">&amp;gt;&amp;lt;/&lt;/span>&lt;span class="nt">script&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;span class="p">&amp;lt;/&lt;/span>&lt;span class="nt">body&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;span class="p">&amp;lt;/&lt;/span>&lt;span class="nt">html&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>If you just double click on the &lt;code>index.html&lt;/code> file you should be able to see a simple chessboard and the pieces. You can move the pieces around, and hovering on a piece will show you the possible moves you can make. This is because of the integration with &lt;code>Chess.js&lt;/code> that does the move generation and valid move checking for us.&lt;/p>
+&lt;p>In case a user tries to join a game that already has 2 players in it, we&amp;rsquo;ll redirect him to &lt;code>full.html&lt;/code>, which is just a basic html page that says the game is full.&lt;/p>
+&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-html" data-lang="html">
+&lt;span class="cp">&amp;lt;!doctype html&amp;gt;&lt;/span>
+&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">html&lt;/span> &lt;span class="na">lang&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;en&amp;#34;&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">head&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">meta&lt;/span> &lt;span class="na">charset&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;UTF-8&amp;#34;&lt;/span> &lt;span class="p">/&amp;gt;&lt;/span>
+&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">title&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>Room Full&lt;span class="p">&amp;lt;/&lt;/span>&lt;span class="nt">title&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">script&lt;/span> &lt;span class="na">src&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js&amp;#34;&lt;/span>&lt;span class="p">&amp;gt;&amp;lt;/&lt;/span>&lt;span class="nt">script&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">link&lt;/span> &lt;span class="na">rel&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;stylesheet&amp;#34;&lt;/span> &lt;span class="na">href&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css&amp;#34;&lt;/span>
+&lt;span class="na">integrity&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO&amp;#34;&lt;/span> &lt;span class="na">crossorigin&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;anonymous&amp;#34;&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">script&lt;/span> &lt;span class="na">src&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js&amp;#34;&lt;/span>
+&lt;span class="na">integrity&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy&amp;#34;&lt;/span>
+&lt;span class="na">crossorigin&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;anonymous&amp;#34;&lt;/span>&lt;span class="p">&amp;gt;&amp;lt;/&lt;/span>&lt;span class="nt">script&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;span class="p">&amp;lt;/&lt;/span>&lt;span class="nt">head&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">body&lt;/span> &lt;span class="na">style&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;margin: 4%&amp;#34;&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">div&lt;/span> &lt;span class="na">id&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;player&amp;#34;&lt;/span> &lt;span class="na">style&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;margin: auto&amp;#34;&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>This room is full&lt;span class="p">&amp;lt;/&lt;/span>&lt;span class="nt">div&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;span class="p">&amp;lt;/&lt;/span>&lt;span class="nt">body&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;span class="p">&amp;lt;/&lt;/span>&lt;span class="nt">html&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;/code>&lt;/pre>&lt;/div>&lt;h1 id="packages">Packages&lt;/h1>
+&lt;p>For this project we will be using only &lt;code>Express&lt;/code> and &lt;code>Socket.io&lt;/code>. To install them, run&lt;/p>
+&lt;pre>&lt;code>npm install --save express
+npm install --save socket.io
+&lt;/code>&lt;/pre>&lt;h1 id="the-server">The Server&lt;/h1>
+&lt;p>Create &lt;code>index.js&lt;/code> and require the following modules.&lt;/p>
+&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-javascript" data-lang="javascript">&lt;span class="kr">const&lt;/span> &lt;span class="nx">express&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="nx">require&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s1">&amp;#39;express&amp;#39;&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;span class="kr">const&lt;/span> &lt;span class="nx">http&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="nx">require&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s1">&amp;#39;http&amp;#39;&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;span class="kr">const&lt;/span> &lt;span class="nx">socket&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="nx">require&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s1">&amp;#39;socket.io&amp;#39;&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>Then we&amp;rsquo;re going to declare a few variables&lt;/p>
+&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-javascript" data-lang="javascript">
+&lt;span class="c1">// use 8080 as the default port number, process.env.PORT is
+&lt;/span>&lt;span class="c1">//useful if you deploy to Heroku
+&lt;/span>&lt;span class="c1">&lt;/span>&lt;span class="kr">const&lt;/span> &lt;span class="nx">port&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="nx">process&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">env&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">PORT&lt;/span> &lt;span class="o">||&lt;/span> &lt;span class="mi">8080&lt;/span>
+&lt;span class="kd">var&lt;/span> &lt;span class="nx">app&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="nx">express&lt;/span>&lt;span class="p">();&lt;/span>
+&lt;span class="c1">// start the server
+&lt;/span>&lt;span class="c1">&lt;/span>&lt;span class="kr">const&lt;/span> &lt;span class="nx">server&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="nx">http&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">createServer&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nx">app&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;span class="c1">// initialize a new instance of socket.io by passing the HTTP server object
+&lt;/span>&lt;span class="c1">&lt;/span>&lt;span class="kr">const&lt;/span> &lt;span class="nx">io&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="nx">socket&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nx">server&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;span class="c1">// keep track of how many players in a game (0, 1, 2)
+&lt;/span>&lt;span class="c1">&lt;/span>&lt;span class="kd">var&lt;/span> &lt;span class="nx">players&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;span class="c1">// create an array of 100 games and initialize them
+&lt;/span>&lt;span class="c1">&lt;/span>&lt;span class="kd">var&lt;/span> &lt;span class="nx">games&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="nb">Array&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="mi">100&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;span class="k">for&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="kd">let&lt;/span> &lt;span class="nx">i&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="mi">0&lt;/span>&lt;span class="p">;&lt;/span> &lt;span class="nx">i&lt;/span> &lt;span class="o">&amp;lt;&lt;/span> &lt;span class="mi">100&lt;/span>&lt;span class="p">;&lt;/span> &lt;span class="nx">i&lt;/span>&lt;span class="o">++&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;span class="nx">games&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="nx">i&lt;/span>&lt;span class="p">]&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="p">{&lt;/span>&lt;span class="nx">players&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="mi">0&lt;/span> &lt;span class="p">,&lt;/span> &lt;span class="nx">pid&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="p">[&lt;/span>&lt;span class="mi">0&lt;/span> &lt;span class="p">,&lt;/span> &lt;span class="mi">0&lt;/span>&lt;span class="p">]};&lt;/span>
+&lt;span class="p">}&lt;/span>
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>Our routing is simple, we only need to show &lt;code>index.html&lt;/code> when &amp;ldquo;/&amp;rdquo; is accessed&lt;/p>
+&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-javascript" data-lang="javascript">&lt;span class="c1">// Add the static directory for our js and css files
+&lt;/span>&lt;span class="c1">&lt;/span>&lt;span class="nx">app&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">use&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nx">express&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="kr">static&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nx">__dirname&lt;/span> &lt;span class="o">+&lt;/span> &lt;span class="s2">&amp;#34;/&amp;#34;&lt;/span>&lt;span class="p">));&lt;/span>
+&lt;span class="nx">app&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">get&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s1">&amp;#39;/&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="nx">req&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nx">res&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">=&amp;gt;&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;span class="nx">res&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">sendFile&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nx">__dirname&lt;/span> &lt;span class="o">+&lt;/span> &lt;span class="s1">&amp;#39;/index.html&amp;#39;&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;span class="p">});&lt;/span>
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>Now its time to listen for the &lt;code>connection&lt;/code> event on the server&lt;/p>
+&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-javascript" data-lang="javascript">
+&lt;span class="nx">io&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">on&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s1">&amp;#39;connection&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="kd">function&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="nx">socket&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;span class="c1">// just assign a random number to every player that has connected
+&lt;/span>&lt;span class="c1">&lt;/span> &lt;span class="c1">// the numbers have no significance so it
+&lt;/span>&lt;span class="c1">&lt;/span> &lt;span class="c1">// doesn&amp;#39;t matter if 2 people get the same number
+&lt;/span>&lt;span class="c1">&lt;/span> &lt;span class="kd">var&lt;/span> &lt;span class="nx">playerId&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="nb">Math&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">floor&lt;/span>&lt;span class="p">((&lt;/span>&lt;span class="nb">Math&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">random&lt;/span>&lt;span class="p">()&lt;/span> &lt;span class="o">*&lt;/span> &lt;span class="mi">100&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="o">+&lt;/span> &lt;span class="mi">1&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;span class="nx">console&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">log&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nx">playerId&lt;/span> &lt;span class="o">+&lt;/span> &lt;span class="s1">&amp;#39; connected&amp;#39;&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;span class="c1">// if a user disconnects just print their playerID
+&lt;/span>&lt;span class="c1">&lt;/span> &lt;span class="nx">socket&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">on&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s1">&amp;#39;disconnect&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="kd">function&lt;/span> &lt;span class="p">()&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;span class="nx">console&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">log&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nx">playerId&lt;/span> &lt;span class="o">+&lt;/span> &lt;span class="s1">&amp;#39; disconnected&amp;#39;&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;span class="p">});&lt;/span>
+&lt;span class="p">});&lt;/span>
+&lt;/code>&lt;/pre>&lt;/div>&lt;!-- raw HTML omitted -->
+&lt;h1 id="the-client">The Client&lt;/h1>
+&lt;p>Let&amp;rsquo;s turn our attention back to the client, &lt;code>index.html&lt;/code>. We&amp;rsquo;re going to add an input box where the player enters the room number he wants to join and once he hits a button, if the room is not full, he&amp;rsquo;ll join the room.&lt;/p>
+&lt;p>After adding that and a few divs to display some information, we add bootstrap and the final &lt;code>index.html&lt;/code> looks like this:&lt;/p>
+&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-html" data-lang="html">&lt;span class="cp">&amp;lt;!doctype html&amp;gt;&lt;/span>
+&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">html&lt;/span> &lt;span class="na">lang&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;en&amp;#34;&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">head&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">meta&lt;/span> &lt;span class="na">charset&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;UTF-8&amp;#34;&lt;/span> &lt;span class="p">/&amp;gt;&lt;/span>
+&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">title&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>Chess 0&lt;span class="p">&amp;lt;/&lt;/span>&lt;span class="nt">title&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;span class="c">&amp;lt;!-- Adding bootstrap--&amp;gt;&lt;/span>
+&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">link&lt;/span> &lt;span class="na">rel&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;stylesheet&amp;#34;&lt;/span> &lt;span class="na">href&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css&amp;#34;&lt;/span>
+&lt;span class="na">integrity&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO&amp;#34;&lt;/span> &lt;span class="na">crossorigin&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;anonymous&amp;#34;&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">script&lt;/span> &lt;span class="na">src&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js&amp;#34;&lt;/span>
+&lt;span class="na">integrity&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy&amp;#34;&lt;/span>
+&lt;span class="na">crossorigin&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;anonymous&amp;#34;&lt;/span>&lt;span class="p">&amp;gt;&amp;lt;/&lt;/span>&lt;span class="nt">script&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">script&lt;/span> &lt;span class="na">src&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js&amp;#34;&lt;/span>&lt;span class="p">&amp;gt;&amp;lt;/&lt;/span>&lt;span class="nt">script&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">script&lt;/span> &lt;span class="na">src&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;https://cdnjs.cloudflare.com/ajax/libs/chess.js/0.10.2/chess.js&amp;#34;&lt;/span>&lt;span class="p">&amp;gt;&amp;lt;/&lt;/span>&lt;span class="nt">script&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">script&lt;/span> &lt;span class="na">src&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;./chessboard/js/chessboard-1.0.0.js&amp;#34;&lt;/span>&lt;span class="p">&amp;gt;&amp;lt;/&lt;/span>&lt;span class="nt">script&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">link&lt;/span> &lt;span class="na">rel&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;stylesheet&amp;#34;&lt;/span> &lt;span class="na">type&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;text/css&amp;#34;&lt;/span> &lt;span class="na">href&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;./chessboard/css/chessboard-1.0.0.min.css&amp;#34;&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;span class="c">&amp;lt;!-- Adding some style --&amp;gt;&lt;/span>
+&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">style&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;span class="p">.&lt;/span>&lt;span class="nc">number&lt;/span>&lt;span class="p">::&lt;/span>&lt;span class="nd">-webkit-inner-spin-button&lt;/span>&lt;span class="o">,&lt;/span>
+&lt;span class="p">.&lt;/span>&lt;span class="nc">number&lt;/span>&lt;span class="p">::&lt;/span>&lt;span class="nd">-webkit-outer-spin-button&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;span class="kp">-webkit-&lt;/span>&lt;span class="k">appearance&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="kc">none&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;span class="k">margin&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="mi">0&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;span class="p">}&lt;/span>
+&lt;span class="p">#&lt;/span>&lt;span class="nn">roomNumbers&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;span class="k">margin&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="mi">7&lt;/span>&lt;span class="kt">px&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;span class="p">}&lt;/span>
+&lt;span class="nt">body&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;span class="k">margin&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="mi">4&lt;/span>&lt;span class="kt">%&lt;/span>
+&lt;span class="p">}&lt;/span>
+&lt;span class="p">&amp;lt;/&lt;/span>&lt;span class="nt">style&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;span class="p">&amp;lt;/&lt;/span>&lt;span class="nt">head&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">body&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">script&lt;/span> &lt;span class="na">src&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.1.1/socket.io.js&amp;#34;&lt;/span>&lt;span class="p">&amp;gt;&amp;lt;/&lt;/span>&lt;span class="nt">script&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">div&lt;/span> &lt;span class="na">class&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;container&amp;#34;&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;span class="c">&amp;lt;!-- The chess board --&amp;gt;&lt;/span>
+&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">div&lt;/span> &lt;span class="na">id&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;board&amp;#34;&lt;/span> &lt;span class="na">style&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;width: 500px; margin: auto&amp;#34;&lt;/span>&lt;span class="p">&amp;gt;&amp;lt;/&lt;/span>&lt;span class="nt">div&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">div&lt;/span> &lt;span class="na">style&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;margin: auto&amp;#34;&lt;/span>&lt;span class="err">&amp;#34;&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;span class="c">&amp;lt;!-- Shows the player number and color --&amp;gt;&lt;/span>
+&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">div&lt;/span> &lt;span class="na">id&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34; player&amp;#34;&lt;/span>&lt;span class="p">&amp;gt;&amp;lt;/&lt;/span>&lt;span class="nt">div&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">div&lt;/span> &lt;span class="na">id&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;roomNumbers&amp;#34;&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>Enter a room number between 0 and 99&lt;span class="p">&amp;lt;/&lt;/span>&lt;span class="nt">div&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">form&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">div&lt;/span> &lt;span class="na">class&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;row&amp;#34;&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">div&lt;/span> &lt;span class="na">class&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;col&amp;#34;&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">input&lt;/span> &lt;span class="na">type&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;number&amp;#34;&lt;/span> &lt;span class="na">id&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;room&amp;#34;&lt;/span> &lt;span class="na">min&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;0&amp;#34;&lt;/span> &lt;span class="na">max&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;99&amp;#34;&lt;/span> &lt;span class="na">class&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;form-control form-control-md number&amp;#34;&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;span class="p">&amp;lt;/&lt;/span>&lt;span class="nt">div&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">div&lt;/span> &lt;span class="na">class&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;col&amp;#34;&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;span class="c">&amp;lt;!-- A button that connects the user to the given valid room number --&amp;gt;&lt;/span>
+&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">button&lt;/span> &lt;span class="na">id&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;button&amp;#34;&lt;/span> &lt;span class="na">class&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;btn btn-success&amp;#34;&lt;/span> &lt;span class="na">onclick&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;connect()&amp;#34;&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>Connect&lt;span class="p">&amp;lt;/&lt;/span>&lt;span class="nt">button&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;span class="p">&amp;lt;/&lt;/span>&lt;span class="nt">div&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;span class="p">&amp;lt;/&lt;/span>&lt;span class="nt">div&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;span class="p">&amp;lt;/&lt;/span>&lt;span class="nt">form&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;span class="c">&amp;lt;!-- Displays weather the game is in progress, or over --&amp;gt;&lt;/span>
+&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">div&lt;/span> &lt;span class="na">id&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;state&amp;#34;&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>Join Game&lt;span class="p">&amp;lt;/&lt;/span>&lt;span class="nt">div&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;span class="p">&amp;lt;/&lt;/span>&lt;span class="nt">div&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;span class="p">&amp;lt;/&lt;/span>&lt;span class="nt">div&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">script&lt;/span> &lt;span class="na">src&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;./game.js&amp;#34;&lt;/span>&lt;span class="p">&amp;gt;&amp;lt;/&lt;/span>&lt;span class="nt">script&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;span class="p">&amp;lt;/&lt;/span>&lt;span class="nt">body&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;span class="p">&amp;lt;/&lt;/span>&lt;span class="nt">html&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>Now we have to modify &lt;code>game.js&lt;/code> so that it communicates with the server. After initializing the socket we can communicate via the two methods mentioned earlier.&lt;/p>
+&lt;p>We&amp;rsquo;ll start off modifying &lt;code>game.js&lt;/code> by adding a few variables.&lt;/p>
+&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-javascript" data-lang="javascript">
+&lt;span class="c1">// creates a new chess game using the chess.js library
+&lt;/span>&lt;span class="c1">&lt;/span>&lt;span class="nx">game&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="k">new&lt;/span> &lt;span class="nx">Chess&lt;/span>&lt;span class="p">();&lt;/span>
+&lt;span class="c1">//initialize the socket
+&lt;/span>&lt;span class="c1">&lt;/span>&lt;span class="kd">var&lt;/span> &lt;span class="nx">socket&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="nx">io&lt;/span>&lt;span class="p">();&lt;/span>
+&lt;span class="c1">// piece color
+&lt;/span>&lt;span class="c1">&lt;/span>&lt;span class="kd">var&lt;/span> &lt;span class="nx">color&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s2">&amp;#34;white&amp;#34;&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;span class="c1">// number of players in the current room
+&lt;/span>&lt;span class="c1">&lt;/span>&lt;span class="kd">var&lt;/span> &lt;span class="nx">players&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;span class="c1">// the room number between 0 and 99
+&lt;/span>&lt;span class="c1">&lt;/span>&lt;span class="kd">var&lt;/span> &lt;span class="nx">roomId&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;span class="c1">// if the both players have joined then it will be false
+&lt;/span>&lt;span class="c1">&lt;/span>&lt;span class="kd">var&lt;/span> &lt;span class="nx">play&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="kc">true&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;span class="c1">// For some DOM manipulation later
+&lt;/span>&lt;span class="c1">&lt;/span>&lt;span class="kd">var&lt;/span> &lt;span class="nx">room&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="nb">document&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">getElementById&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s2">&amp;#34;room&amp;#34;&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;span class="kd">var&lt;/span> &lt;span class="nx">roomNumber&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="nb">document&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">getElementById&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s2">&amp;#34;roomNumbers&amp;#34;&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;span class="kd">var&lt;/span> &lt;span class="nx">button&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="nb">document&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">getElementById&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s2">&amp;#34;button&amp;#34;&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;span class="kd">var&lt;/span> &lt;span class="nx">state&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="nb">document&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">getElementById&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s1">&amp;#39;state&amp;#39;&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/code>&lt;/pre>&lt;/div>&lt;!-- raw HTML omitted -->
+&lt;h1 id="more-server-stuff">More Server Stuff&lt;/h1>
+&lt;p>We set up the client side socket, and we will be able to communicate between the client and server. But before that we have a few more things to set up here, inside&lt;/p>
+&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-javascript" data-lang="javascript">&lt;span class="nx">io&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">on&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s1">&amp;#39;connection&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="kd">function&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="nx">socket&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{})&lt;/span>
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>We&amp;rsquo;ll be emitting and receiving some events from the client here and after this, we&amp;rsquo;ll set up the emitters and receivers on the client side too.&lt;/p>
+&lt;p>What we&amp;rsquo;ll use the for server here is basically passing on the message from one client to the other. So in most of the &lt;code>socket.on()&lt;/code> function callbacks, you&amp;rsquo;ll see a &lt;code>socket.emit&lt;/code> function, so that the server can pass on the event to the rest of the clients. since the server will emit events to all clients. The clients will know if the event was meant for them because we pass the &lt;code>roomId&lt;/code> in the message. The &lt;code>roomId&lt;/code> is checked on the client side. This method isn&amp;rsquo;t secure, but it&amp;rsquo;s fine for our small application.&lt;/p>
+&lt;p>This part is added in the &lt;code>io.on('connection')&lt;/code> callback in &lt;code>index.js&lt;/code> after the playerID is generated. We&amp;rsquo;ll also add a new function on &lt;code>disconnect&lt;/code> to free up room space when players disconnect.&lt;/p>
+&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-javascript" data-lang="javascript">
+&lt;span class="kd">var&lt;/span> &lt;span class="nx">color&lt;/span>&lt;span class="p">;&lt;/span> &lt;span class="c1">// black or white
+&lt;/span>&lt;span class="c1">&lt;/span>
+&lt;span class="c1">// &amp;#39;joined&amp;#39; is emitted when the player enters a room number and clicks
+&lt;/span>&lt;span class="c1">// the connect button the room ID that the player entered gets passed as a message
+&lt;/span>&lt;span class="c1">&lt;/span>
+&lt;span class="nx">socket&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">on&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s1">&amp;#39;joined&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="kd">function&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="nx">roomId&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;span class="c1">// if the room is not full then add the player to that room
+&lt;/span>&lt;span class="c1">&lt;/span> &lt;span class="k">if&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="nx">games&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="nx">roomId&lt;/span>&lt;span class="p">].&lt;/span>&lt;span class="nx">players&lt;/span> &lt;span class="o">&amp;lt;&lt;/span> &lt;span class="mi">2&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;span class="nx">games&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="nx">roomId&lt;/span>&lt;span class="p">].&lt;/span>&lt;span class="nx">players&lt;/span>&lt;span class="o">++&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;span class="nx">games&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="nx">roomId&lt;/span>&lt;span class="p">].&lt;/span>&lt;span class="nx">pid&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="nx">games&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="nx">roomId&lt;/span>&lt;span class="p">].&lt;/span>&lt;span class="nx">players&lt;/span> &lt;span class="o">-&lt;/span> &lt;span class="mi">1&lt;/span>&lt;span class="p">]&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="nx">playerId&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;span class="p">}&lt;/span> &lt;span class="c1">// else emit the full event
+&lt;/span>&lt;span class="c1">&lt;/span> &lt;span class="k">else&lt;/span>&lt;span class="p">{&lt;/span>
+&lt;span class="nx">socket&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">emit&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s1">&amp;#39;full&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nx">roomId&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;span class="k">return&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;span class="p">}&lt;/span>
+&lt;span class="nx">console&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">log&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nx">games&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="nx">roomId&lt;/span>&lt;span class="p">]);&lt;/span>
+&lt;span class="nx">players&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="nx">games&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="nx">roomId&lt;/span>&lt;span class="p">].&lt;/span>&lt;span class="nx">players&lt;/span>
+&lt;span class="c1">// the first player to join the room gets white
+&lt;/span>&lt;span class="c1">&lt;/span> &lt;span class="k">if&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="nx">players&lt;/span> &lt;span class="o">%&lt;/span> &lt;span class="mi">2&lt;/span> &lt;span class="o">==&lt;/span> &lt;span class="mi">0&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="nx">color&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s1">&amp;#39;black&amp;#39;&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;span class="k">else&lt;/span> &lt;span class="nx">color&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s1">&amp;#39;white&amp;#39;&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;span class="c1">// this is an important event because, once this is emitted the game
+&lt;/span>&lt;span class="c1">&lt;/span> &lt;span class="c1">// will be set up in the client side, and it&amp;#39;ll display the chess board
+&lt;/span>&lt;span class="c1">&lt;/span> &lt;span class="nx">socket&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">emit&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s1">&amp;#39;player&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="p">{&lt;/span> &lt;span class="nx">playerId&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nx">players&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nx">color&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nx">roomId&lt;/span> &lt;span class="p">})&lt;/span>
+&lt;span class="p">});&lt;/span>
+&lt;span class="c1">// The client side emits a &amp;#39;move&amp;#39; event when a valid move has been made.
+&lt;/span>&lt;span class="c1">&lt;/span>&lt;span class="nx">socket&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">on&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s1">&amp;#39;move&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="kd">function&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="nx">msg&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;span class="c1">// pass on the move event to the other clients
+&lt;/span>&lt;span class="c1">&lt;/span> &lt;span class="nx">socket&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">broadcast&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">emit&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s1">&amp;#39;move&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nx">msg&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;span class="p">});&lt;/span>
+&lt;span class="c1">// &amp;#39;play&amp;#39; is emitted when both players have joined and the game can start
+&lt;/span>&lt;span class="c1">&lt;/span>&lt;span class="nx">socket&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">on&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s1">&amp;#39;play&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="kd">function&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="nx">msg&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;span class="nx">socket&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">broadcast&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">emit&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s1">&amp;#39;play&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nx">msg&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;span class="nx">console&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">log&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s2">&amp;#34;ready &amp;#34;&lt;/span> &lt;span class="o">+&lt;/span> &lt;span class="nx">msg&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;span class="p">});&lt;/span>
+&lt;span class="c1">// when the user disconnects from the server, remove him from the game room
+&lt;/span>&lt;span class="c1">&lt;/span>&lt;span class="nx">socket&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">on&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s1">&amp;#39;disconnect&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="kd">function&lt;/span> &lt;span class="p">()&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;span class="k">for&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="kd">let&lt;/span> &lt;span class="nx">i&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="mi">0&lt;/span>&lt;span class="p">;&lt;/span> &lt;span class="nx">i&lt;/span> &lt;span class="o">&amp;lt;&lt;/span> &lt;span class="mi">100&lt;/span>&lt;span class="p">;&lt;/span> &lt;span class="nx">i&lt;/span>&lt;span class="o">++&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;span class="k">if&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="nx">games&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="nx">i&lt;/span>&lt;span class="p">].&lt;/span>&lt;span class="nx">pid&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="mi">0&lt;/span>&lt;span class="p">]&lt;/span> &lt;span class="o">==&lt;/span> &lt;span class="nx">playerId&lt;/span> &lt;span class="o">||&lt;/span> &lt;span class="nx">games&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="nx">i&lt;/span>&lt;span class="p">].&lt;/span>&lt;span class="nx">pid&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="mi">1&lt;/span>&lt;span class="p">]&lt;/span> &lt;span class="o">==&lt;/span> &lt;span class="nx">playerId&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;span class="nx">games&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="nx">i&lt;/span>&lt;span class="p">].&lt;/span>&lt;span class="nx">players&lt;/span>&lt;span class="o">--&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;span class="p">}&lt;/span>
+&lt;span class="nx">console&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">log&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nx">playerId&lt;/span> &lt;span class="o">+&lt;/span> &lt;span class="s1">&amp;#39; disconnected&amp;#39;&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;span class="p">});&lt;/span>
+&lt;/code>&lt;/pre>&lt;/div>&lt;!-- raw HTML omitted -->
+&lt;h1 id="back-to-the-client">Back to the Client&lt;/h1>
+&lt;p>After setting up our server to relay messages back and forth from clients we set up the client to respond to the server emitted events. So let&amp;rsquo;s get back to &lt;code>game.js&lt;/code>.&lt;/p>
+&lt;p>First thing we&amp;rsquo;ll do is set up a listener for the &amp;lsquo;player&amp;rsquo; event, which means that a player has joined the event and the board will be set up, along with the player&amp;rsquo;s color. The code we wrote to create the board in the first step also goes in this.&lt;/p>
+&lt;p>Put this at the bottom of &lt;code>game.js&lt;/code>, after removing the old &lt;code>cfg&lt;/code> and &lt;code>board&lt;/code> variables.&lt;/p>
+&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-javascript" data-lang="javascript">
+&lt;span class="nx">socket&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">on&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s1">&amp;#39;player&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="nx">msg&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">=&amp;gt;&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;span class="kd">var&lt;/span> &lt;span class="nx">plno&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="nb">document&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">getElementById&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s1">&amp;#39;player&amp;#39;&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;span class="c1">// we&amp;#39;re passing an object -
+&lt;/span>&lt;span class="c1">&lt;/span> &lt;span class="c1">// { playerId, players, color, roomId } as msg
+&lt;/span>&lt;span class="c1">&lt;/span> &lt;span class="nx">color&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="nx">msg&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">color&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;span class="c1">// show the players number and color in the player div
+&lt;/span>&lt;span class="c1">&lt;/span> &lt;span class="nx">players&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="nx">msg&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">players&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;span class="nx">plno&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">innerHTML&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s1">&amp;#39;Player &amp;#39;&lt;/span> &lt;span class="o">+&lt;/span> &lt;span class="nx">players&lt;/span> &lt;span class="o">+&lt;/span> &lt;span class="s2">&amp;#34; : &amp;#34;&lt;/span> &lt;span class="o">+&lt;/span> &lt;span class="nx">color&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;span class="c1">// emit the play event when 2 players have joined
+&lt;/span>&lt;span class="c1">&lt;/span> &lt;span class="k">if&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nx">players&lt;/span> &lt;span class="o">==&lt;/span> &lt;span class="mi">2&lt;/span>&lt;span class="p">){&lt;/span>
+&lt;span class="nx">play&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="kc">false&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;span class="c1">// relay it to the other player that is in the room
+&lt;/span>&lt;span class="c1">&lt;/span> &lt;span class="nx">socket&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">emit&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s1">&amp;#39;play&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nx">msg&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">roomId&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;span class="c1">// change the state from &amp;#39;join room&amp;#39; to -
+&lt;/span>&lt;span class="c1">&lt;/span> &lt;span class="nx">state&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">innerHTML&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s2">&amp;#34;Game in Progress&amp;#34;&lt;/span>
+&lt;span class="p">}&lt;/span>
+&lt;span class="c1">// if only one person is in the room
+&lt;/span>&lt;span class="c1">&lt;/span> &lt;span class="k">else&lt;/span>
+&lt;span class="nx">state&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">innerHTML&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s2">&amp;#34;Waiting for Second player&amp;#34;&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;span class="kd">var&lt;/span> &lt;span class="nx">cfg&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;span class="nx">orientation&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="nx">color&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;span class="nx">draggable&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="kc">true&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;span class="nx">position&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="s1">&amp;#39;start&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;span class="nx">onDragStart&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="nx">onDragStart&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;span class="nx">onDrop&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="nx">onDrop&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;span class="nx">onMouseoutSquare&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="nx">onMouseoutSquare&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;span class="nx">onMouseoverSquare&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="nx">onMouseoverSquare&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;span class="nx">onSnapEnd&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="nx">onSnapEnd&lt;/span>
+&lt;span class="p">};&lt;/span>
+&lt;span class="nx">board&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="nx">ChessBoard&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s1">&amp;#39;board&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nx">cfg&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;span class="p">});&lt;/span>
+&lt;span class="kd">var&lt;/span> &lt;span class="nx">board&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>Now we need to modify some of the functions that we copied from the example at &lt;a href="http://chessboardjs.com/examples#5003">&lt;code>chessboardjs&lt;/code>&lt;/a>.&lt;/p>
+&lt;p>For &lt;code>onDragStart&lt;/code> we add a few more conditions to check if the move is valid or not. The conditions we added are -&lt;/p>
+&lt;pre>&lt;code>play || // check if both players have joined
+// if the player is white, he cannot move black pieces and vice versa
+(game.turn() === 'w' &amp;amp;&amp;amp; color === 'black') ||
+(game.turn() === 'b' &amp;amp;&amp;amp; color === 'white')
+&lt;/code>&lt;/pre>&lt;!-- raw HTML omitted -->
+&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-javascript" data-lang="javascript">
+&lt;span class="kd">var&lt;/span> &lt;span class="nx">onDragStart&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="kd">function&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="nx">source&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nx">piece&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;span class="c1">// A few more rules have been added
+&lt;/span>&lt;span class="c1">&lt;/span> &lt;span class="k">if&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="nx">game&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">game_over&lt;/span>&lt;span class="p">()&lt;/span> &lt;span class="o">===&lt;/span> &lt;span class="kc">true&lt;/span> &lt;span class="o">||&lt;/span> &lt;span class="nx">play&lt;/span> &lt;span class="o">||&lt;/span>
+&lt;span class="p">(&lt;/span>&lt;span class="nx">game&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">turn&lt;/span>&lt;span class="p">()&lt;/span> &lt;span class="o">===&lt;/span> &lt;span class="s1">&amp;#39;w&amp;#39;&lt;/span> &lt;span class="o">&amp;amp;&amp;amp;&lt;/span> &lt;span class="nx">piece&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">search&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="sr">/^b/&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="o">!==&lt;/span> &lt;span class="o">-&lt;/span>&lt;span class="mi">1&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="o">||&lt;/span>
+&lt;span class="p">(&lt;/span>&lt;span class="nx">game&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">turn&lt;/span>&lt;span class="p">()&lt;/span> &lt;span class="o">===&lt;/span> &lt;span class="s1">&amp;#39;b&amp;#39;&lt;/span> &lt;span class="o">&amp;amp;&amp;amp;&lt;/span> &lt;span class="nx">piece&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">search&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="sr">/^w/&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="o">!==&lt;/span> &lt;span class="o">-&lt;/span>&lt;span class="mi">1&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="o">||&lt;/span>
+&lt;span class="p">(&lt;/span>&lt;span class="nx">game&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">turn&lt;/span>&lt;span class="p">()&lt;/span> &lt;span class="o">===&lt;/span> &lt;span class="s1">&amp;#39;w&amp;#39;&lt;/span> &lt;span class="o">&amp;amp;&amp;amp;&lt;/span> &lt;span class="nx">color&lt;/span> &lt;span class="o">===&lt;/span> &lt;span class="s1">&amp;#39;black&amp;#39;&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="o">||&lt;/span>
+&lt;span class="p">(&lt;/span>&lt;span class="nx">game&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">turn&lt;/span>&lt;span class="p">()&lt;/span> &lt;span class="o">===&lt;/span> &lt;span class="s1">&amp;#39;b&amp;#39;&lt;/span> &lt;span class="o">&amp;amp;&amp;amp;&lt;/span> &lt;span class="nx">color&lt;/span> &lt;span class="o">===&lt;/span> &lt;span class="s1">&amp;#39;white&amp;#39;&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;span class="k">return&lt;/span> &lt;span class="kc">false&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;span class="p">}&lt;/span>
+&lt;span class="p">};&lt;/span>
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>The function &lt;code>onDrop&lt;/code>, is when the pieces are actually moved. So when the player makes a move and drops a move, the &amp;lsquo;move&amp;rsquo; event is emitted.&lt;/p>
+&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-javascript" data-lang="javascript">
+&lt;span class="kd">var&lt;/span> &lt;span class="nx">onDrop&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="kd">function&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="nx">source&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nx">target&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;span class="nx">removeGreySquares&lt;/span>&lt;span class="p">();&lt;/span>
+&lt;span class="c1">// see if the move is legal
+&lt;/span>&lt;span class="c1">&lt;/span> &lt;span class="kd">var&lt;/span> &lt;span class="nx">move&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="nx">game&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">move&lt;/span>&lt;span class="p">({&lt;/span>
+&lt;span class="nx">from&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="nx">source&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;span class="nx">to&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="nx">target&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;span class="nx">promotion&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="s1">&amp;#39;q&amp;#39;&lt;/span>
+&lt;span class="p">});&lt;/span>
+&lt;span class="k">if&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="nx">game&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">game_over&lt;/span>&lt;span class="p">())&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;span class="nx">state&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">innerHTML&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s1">&amp;#39;GAME OVER&amp;#39;&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;span class="nx">socket&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">emit&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s1">&amp;#39;gameOver&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nx">roomId&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;span class="p">}&lt;/span>
+&lt;span class="c1">// illegal move
+&lt;/span>&lt;span class="c1">&lt;/span> &lt;span class="k">if&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="nx">move&lt;/span> &lt;span class="o">===&lt;/span> &lt;span class="kc">null&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="k">return&lt;/span> &lt;span class="s1">&amp;#39;snapback&amp;#39;&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;span class="c1">// if the move is allowed, emit the move event.
+&lt;/span>&lt;span class="c1">&lt;/span> &lt;span class="k">else&lt;/span>
+&lt;span class="nx">socket&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">emit&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s1">&amp;#39;move&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="p">{&lt;/span> &lt;span class="nx">move&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="nx">move&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nx">board&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="nx">game&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">fen&lt;/span>&lt;span class="p">(),&lt;/span> &lt;span class="nx">room&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="nx">roomId&lt;/span> &lt;span class="p">});&lt;/span>
+&lt;span class="p">};&lt;/span>
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>Now we need to add some listeners, so that changes that are sent via events are reflected in the client.&lt;/p>
+&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-javascript" data-lang="javascript">
+&lt;span class="c1">// if the room is full (players &amp;gt; 2), redirect the user
+&lt;/span>&lt;span class="c1">// to the full.html page we made earlier
+&lt;/span>&lt;span class="c1">&lt;/span>&lt;span class="nx">socket&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">on&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s1">&amp;#39;full&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="kd">function&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="nx">msg&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;span class="k">if&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nx">roomId&lt;/span> &lt;span class="o">==&lt;/span> &lt;span class="nx">msg&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;span class="nb">window&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">location&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">assign&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nb">window&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">location&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">href&lt;/span>&lt;span class="o">+&lt;/span> &lt;span class="s1">&amp;#39;full.html&amp;#39;&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;span class="p">});&lt;/span>
+&lt;span class="c1">// change play to false when both players have
+&lt;/span>&lt;span class="c1">// joined the room, so that they can start playing
+&lt;/span>&lt;span class="c1">// (when play is false the players can play)
+&lt;/span>&lt;span class="c1">&lt;/span>&lt;span class="nx">socket&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">on&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s1">&amp;#39;play&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="kd">function&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="nx">msg&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;span class="k">if&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="nx">msg&lt;/span> &lt;span class="o">==&lt;/span> &lt;span class="nx">roomId&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;span class="nx">play&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="kc">false&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;span class="nx">state&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">innerHTML&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s2">&amp;#34;Game in progress&amp;#34;&lt;/span>
+&lt;span class="p">}&lt;/span>
+&lt;span class="p">});&lt;/span>
+&lt;span class="c1">// when a move happens, check if it was meant for the clients room
+&lt;/span>&lt;span class="c1">// if yes, then make the move on the clients board
+&lt;/span>&lt;span class="c1">&lt;/span>&lt;span class="nx">socket&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">on&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s1">&amp;#39;move&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="kd">function&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="nx">msg&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;span class="k">if&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="nx">msg&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">room&lt;/span> &lt;span class="o">==&lt;/span> &lt;span class="nx">roomId&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;span class="nx">game&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">move&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nx">msg&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">move&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;span class="nx">board&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">position&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nx">game&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">fen&lt;/span>&lt;span class="p">());&lt;/span>
+&lt;span class="nx">console&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">log&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s2">&amp;#34;moved&amp;#34;&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;span class="p">}&lt;/span>
+&lt;span class="p">});&lt;/span>
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>One last method requires implementation, the &lt;code>connect&lt;/code> function. When we click the connect button it needs to emit an event with the room id that the player has entered.&lt;/p>
+&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-javascript" data-lang="javascript">
+&lt;span class="kd">var&lt;/span> &lt;span class="nx">connect&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="kd">function&lt;/span>&lt;span class="p">(){&lt;/span>
+&lt;span class="c1">// extract the value of the input field
+&lt;/span>&lt;span class="c1">&lt;/span> &lt;span class="nx">roomId&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="nx">room&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">value&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;span class="c1">// if the room number is valid
+&lt;/span>&lt;span class="c1">&lt;/span> &lt;span class="k">if&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="nx">roomId&lt;/span> &lt;span class="o">!==&lt;/span> &lt;span class="s2">&amp;#34;&amp;#34;&lt;/span> &lt;span class="o">&amp;amp;&amp;amp;&lt;/span> &lt;span class="nb">parseInt&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nx">roomId&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="o">&amp;lt;=&lt;/span> &lt;span class="mi">100&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;span class="nx">room&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">remove&lt;/span>&lt;span class="p">();&lt;/span>
+&lt;span class="nx">roomNumber&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">innerHTML&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s2">&amp;#34;Room Number &amp;#34;&lt;/span> &lt;span class="o">+&lt;/span> &lt;span class="nx">roomId&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;span class="nx">button&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">remove&lt;/span>&lt;span class="p">();&lt;/span>
+&lt;span class="c1">// emit the &amp;#39;joined&amp;#39; event which we have set up a listener for on the server
+&lt;/span>&lt;span class="c1">&lt;/span> &lt;span class="nx">socket&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">emit&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s1">&amp;#39;joined&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nx">roomId&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;span class="p">}&lt;/span>
+&lt;span class="p">}&lt;/span>
+&lt;/code>&lt;/pre>&lt;/div>&lt;h1 id="checking-if-it-works">Checking if it works&lt;/h1>
+&lt;p>For the complete code, check the repo, &lt;a href="https://github.com/Aveek-Saha/Online-Chess">&lt;code>Online chess&lt;/code>&lt;/a>.&lt;/p>
+&lt;p>cd to the project directory, and then run&lt;/p>
+&lt;pre>&lt;code>node index.js
+&lt;/code>&lt;/pre>&lt;p>If you&amp;rsquo;ve done everything correctly you&amp;rsquo;ll see something like this &lt;a href="https://chess0.herokuapp.com">&lt;code>Live demo&lt;/code>&lt;/a> here. You can open up as many instances as you want and try playing with your friends.&lt;/p>
+&lt;!-- raw HTML omitted --></description></item><item><title>MEAN Todo app</title><link>https://home.aveek.io/blog/post/mean-todo-app/</link><pubDate>Thu, 09 Aug 2018 00:00:00 +0000</pubDate><author>aveek.s98@gmail.com (Aveek Saha)</author><guid>https://home.aveek.io/blog/post/mean-todo-app/</guid><description>
+&lt;p>If you want the code for this project, fork this GitHub repo - &lt;a href="https://github.com/Aveek-Saha/MEAN-todo-app">&lt;code>MEAN Todo app&lt;/code>&lt;/a> &lt;!-- raw HTML omitted -->
+If you want to see a live demoCheck it out here - &lt;a href="https://todo0.herokuapp.com/">&lt;code>Live demo&lt;/code>&lt;/a>&lt;/p>
+&lt;p>If you want the code for this project, fork this GitHub repo - &lt;a href="https://github.com/Aveek-Saha/MEAN-todo-app">&lt;code>MEAN Todo app&lt;/code>&lt;/a> &lt;!-- raw HTML omitted -->
+If you want to see a live demoCheck it out here - &lt;a href="https://todo0.herokuapp.com/">&lt;code>Live demo&lt;/code>&lt;/a>&lt;/p>
+&lt;h1 id="introduction">Introduction&lt;/h1>
+&lt;p>The MEAN stack, for those of you that haven’t heard of it, is a free JavaScript software stack for building modern web applications. This stack consists of – MongoDB, Express, Angular, and NodeJS. MongoDB is a NoSQL database that is highly scalable. Express is a middle-ware library that deals with routing in this case. AngularJS is a front end JavaScript library for the creating UI. NodeJS is a JavaScript run-time environment that executes JavaScript code outside the browser, it allows us to run JavaScript on the server.&lt;/p>
+&lt;h1 id="crud-operations">CRUD Operations&lt;/h1>
+&lt;p>At the heart of it all, what the app does is Create, Read, Update, and Delete documents in the database. The rest of the application simply provides an interface, both front end and back end to facilitate this. The Mongoose library has been used to interact with the MLabs MongoDB database.&lt;/p>
+&lt;p>Using Express we set up the routing for the CRUD operations, using the get method for Reading the list of existing Todos.&lt;!-- raw HTML omitted -->
+&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-javascript" data-lang="javascript">&lt;span class="nx">app&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">get&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s1">&amp;#39;/api/todos&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="nx">req&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nx">res&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">=&amp;gt;{&lt;/span>
+&lt;span class="nx">Todo&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">find&lt;/span>&lt;span class="p">((&lt;/span>&lt;span class="nx">err&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nx">todos&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">=&amp;gt;&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;span class="k">if&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nx">err&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="nx">res&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">send&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nx">err&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;span class="nx">res&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">json&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nx">todos&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;span class="p">})&lt;/span>
+&lt;span class="p">})&lt;/span>
+&lt;/code>&lt;/pre>&lt;/div>&lt;/p>
+&lt;p>The post method for Creating new Todos.&lt;!-- raw HTML omitted -->
+&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-javascript" data-lang="javascript">&lt;span class="nx">app&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">post&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s1">&amp;#39;/api/todos&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="nx">req&lt;/span>&lt;span class="p">,&lt;/span>&lt;span class="nx">res&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">=&amp;gt;{&lt;/span>
+&lt;span class="nx">Todo&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">create&lt;/span>&lt;span class="p">({&lt;/span>
+&lt;span class="nx">text&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="nx">req&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">body&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">text&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;span class="nx">done&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="s1">&amp;#39;false&amp;#39;&lt;/span>
+&lt;span class="p">},&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="nx">err&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nx">todo&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">=&amp;gt;{&lt;/span>
+&lt;span class="k">if&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nx">err&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="nx">res&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">send&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nx">err&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;span class="nx">Todo&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">find&lt;/span>&lt;span class="p">((&lt;/span>&lt;span class="nx">err&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nx">todos&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">=&amp;gt;&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;span class="k">if&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nx">err&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="nx">res&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">send&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nx">err&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;span class="nx">res&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">json&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nx">todos&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;span class="p">});&lt;/span>
+&lt;span class="p">});&lt;/span>
+&lt;span class="p">});&lt;/span>
+&lt;/code>&lt;/pre>&lt;/div>&lt;/p>
+&lt;p>The delete method for Deleting specific Todos. For the delete function we pass the ID of the todo to be deleted as a parameter.&lt;!-- raw HTML omitted -->
+&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-javascript" data-lang="javascript">&lt;span class="nx">app&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="k">delete&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s1">&amp;#39;/api/todos/:todo_id&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="nx">req&lt;/span>&lt;span class="p">,&lt;/span>&lt;span class="nx">res&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">=&amp;gt;{&lt;/span>
+&lt;span class="nx">Todo&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">remove&lt;/span>&lt;span class="p">({&lt;/span>
+&lt;span class="nx">_id&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="nx">req&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">params&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">todo_id&lt;/span>
+&lt;span class="p">},&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="nx">err&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nx">todo&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">=&amp;gt;{&lt;/span>
+&lt;span class="k">if&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nx">err&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="nx">res&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">send&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nx">err&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;span class="nx">Todo&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">find&lt;/span>&lt;span class="p">((&lt;/span>&lt;span class="nx">err&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nx">todos&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">=&amp;gt;&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;span class="k">if&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nx">err&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="nx">res&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">send&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nx">err&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;span class="nx">res&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">json&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nx">todos&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;span class="p">});&lt;/span>
+&lt;span class="p">});&lt;/span>
+&lt;span class="p">});&lt;/span>
+&lt;/code>&lt;/pre>&lt;/div>&lt;/p>
+&lt;p>On our front end, we have a counter that shows the number of tasks to do. This is found by simply counting the number of elements in the response by the get function. Below this is a list of todos, which have been fetched by querying the database for all documents in the todo collection. This is passed as an array to an Angular variable and we iterate through it to create the list of todos.&lt;/p>
+&lt;p>Each todo in this list has its own unique id, which is automatically created in mongodb when a new document is inserted. There is a delete button next to the text content of each task. on pressing this, the id of the todo is passed as a parameter to the delete method for Deleting specific Todos, and it updates the list.&lt;/p>
+&lt;p>There’s a form by which a user can enter a new task to do. On submitting this form, the text entered by the user is sent as a parameter to the route for the post method for Creating new Todos. This function in turn creates a new document in the database, and the list of todos is updated with the new task.&lt;/p>
+&lt;!-- raw HTML omitted --></description></item></channel></rss>

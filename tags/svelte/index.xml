@@ -1,4 +1,443 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Svelte on Aveek's Blog</title><link>https://home.aveek.io/blog/tags/svelte/</link><description>Recent content in Svelte on Aveek's Blog</description><generator>Hugo -- gohugo.io</generator><managingEditor>aveek.s98@gmail.com (Aveek Saha)</managingEditor><webMaster>aveek.s98@gmail.com (Aveek Saha)</webMaster><lastBuildDate>Sun, 24 May 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://home.aveek.io/blog/tags/svelte/index.xml" rel="self" type="application/rss+xml"/><item><title>Getting started with Svelte and Electron</title><link>https://home.aveek.io/blog/post/electron-svelte/</link><pubDate>Sun, 24 May 2020 00:00:00 +0000</pubDate><author>aveek.s98@gmail.com (Aveek Saha)</author><guid>https://home.aveek.io/blog/post/electron-svelte/</guid><description>&lt;p>The code for this tutorial can be found &lt;a href="https://gitlab.com/aveeksaha/electron-svelte">&lt;code>here&lt;/code>&lt;/a>&lt;/p></description></item><item><title>Deploying Svelte apps to Firebase with GitHub actions</title><link>https://home.aveek.io/blog/post/deploy-svelte-firebase/</link><pubDate>Fri, 01 May 2020 00:00:00 +0000</pubDate><author>aveek.s98@gmail.com (Aveek Saha)</author><guid>https://home.aveek.io/blog/post/deploy-svelte-firebase/</guid><description>&lt;p>Check the final application here - &lt;a href="pix2ascii.web.app">&lt;code>pix2ascii&lt;/code>&lt;/a>.&lt;/p>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Svelte on Aveek's Blog</title><link>https://home.aveek.io/blog/tags/svelte/</link><description>Recent content in Svelte on Aveek's Blog</description><generator>Hugo -- gohugo.io</generator><managingEditor>aveek.s98@gmail.com (Aveek Saha)</managingEditor><webMaster>aveek.s98@gmail.com (Aveek Saha)</webMaster><lastBuildDate>Sun, 24 May 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://home.aveek.io/blog/tags/svelte/index.xml" rel="self" type="application/rss+xml"/><item><title>Getting started with Svelte and Electron</title><link>https://home.aveek.io/blog/post/electron-svelte/</link><pubDate>Sun, 24 May 2020 00:00:00 +0000</pubDate><author>aveek.s98@gmail.com (Aveek Saha)</author><guid>https://home.aveek.io/blog/post/electron-svelte/</guid><description>
+&lt;p>The code for this tutorial can be found &lt;a href="https://gitlab.com/aveeksaha/electron-svelte">&lt;code>here&lt;/code>&lt;/a>&lt;/p>
+&lt;p>The code for this tutorial can be found &lt;a href="https://gitlab.com/aveeksaha/electron-svelte">&lt;code>here&lt;/code>&lt;/a>&lt;/p>
+&lt;h1 id="introduction">Introduction&lt;/h1>
+&lt;p>This is a guide to get you up and running with &lt;a href="https://svelte.dev/">&lt;code>Svelte&lt;/code>&lt;/a> + &lt;a href="https://www.electronjs.org/">&lt;code>Electron&lt;/code>&lt;/a>. We&amp;rsquo;ll just be going through the basic setup process to give you a starting point to develop desktop applications with Svelte by using Electron. If you want to learn more about Svelte basics you can check out this tutorial here: &lt;a href="https://home.aveek.io/blog/post/get-started-with-svelte/">Get started with Svelte&lt;/a>.&lt;/p>
+&lt;p>You can follow this tutorial even if you&amp;rsquo;re not too familiar with Svelte because we&amp;rsquo;ll just be setting things up for the project here.&lt;/p>
+&lt;h1 id="create-a-svelte-app">Create a Svelte app&lt;/h1>
+&lt;p>To get started we&amp;rsquo;ll first be cloning the Svelte boilerplate using a tool called &lt;code>degit&lt;/code>. Let&amp;rsquo;s start by installing &lt;code>degit&lt;/code> using&lt;/p>
+&lt;pre>&lt;code>npm install -g degit
+&lt;/code>&lt;/pre>&lt;p>Then we install the boilerplate and install all the dependencies.&lt;/p>
+&lt;pre>&lt;code>npx degit sveltejs/template svelte_electron
+cd svelte_electron
+npm install
+&lt;/code>&lt;/pre>&lt;p>To run the dev server run:&lt;/p>
+&lt;pre>&lt;code>npm run dev
+&lt;/code>&lt;/pre>&lt;p>When you open http://localhost:5000, you should see a default web page. This means that the setup was successful!&lt;/p>
+&lt;h1 id="set-up-electron">Set up Electron&lt;/h1>
+&lt;p>Now we&amp;rsquo;ll install &lt;code>electron&lt;/code> as a development dependency.&lt;/p>
+&lt;pre>&lt;code>npm i -D electron@latest
+&lt;/code>&lt;/pre>&lt;p>Then we&amp;rsquo;ll install &lt;code>electron-reload&lt;/code> and &lt;code>electron-is-dev&lt;/code> for some quality of life improvement during development. &lt;code>electron-reload&lt;/code> will let us watch files and reload the electron app automatically to reflect changes we make to the code. &lt;code>electron-is-dev&lt;/code> will allow us to detect if the application is running in production or development.&lt;/p>
+&lt;pre>&lt;code>npm i -D electron-reload electron-is-dev
+&lt;/code>&lt;/pre>&lt;p>Now we need to create an entry point for our electron app. Create a file called &lt;code>main.js&lt;/code> with the following code.&lt;/p>
+&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-javascript" data-lang="javascript">&lt;span class="kr">const&lt;/span> &lt;span class="p">{&lt;/span> &lt;span class="nx">app&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nx">BrowserWindow&lt;/span> &lt;span class="p">}&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="nx">require&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s1">&amp;#39;electron&amp;#39;&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;span class="kr">const&lt;/span> &lt;span class="nx">path&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="nx">require&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s1">&amp;#39;path&amp;#39;&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;span class="kr">const&lt;/span> &lt;span class="nx">url&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="nx">require&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s1">&amp;#39;url&amp;#39;&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;span class="kr">const&lt;/span> &lt;span class="nx">isDev&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="nx">require&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s1">&amp;#39;electron-is-dev&amp;#39;&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;span class="c1">// If in development use electron-reload to watch for
+&lt;/span>&lt;span class="c1">// changes in the current directory
+&lt;/span>&lt;span class="c1">&lt;/span>&lt;span class="k">if&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="nx">isDev&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;span class="nx">require&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s1">&amp;#39;electron-reload&amp;#39;&lt;/span>&lt;span class="p">)(&lt;/span>&lt;span class="nx">__dirname&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;span class="nx">electron&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="nx">require&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="sb">`&lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nx">__dirname&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="sb">/node_modules/electron`&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;span class="p">});&lt;/span>
+&lt;span class="p">}&lt;/span>
+&lt;span class="kd">function&lt;/span> &lt;span class="nx">createWindow&lt;/span>&lt;span class="p">()&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;span class="c1">// Create the browser window with node integration
+&lt;/span>&lt;span class="c1">&lt;/span> &lt;span class="kr">const&lt;/span> &lt;span class="nx">win&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="k">new&lt;/span> &lt;span class="nx">BrowserWindow&lt;/span>&lt;span class="p">({&lt;/span>
+&lt;span class="nx">width&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="mi">800&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;span class="nx">height&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="mi">600&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;span class="nx">webPreferences&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;span class="nx">nodeIntegration&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="kc">true&lt;/span>
+&lt;span class="p">}&lt;/span>
+&lt;span class="p">})&lt;/span>
+&lt;span class="nx">win&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">loadURL&lt;/span>&lt;span class="p">(&lt;/span>
+&lt;span class="nx">url&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">format&lt;/span>&lt;span class="p">({&lt;/span>
+&lt;span class="nx">pathname&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="nx">path&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">join&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nx">__dirname&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="s1">&amp;#39;public/index.html&amp;#39;&lt;/span>&lt;span class="p">),&lt;/span>
+&lt;span class="nx">protocol&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="s1">&amp;#39;file:&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;span class="nx">slashes&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="kc">true&lt;/span>
+&lt;span class="p">})&lt;/span>
+&lt;span class="p">)&lt;/span>
+&lt;span class="c1">// Open the DevTools only if app is in development
+&lt;/span>&lt;span class="c1">&lt;/span> &lt;span class="c1">// If in production, don&amp;#39;t show.
+&lt;/span>&lt;span class="c1">&lt;/span> &lt;span class="k">if&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="nx">isDev&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;span class="nx">win&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">webContents&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">openDevTools&lt;/span>&lt;span class="p">()&lt;/span>
+&lt;span class="p">}&lt;/span>
+&lt;span class="nx">app&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">whenReady&lt;/span>&lt;span class="p">().&lt;/span>&lt;span class="nx">then&lt;/span>&lt;span class="p">(()&lt;/span> &lt;span class="p">=&amp;gt;&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;span class="nx">createWindow&lt;/span>&lt;span class="p">()&lt;/span>
+&lt;span class="nx">app&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">on&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s1">&amp;#39;activate&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="kd">function&lt;/span> &lt;span class="p">()&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;span class="k">if&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="nx">BrowserWindow&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">getAllWindows&lt;/span>&lt;span class="p">().&lt;/span>&lt;span class="nx">length&lt;/span> &lt;span class="o">===&lt;/span> &lt;span class="mi">0&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="nx">createWindow&lt;/span>&lt;span class="p">()&lt;/span>
+&lt;span class="p">})&lt;/span>
+&lt;span class="p">})&lt;/span>
+&lt;span class="nx">app&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">on&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s1">&amp;#39;window-all-closed&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="kd">function&lt;/span> &lt;span class="p">()&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;span class="k">if&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="nx">process&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">platform&lt;/span> &lt;span class="o">!==&lt;/span> &lt;span class="s1">&amp;#39;darwin&amp;#39;&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="nx">app&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">quit&lt;/span>&lt;span class="p">()&lt;/span>
+&lt;span class="p">})&lt;/span>
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>Now we need to set up some scripts in our &lt;code>package.json&lt;/code> and define the Electron entry point.&lt;/p>
+&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-json" data-lang="json">&lt;span class="p">{&lt;/span> &lt;span class="err">....&lt;/span>
+&lt;span class="nt">&amp;#34;main&amp;#34;&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="s2">&amp;#34;main.js&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;span class="nt">&amp;#34;scripts&amp;#34;&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;span class="err">...&lt;/span>
+&lt;span class="nt">&amp;#34;app&amp;#34;&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="s2">&amp;#34;electron .&amp;#34;&lt;/span>
+&lt;span class="err">...&lt;/span>
+&lt;span class="p">}&lt;/span>
+&lt;span class="err">....&lt;/span>
+&lt;span class="p">}&lt;/span>
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>There&amp;rsquo;s one last step before your application can be rendered. In &lt;code>public/index.html&lt;/code> we need to make the urls absolute so that Electron doesn&amp;rsquo;t give us a resource not found error while loading the page.&lt;/p>
+&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-html" data-lang="html">&lt;span class="cp">&amp;lt;!DOCTYPE html&amp;gt;&lt;/span>
+&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">html&lt;/span> &lt;span class="na">lang&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;en&amp;#34;&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">head&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">meta&lt;/span> &lt;span class="na">charset&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#39;utf-8&amp;#39;&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">meta&lt;/span> &lt;span class="na">name&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#39;viewport&amp;#39;&lt;/span> &lt;span class="na">content&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#39;width=device-width,initial-scale=1&amp;#39;&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">title&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>Svelte app&lt;span class="p">&amp;lt;/&lt;/span>&lt;span class="nt">title&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">link&lt;/span> &lt;span class="na">rel&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#39;icon&amp;#39;&lt;/span> &lt;span class="na">type&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#39;image/png&amp;#39;&lt;/span> &lt;span class="na">href&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#39;favicon.png&amp;#39;&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">link&lt;/span> &lt;span class="na">rel&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#39;stylesheet&amp;#39;&lt;/span> &lt;span class="na">href&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#39;global.css&amp;#39;&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">link&lt;/span> &lt;span class="na">rel&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#39;stylesheet&amp;#39;&lt;/span> &lt;span class="na">href&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#39;build/bundle.css&amp;#39;&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">script&lt;/span> &lt;span class="na">defer&lt;/span> &lt;span class="na">src&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#39;build/bundle.js&amp;#39;&lt;/span>&lt;span class="p">&amp;gt;&amp;lt;/&lt;/span>&lt;span class="nt">script&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;span class="p">&amp;lt;/&lt;/span>&lt;span class="nt">head&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">body&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;span class="p">&amp;lt;/&lt;/span>&lt;span class="nt">body&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;span class="p">&amp;lt;/&lt;/span>&lt;span class="nt">html&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>Run &lt;code>npm run build&lt;/code> to create the compiled JavaScript and CSS files in the &lt;code>public/build/&lt;/code> directory.&lt;/p>
+&lt;p>Now if you run &lt;code>npm run app&lt;/code> you should see the same default welcome page you saw on your browser in an Electron window.&lt;/p>
+&lt;h1 id="live-reload-both-electron-and-svelte">Live reload both electron and Svelte&lt;/h1>
+&lt;p>The way the application is set up now, You could run &lt;code>npm run dev&lt;/code> in one terminal to enable live reload for Svelte, and &lt;code>npm run app&lt;/code> in another terminal to load the electron app. This is a little inconvenient and we can combine both these functions and run them simultaneously.&lt;/p>
+&lt;p>For this we&amp;rsquo;ll be using &lt;a href="https://www.npmjs.com/package/concurrently">&lt;code>concurrently&lt;/code>&lt;/a>. So we&amp;rsquo;ll first install it and then update our scripts in &lt;code>package.json&lt;/code>.&lt;/p>
+&lt;pre>&lt;code>npm i -D concurrently
+&lt;/code>&lt;/pre>&lt;p>Then we&amp;rsquo;ll create a script to run both Svelte and Electron parallelly.&lt;/p>
+&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-json" data-lang="json">&lt;span class="p">{&lt;/span>
+&lt;span class="nt">&amp;#34;scripts&amp;#34;&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;span class="err">...&lt;/span>
+&lt;span class="nt">&amp;#34;app-dev&amp;#34;&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="s2">&amp;#34;concurrently \&amp;#34;npm:dev\&amp;#34; \&amp;#34;npm:app\&amp;#34;&amp;#34;&lt;/span>
+&lt;span class="err">...&lt;/span>
+&lt;span class="p">},&lt;/span>
+&lt;span class="p">}&lt;/span>
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>By running &lt;code>npm run app-dev&lt;/code> you can live reload both Electron and Svelte!&lt;/p>
+&lt;h1 id="conclusion">Conclusion&lt;/h1>
+&lt;p>Now you have a starting point to start building your Electron apps with Svelte at the frontend. While there are some starter templates available, the setup process for this is pretty straightforward and easy to do by yourself.&lt;/p>
+&lt;p>If you&amp;rsquo;re interested in learning Svelte you can check out this tutorial here: &lt;a href="https://home.aveek.io/blog/post/get-started-with-svelte/">Get started with Svelte&lt;/a>.&lt;/p>
+&lt;!-- raw HTML omitted -->
+&lt;!-- raw HTML omitted --></description></item><item><title>Deploying Svelte apps to Firebase with GitHub actions</title><link>https://home.aveek.io/blog/post/deploy-svelte-firebase/</link><pubDate>Fri, 01 May 2020 00:00:00 +0000</pubDate><author>aveek.s98@gmail.com (Aveek Saha)</author><guid>https://home.aveek.io/blog/post/deploy-svelte-firebase/</guid><description>
+&lt;p>Check the final application here - &lt;a href="pix2ascii.web.app">&lt;code>pix2ascii&lt;/code>&lt;/a>.&lt;/p>
 &lt;p>The full code for this project can be found on &lt;a href="https://github.com/Aveek-Saha/pix2ascii">&lt;code>GitHub&lt;/code>&lt;/a>
-or read the previous part here: &lt;a href="https://home.aveek.io/blog/post/getting-started-with-firebase-functions/">&lt;code>Getting started with Firebase Functions&lt;/code>&lt;/a>&lt;/p></description></item><item><title>Get started with Svelte</title><link>https://home.aveek.io/blog/post/get-started-with-svelte/</link><pubDate>Fri, 17 May 2019 00:00:00 +0000</pubDate><author>aveek.s98@gmail.com (Aveek Saha)</author><guid>https://home.aveek.io/blog/post/get-started-with-svelte/</guid><description>&lt;p>Live demo - &lt;a href="https://svelte-tut.netlify.com/">&lt;code>Demo&lt;/code>&lt;/a>&lt;/p>
-&lt;p>Code for this tutorial can be found on &lt;a href="https://gitlab.com/aveeksaha/svelte-tut">&lt;code>Gitlab&lt;/code>&lt;/a>&lt;/p></description></item></channel></rss>
+or read the previous part here: &lt;a href="https://home.aveek.io/blog/post/getting-started-with-firebase-functions/">&lt;code>Getting started with Firebase Functions&lt;/code>&lt;/a>&lt;/p>
+&lt;p>Check the final application here - &lt;a href="pix2ascii.web.app">&lt;code>pix2ascii&lt;/code>&lt;/a>.&lt;/p>
+&lt;p>The full code for this project can be found on &lt;a href="https://github.com/Aveek-Saha/pix2ascii">&lt;code>GitHub&lt;/code>&lt;/a>
+or read the previous part here: &lt;a href="https://home.aveek.io/blog/post/getting-started-with-firebase-functions/">&lt;code>Getting started with Firebase Functions&lt;/code>&lt;/a>&lt;/p>
+&lt;h1 id="introduction">Introduction&lt;/h1>
+&lt;p>In this tutorial we&amp;rsquo;ll be deploying a Svelte application to Firebase hosting. We&amp;rsquo;ll also be automating the deploy process using GitHub actions so that it deploys every time we push changes to GitHub. For those of you not familiar with Svelte, I&amp;rsquo;ve already written a beginners guide on Svelte that you can check out &lt;a href="https://home.aveek.io/blog/post/get-started-with-svelte/">here&lt;/a>. It&amp;rsquo;s fairly easy to learn the basics so be sure to go through that first.&lt;/p>
+&lt;p>If you haven&amp;rsquo;t checked it out already, read the &lt;a href="https://home.aveek.io/blog/post/getting-started-with-firebase-functions/">first part&lt;/a> of this series where I set up a Firebase cloud function as a backend for our application.&lt;/p>
+&lt;p>Even if your use case is different and you&amp;rsquo;re only interested in Automating the deploy process to firebase hosting you can still follow along and modify the steps to suit you choice of frontend framework. Alternatively you can also skip ahead to the Continuous Deployment section below.&lt;/p>
+&lt;h2 id="recap">Recap&lt;/h2>
+&lt;p>In the last part we created a backend Firebase function that accepts an image along with a few other parameters in order to convert that image into ascii art and sends it back as a string.&lt;/p>
+&lt;p>Now that we have our cloud function set up, let&amp;rsquo;s create the frontend from where we can upload the image and get the converted result. For this we&amp;rsquo;ll first need to set up firebase hosting to deploy the frontend.&lt;/p>
+&lt;h1 id="setting-up-firebase">Setting up Firebase&lt;/h1>
+&lt;h3 id="0-initial-setup-">0. Initial setup-&lt;/h3>
+&lt;p>If you&amp;rsquo;ve come here from the previous part you can skip step 0, otherwise first follow these steps:&lt;/p>
+&lt;ol>
+&lt;li>
+&lt;p>Create a Firebase project-
+Go to the firebase console and create a new project. You can choose to set up Google analytics for the project, but it&amp;rsquo;s not really important for this application.&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>Set up Firebase CLI-
+You&amp;rsquo;ll need to have Node.js installed already on your system. Install the cli through npm by running &lt;code>npm install -g firebase-tools&lt;/code>&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>Initialize the Firebase SDK-
+Run &lt;code>firebase login&lt;/code> to log in to the CLI via the browser using the account your new project is linked to.&lt;/p>
+&lt;/li>
+&lt;/ol>
+&lt;h3 id="1-check-your-directory-">1. Check your directory-&lt;/h3>
+&lt;p>Go to the root directory of your Firebase project.&lt;/p>
+&lt;h3 id="2-run-firebase-init-">2. Run Firebase init-&lt;/h3>
+&lt;p>Once in the root directory, run &lt;code>firebase init&lt;/code>, If you&amp;rsquo;ve been following along from the previous article it&amp;rsquo;ll tell you that you&amp;rsquo;re already in a firebase project but that&amp;rsquo;s fine, setting up hosting won&amp;rsquo;t affect the function you created. When prompted for which features you want to set up, select &lt;code>hosting&lt;/code>.&lt;/p>
+&lt;h3 id="3-config-options-">3. Config options-&lt;/h3>
+&lt;p>&lt;code>What do you want to use as your public directory?&lt;/code>, leave as default (public). &lt;code>Configure as a single-page app?&lt;/code>, yes&lt;/p>
+&lt;h1 id="svelte-setup">Svelte Setup&lt;/h1>
+&lt;p>We&amp;rsquo;ll be using a tool called &lt;code>degit&lt;/code> to get the basic template for our Svelte app, so first install that if you don&amp;rsquo;t already have it installed.&lt;/p>
+&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-bash" data-lang="bash">npm install -g degit
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>Create a svelte application in the Firebase project directory&lt;/p>
+&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-bash" data-lang="bash">npx degit sveltejs/template client
+&lt;span class="nb">cd&lt;/span> client
+npm i
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>To run the dev server run&lt;/p>
+&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-bash" data-lang="bash">npm run dev
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>If you visit http://localhost:5000 the default startup page should be displayed and this means your setup was successful.&lt;/p>
+&lt;h2 id="configure-svelte">Configure Svelte&lt;/h2>
+&lt;p>In order to deploy Svelte to Firebase hosting we need to make some changes first.&lt;/p>
+&lt;p>If you look at your file structure, you should see two &lt;code>public&lt;/code> folders that are placed something like this.&lt;/p>
+&lt;pre>&lt;code>|--client/
+| |--public/
+|
+|--public/
+&lt;/code>&lt;/pre>&lt;p>The public folder created by firebase hosting needs to be replaced by the one generated by Svelte. That means replace &lt;code>./public&lt;/code> with &lt;code>./client/public&lt;/code>. This is done because the &lt;code>./public&lt;/code> folder is the one deployed to Firebase hosting and we want this to be our compiled Svelte code.&lt;/p>
+&lt;p>Just copying the folder won&amp;rsquo;t do however, we need to configure the rollup script &lt;code>client/client/rollup.config.js&lt;/code> so that Svelte compiles 0ur frontend to the new &lt;code>public/build/&lt;/code> folder. To do this replace this section of the config file-&lt;/p>
+&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-javascript" data-lang="javascript">&lt;span class="p">..&lt;/span>
+&lt;span class="kr">export&lt;/span> &lt;span class="k">default&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;span class="p">...&lt;/span>
+&lt;span class="p">...&lt;/span>
+&lt;span class="p">}&lt;/span>
+&lt;span class="p">..&lt;/span>
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>With this-&lt;/p>
+&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-javascript" data-lang="javascript">&lt;span class="kr">export&lt;/span> &lt;span class="k">default&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;span class="nx">input&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="s1">&amp;#39;src/main.js&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;span class="nx">output&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;span class="nx">sourcemap&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="kc">true&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;span class="nx">format&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="s1">&amp;#39;iife&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;span class="nx">name&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="s1">&amp;#39;app&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;span class="c1">// Change Js bundle location
+&lt;/span>&lt;span class="c1">&lt;/span> &lt;span class="nx">file&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="s1">&amp;#39;../public/build/bundle.js&amp;#39;&lt;/span>
+&lt;span class="p">},&lt;/span>
+&lt;span class="nx">plugins&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="p">[&lt;/span>
+&lt;span class="nx">svelte&lt;/span>&lt;span class="p">({&lt;/span>
+&lt;span class="nx">dev&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="o">!&lt;/span>&lt;span class="nx">production&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;span class="c1">// Change css bundle location
+&lt;/span>&lt;span class="c1">&lt;/span> &lt;span class="nx">css&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="nx">css&lt;/span> &lt;span class="p">=&amp;gt;&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;span class="nx">css&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">write&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s1">&amp;#39;../public/build/bundle.css&amp;#39;&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;span class="p">}&lt;/span>
+&lt;span class="p">}),&lt;/span>
+&lt;span class="nx">resolve&lt;/span>&lt;span class="p">({&lt;/span>
+&lt;span class="nx">browser&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="kc">true&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;span class="nx">dedupe&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="p">[&lt;/span>&lt;span class="s1">&amp;#39;svelte&amp;#39;&lt;/span>&lt;span class="p">]&lt;/span>
+&lt;span class="p">}),&lt;/span>
+&lt;span class="nx">commonjs&lt;/span>&lt;span class="p">(),&lt;/span>
+&lt;span class="o">!&lt;/span>&lt;span class="nx">production&lt;/span> &lt;span class="o">&amp;amp;&amp;amp;&lt;/span> &lt;span class="nx">serve&lt;/span>&lt;span class="p">(),&lt;/span>
+&lt;span class="c1">// Watch the new `public` directory and refresh
+&lt;/span>&lt;span class="c1">&lt;/span> &lt;span class="c1">// the browser on changes
+&lt;/span>&lt;span class="c1">&lt;/span> &lt;span class="o">!&lt;/span>&lt;span class="nx">production&lt;/span> &lt;span class="o">&amp;amp;&amp;amp;&lt;/span> &lt;span class="nx">livereload&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s1">&amp;#39;../public&amp;#39;&lt;/span>&lt;span class="p">),&lt;/span>
+&lt;span class="nx">production&lt;/span> &lt;span class="o">&amp;amp;&amp;amp;&lt;/span> &lt;span class="nx">terser&lt;/span>&lt;span class="p">()&lt;/span>
+&lt;span class="p">],&lt;/span>
+&lt;span class="nx">watch&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;span class="nx">clearScreen&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="kc">false&lt;/span>
+&lt;span class="p">}&lt;/span>
+&lt;span class="p">};&lt;/span>
+&lt;/code>&lt;/pre>&lt;/div>
+&lt;p>Svelte uses &lt;code>sirv&lt;/code> to host the application on your localhost and we&amp;rsquo;ll have to change the target folder that &lt;code>sirv&lt;/code> serves to the new &lt;code>public&lt;/code> folder. To do this go to the &lt;code>scripts&lt;/code> section of &lt;code>client/package.json&lt;/code> and look for the &lt;code>&amp;quot;start&amp;quot;&lt;/code>script. Replace it with the following-&lt;/p>
+&lt;pre>&lt;code>&amp;quot;scripts&amp;quot;: {
+...
+&amp;quot;start&amp;quot;: &amp;quot;sirv ../public&amp;quot;
+...
+}
+&lt;/code>&lt;/pre>&lt;p>Now if you run &lt;code>npm run dev&lt;/code> to serve your application again you should see the same default starting page when you visit http://localhost:5000 if everything is set up correctly.&lt;/p>
+&lt;h2 id="frontend-code">Frontend code&lt;/h2>
+&lt;p>I will not be explaining the code for the frontend in detail as the main objective of this post is to show you how to set up and deploy the application. The frontend is basically a multipart form where the user has to upload the image, specify the number of characters used to represent one row of the resulting ascii image(width) and select the set of characters that the ascii art will be made from(charset).&lt;/p>
+&lt;p>Once all this information has been submitted by the user, an AJAX request is sent to the cloud function at &lt;code>https://us-central1-&amp;lt;project&amp;gt;.cloudfunctions.net/ascii&lt;/code> and the resulting ascii art string in the response is printed on the screen.&lt;/p>
+&lt;p>You can see a demo of this in action at &lt;a href="https://pix2ascii.web.app/">Pix2Ascii&lt;/a> or check out the Code on &lt;a href="https://github.com/Aveek-Saha/pix2ascii/blob/master/client/src/App.svelte">GitHub&lt;/a>. You can very easily implement this functionality using another framework or your own UI.&lt;/p>
+&lt;p>This ends the Svelte portion of this tutorial.&lt;/p>
+&lt;h1 id="continuous-deployment">Continuous Deployment&lt;/h1>
+&lt;p>Now we&amp;rsquo;ll be looking at how we can deploy our code automatically on every push by using GitHub actions so obviously you&amp;rsquo;ll be needing a GitHub repository for this. To set up a GitHub action we need to create a new workflow, and there are 2 ways to do this-&lt;/p>
+&lt;ol>
+&lt;li>
+&lt;p>In your github repository, go to the actions tab, and select &lt;code>set up a workflow yourself&lt;/code>. This will take you to an editor with a basic workflow that you can replace with the workflow we&amp;rsquo;ll be creating below.&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>If it doesn&amp;rsquo;t already exist, in your repository directory, create a &lt;code>.github&lt;/code> folder and then a folder called &lt;code>workflows&lt;/code> in it. Create a workflow file there under &lt;code>.github/workflows/&lt;/code> and name it &lt;code>deploy.yml&lt;/code>.&lt;/p>
+&lt;/li>
+&lt;/ol>
+&lt;p>In order to authenticate our deploys to firebase, we&amp;rsquo;ll need an auth token from firebase first. To get the token, run &lt;code>firebase login:ci&lt;/code> in your terminal and copy the token it returns. Then add this token to your repository by going to &lt;code>Settings &amp;gt; Secrets &amp;gt; New secret&lt;/code>. Name the token &lt;code>FIREBASE_TOKEN&lt;/code> and paste the token you copied from the terminal.&lt;/p>
+&lt;p>In the &lt;code>.yml&lt;/code> file we&amp;rsquo;ll specify the steps for our workflow.&lt;/p>
+&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-yaml" data-lang="yaml">&lt;span class="k">name&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>CI/CD&lt;span class="w">
+&lt;/span>&lt;span class="w">
+&lt;/span>&lt;span class="w">&lt;/span>&lt;span class="c"># When the workflow will run, in this case&lt;/span>&lt;span class="w">
+&lt;/span>&lt;span class="w">&lt;/span>&lt;span class="c"># on push or pull request to the master branch&lt;/span>&lt;span class="w">
+&lt;/span>&lt;span class="w">&lt;/span>&lt;span class="k">on&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
+&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="k">push&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
+&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="k">branches&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="w"> &lt;/span>master&lt;span class="w"> &lt;/span>&lt;span class="p">]&lt;/span>&lt;span class="w">
+&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="k">pull_request&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
+&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="k">branches&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="w"> &lt;/span>master&lt;span class="w"> &lt;/span>&lt;span class="p">]&lt;/span>&lt;span class="w">
+&lt;/span>&lt;span class="w">
+&lt;/span>&lt;span class="w">&lt;/span>&lt;span class="c"># Jobs are a sequence of steps&lt;/span>&lt;span class="w">
+&lt;/span>&lt;span class="w">&lt;/span>&lt;span class="k">jobs&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
+&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="c"># This workflow has only one Job, build&lt;/span>&lt;span class="w">
+&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="k">build&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
+&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="c"># The type of container the workflow will run on &lt;/span>&lt;span class="w">
+&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="k">runs-on&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>ubuntu-latest&lt;span class="w">
+&lt;/span>&lt;span class="w">
+&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="c"># The sequence of steps for this job&lt;/span>&lt;span class="w">
+&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="k">steps&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
+&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="c"># Checks-out your repository so your job can access it&lt;/span>&lt;span class="w">
+&lt;/span>&lt;span class="w"> &lt;/span>- &lt;span class="k">uses&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>actions/checkout@v2&lt;span class="w">
+&lt;/span>&lt;span class="w">
+&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="c"># First install dependencies for the front end and then &lt;/span>&lt;span class="w">
+&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="c"># for the cloud function. If you only have frontend remove the lines &lt;/span>&lt;span class="w">
+&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="c"># from after &amp;#34;npm run build&amp;#34; till the next step i.e. &amp;#34;Firebase Deploy&amp;#34;&lt;/span>&lt;span class="w">
+&lt;/span>&lt;span class="w"> &lt;/span>- &lt;span class="k">name&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>Build&lt;span class="w">
+&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="k">run&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="sd">|
+&lt;/span>&lt;span class="sd"> cd client&lt;/span>&lt;span class="w">
+&lt;/span>&lt;span class="w"> &lt;/span>npm&lt;span class="w"> &lt;/span>i&lt;span class="w">
+&lt;/span>&lt;span class="w"> &lt;/span>npm&lt;span class="w"> &lt;/span>run&lt;span class="w"> &lt;/span>build&lt;span class="w">
+&lt;/span>&lt;span class="w"> &lt;/span>cd&lt;span class="w"> &lt;/span>..&lt;span class="w">
+&lt;/span>&lt;span class="w"> &lt;/span>cd&lt;span class="w"> &lt;/span>functions&lt;span class="w">
+&lt;/span>&lt;span class="w"> &lt;/span>npm&lt;span class="w"> &lt;/span>i&lt;span class="w">
+&lt;/span>&lt;span class="w">
+&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="c"># Install firebase tools and deploy to firebase&lt;/span>&lt;span class="w">
+&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="c"># using the token we created earlier&lt;/span>&lt;span class="w">
+&lt;/span>&lt;span class="w"> &lt;/span>- &lt;span class="k">name&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>Firebase&lt;span class="w"> &lt;/span>Deploy&lt;span class="w">
+&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="k">run&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="sd">|
+&lt;/span>&lt;span class="sd"> sudo npm install -g firebase-tools&lt;/span>&lt;span class="w">
+&lt;/span>&lt;span class="w"> &lt;/span>firebase&lt;span class="w"> &lt;/span>deploy&lt;span class="w"> &lt;/span>--token&lt;span class="w"> &lt;/span>${{&lt;span class="w"> &lt;/span>secrets.FIREBASE_TOKEN&lt;span class="w"> &lt;/span>}}&lt;span class="w">
+&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h1 id="conclusion">Conclusion&lt;/h1>
+&lt;p>Now everytime you push changes to your Github repository a new job will be started to deploy your application to Firebase. Though this example is for Cloud functions and Hosting you can use the same logic to automatically deploy changes to other Firebase services too.&lt;/p>
+&lt;p>The website will be hosted at &lt;code>&amp;lt;your-project-name&amp;gt;.web.app&lt;/code> after it&amp;rsquo;s been deployed successfully and you can view the final result there.&lt;/p>
+&lt;!-- raw HTML omitted -->
+&lt;!-- raw HTML omitted --></description></item><item><title>Get started with Svelte</title><link>https://home.aveek.io/blog/post/get-started-with-svelte/</link><pubDate>Fri, 17 May 2019 00:00:00 +0000</pubDate><author>aveek.s98@gmail.com (Aveek Saha)</author><guid>https://home.aveek.io/blog/post/get-started-with-svelte/</guid><description>
+&lt;p>Live demo - &lt;a href="https://svelte-tut.netlify.com/">&lt;code>Demo&lt;/code>&lt;/a>&lt;/p>
+&lt;p>Code for this tutorial can be found on &lt;a href="https://gitlab.com/aveeksaha/svelte-tut">&lt;code>Gitlab&lt;/code>&lt;/a>&lt;/p>
+&lt;p>Live demo - &lt;a href="https://svelte-tut.netlify.com/">&lt;code>Demo&lt;/code>&lt;/a>&lt;/p>
+&lt;p>Code for this tutorial can be found on &lt;a href="https://gitlab.com/aveeksaha/svelte-tut">&lt;code>Gitlab&lt;/code>&lt;/a>&lt;/p>
+&lt;h1 id="what-is-svelte">What is Svelte?&lt;/h1>
+&lt;blockquote>
+&lt;p>Svelte is a new way to build web applications. It&amp;rsquo;s a compiler that takes your declarative components and converts them into efficient JavaScript that surgically updates the DOM.&lt;/p>
+&lt;/blockquote>
+&lt;p>Svelte is different from traditional component frameworks like Vue or React because it is essentially a compiler that converts your code into vanilla JavaScript at build time. This allows you to create reactive components without the performance overhead of the Virtual DOM.&lt;/p>
+&lt;p>You can read more about them on their website &lt;a href="https://svelte.dev/">&lt;code>Svelte&lt;/code>&lt;/a>&lt;/p>
+&lt;h1 id="setup">Setup&lt;/h1>
+&lt;p>Like all great tutorials, today I&amp;rsquo;ll be showing you how to make a ToDo application using Svelte.&lt;/p>
+&lt;p>For this tutorial we&amp;rsquo;ll be building on the Svelte boilerplate and we&amp;rsquo;ll need &lt;code>degit&lt;/code> for that so start by installing &lt;code>degit&lt;/code> using&lt;/p>
+&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-bash" data-lang="bash">npm install -g degit
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>Then we install the boilerplate and install all the dependencies.&lt;/p>
+&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-bash" data-lang="bash">npx degit sveltejs/template svelte_tut
+&lt;span class="nb">cd&lt;/span> svelte_tut
+npm install
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>To run the dev server run&lt;/p>
+&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-bash" data-lang="bash">npm run dev
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>Then open http://localhost:5000, you should see something like this&lt;/p>
+&lt;p>&lt;img src="https://home.aveek.io/blog/svelte/svelte_1.png" alt="Screenshot1">&lt;/p>
+&lt;h1 id="making-the-app">Making the app&lt;/h1>
+&lt;p>Open &lt;code>src/App.svelte&lt;/code> and replace the code that was there with&lt;/p>
+&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-html" data-lang="html">&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">script&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;span class="c1">// Variable to store user input
+&lt;/span>&lt;span class="c1">&lt;/span> &lt;span class="kd">let&lt;/span> &lt;span class="nx">task&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s2">&amp;#34;&amp;#34;&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;span class="c1">// Array to store tasks
+&lt;/span>&lt;span class="c1">&lt;/span> &lt;span class="kd">let&lt;/span> &lt;span class="nx">todos&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="p">[&lt;/span>&lt;span class="s2">&amp;#34;eat&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="s2">&amp;#34;sleep&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="s2">&amp;#34;code&amp;#34;&lt;/span>&lt;span class="p">]&lt;/span>
+&lt;span class="p">&amp;lt;/&lt;/span>&lt;span class="nt">script&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">style&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;span class="p">&amp;lt;/&lt;/span>&lt;span class="nt">style&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>&lt;/code>&lt;/pre>&lt;/div>
+&lt;p>We can use Svelte to bind the variable &lt;code>task&lt;/code> to an input element, and add a function to push a new element into the array whenever we press a button.&lt;/p>
+&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-html" data-lang="html">&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">script&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;span class="c1">// Variable to store user input
+&lt;/span>&lt;span class="c1">&lt;/span> &lt;span class="kd">let&lt;/span> &lt;span class="nx">task&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s2">&amp;#34;&amp;#34;&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;span class="c1">// Array to store tasks
+&lt;/span>&lt;span class="c1">&lt;/span> &lt;span class="kd">let&lt;/span> &lt;span class="nx">todos&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="p">[&lt;/span>&lt;span class="s2">&amp;#34;eat&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="s2">&amp;#34;sleep&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="s2">&amp;#34;code&amp;#34;&lt;/span>&lt;span class="p">]&lt;/span>
+&lt;span class="kd">function&lt;/span> &lt;span class="nx">addTask&lt;/span>&lt;span class="p">()&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;span class="c1">// Dont add something if the input value is empty
+&lt;/span>&lt;span class="c1">&lt;/span> &lt;span class="k">if&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nx">task&lt;/span>&lt;span class="o">!=&lt;/span>&lt;span class="s2">&amp;#34;&amp;#34;&lt;/span>&lt;span class="p">){&lt;/span>
+&lt;span class="c1">// Push a new task to the array
+&lt;/span>&lt;span class="c1">&lt;/span> &lt;span class="nx">todos&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">push&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nx">task&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;span class="nx">task&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s2">&amp;#34;&amp;#34;&lt;/span>
+&lt;span class="p">}&lt;/span>
+&lt;span class="p">}&lt;/span>
+&lt;span class="p">&amp;lt;/&lt;/span>&lt;span class="nt">script&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">style&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;span class="p">&amp;lt;/&lt;/span>&lt;span class="nt">style&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;span class="c">&amp;lt;!-- The value of task will now change when you type in the input
+&lt;/span>&lt;span class="c">because the task variable is now bound to the input value --&amp;gt;&lt;/span>
+&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">input&lt;/span> &lt;span class="na">bind:value&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">{task}&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;span class="c">&amp;lt;!-- when the onclick event is triggered it calls addTask --&amp;gt;&lt;/span>
+&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">button&lt;/span> &lt;span class="na">on:click&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">{addTask}&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>Add Task&lt;span class="p">&amp;lt;/&lt;/span>&lt;span class="nt">button&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>&lt;/code>&lt;/pre>&lt;/div>
+&lt;p>Now using a loop, we&amp;rsquo;ll display all the elements in &lt;code>tasks&lt;/code> array as a list and we&amp;rsquo;ll add a method to remove elements from the array by selecting the checkbox next to it.&lt;/p>
+&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-html" data-lang="html">&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">script&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;span class="kd">let&lt;/span> &lt;span class="nx">task&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s2">&amp;#34;&amp;#34;&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;span class="kd">let&lt;/span> &lt;span class="nx">todos&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="p">[&lt;/span>&lt;span class="s2">&amp;#34;eat&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="s2">&amp;#34;sleep&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="s2">&amp;#34;code&amp;#34;&lt;/span>&lt;span class="p">]&lt;/span>
+&lt;span class="kd">function&lt;/span> &lt;span class="nx">addTask&lt;/span>&lt;span class="p">()&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;span class="k">if&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nx">task&lt;/span>&lt;span class="o">!=&lt;/span>&lt;span class="s2">&amp;#34;&amp;#34;&lt;/span>&lt;span class="p">){&lt;/span>
+&lt;span class="nx">todos&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">push&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nx">task&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;span class="c1">// The DOM is only updated when an assignment is made so this
+&lt;/span>&lt;span class="c1">&lt;/span> &lt;span class="c1">// code below is needed even though it may seem redundant
+&lt;/span>&lt;span class="c1">&lt;/span> &lt;span class="c1">// Otherwise the list of todos won&amp;#39;t update when we add a task
+&lt;/span>&lt;span class="c1">&lt;/span> &lt;span class="nx">todos&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="nx">todos&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;span class="nx">task&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s2">&amp;#34;&amp;#34;&lt;/span>
+&lt;span class="p">}&lt;/span>
+&lt;span class="p">}&lt;/span>
+&lt;span class="kd">function&lt;/span> &lt;span class="nx">removeTask&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nx">index&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;span class="nx">todos&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="nx">todos&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">slice&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="mi">0&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nx">index&lt;/span>&lt;span class="p">).&lt;/span>&lt;span class="nx">concat&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nx">todos&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">slice&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nx">index&lt;/span> &lt;span class="o">+&lt;/span> &lt;span class="mi">1&lt;/span>&lt;span class="p">));&lt;/span>
+&lt;span class="nx">console&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">log&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nx">index&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;span class="p">}&lt;/span>
+&lt;span class="p">&amp;lt;/&lt;/span>&lt;span class="nt">script&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">style&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;span class="c">/* remove bullets from list */&lt;/span>
+&lt;span class="nt">ul&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;span class="k">list-style&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="kc">none&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;span class="p">}&lt;/span>
+&lt;span class="p">&amp;lt;/&lt;/span>&lt;span class="nt">style&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">input&lt;/span> &lt;span class="na">bind:value&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">{task}&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">button&lt;/span> &lt;span class="na">on:click&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">{addTask}&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>Add Task&lt;span class="p">&amp;lt;/&lt;/span>&lt;span class="nt">button&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">ul&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;span class="c">&amp;lt;!-- For each element in the array, create a new list element --&amp;gt;&lt;/span>
+{#each todos as todo, index (todo)}
+&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">li&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;span class="c">&amp;lt;!-- When the checkbox is ticked the item is removed from the todos array --&amp;gt;&lt;/span>
+&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">input&lt;/span> &lt;span class="na">type&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">checkbox&lt;/span> &lt;span class="na">on:click&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">{()&lt;/span> &lt;span class="err">=&lt;/span>&lt;span class="p">&amp;gt;&lt;/span> removeTask(index)}&amp;gt;
+{todo}
+&lt;span class="p">&amp;lt;/&lt;/span>&lt;span class="nt">li&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+{/each}
+&lt;span class="p">&amp;lt;/&lt;/span>&lt;span class="nt">ul&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>&lt;/code>&lt;/pre>&lt;/div>
+&lt;p>Now our todo list is nearly done, we can add some global CSS to the &lt;code>public/global.css&lt;/code> file.&lt;/p>
+&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-css" data-lang="css">&lt;span class="nt">html&lt;/span>&lt;span class="o">,&lt;/span> &lt;span class="nt">body&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;span class="k">padding&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="mi">5&lt;/span>&lt;span class="kt">%&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;span class="p">}&lt;/span>
+&lt;span class="nt">html&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;span class="k">display&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="kc">table&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;span class="k">margin&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="kc">auto&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;span class="p">}&lt;/span>
+&lt;span class="nt">body&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;span class="k">display&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="kc">table&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="kc">cell&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;span class="k">vertical-align&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="kc">middle&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;span class="p">}&lt;/span>&lt;/code>&lt;/pre>&lt;/div>
+&lt;p>And your final result should look something like this
+&lt;img src="https://home.aveek.io/blog/svelte/svelte_2.png" alt="Screenshot1">&lt;/p>
+&lt;p>To compile the application we just need to run&lt;/p>
+&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-bash" data-lang="bash">npm run build
+&lt;/code>&lt;/pre>&lt;/div>&lt;h1 id="persistent-storage">Persistent storage&lt;/h1>
+&lt;p>If you want the data to be saved when we refresh the page we can use &lt;code>IndexedDB&lt;/code> to store the list of tasks. The IndexedDB API is not that intuitive, so we&amp;rsquo;ll use a wrapper called &lt;code>idb-keyval&lt;/code>.&lt;/p>
+&lt;p>Install it with&lt;/p>
+&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-bash" data-lang="bash">npm install idb-keyval
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>Import it in &lt;code>App.svelte&lt;/code>, remove the default values in the todo array and then load the array if it is already stored.
+&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-javascript" data-lang="javascript">&lt;span class="c1">// import idb-keyval
+&lt;/span>&lt;span class="c1">&lt;/span>&lt;span class="kr">import&lt;/span> &lt;span class="p">{&lt;/span> &lt;span class="nx">get&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nx">set&lt;/span> &lt;span class="p">}&lt;/span> &lt;span class="nx">from&lt;/span> &lt;span class="s1">&amp;#39;idb-keyval&amp;#39;&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;span class="kd">let&lt;/span> &lt;span class="nx">task&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s2">&amp;#34;&amp;#34;&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;span class="c1">// Empty the default values in the array
+&lt;/span>&lt;span class="c1">&lt;/span>&lt;span class="kd">let&lt;/span> &lt;span class="nx">todos&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="p">[]&lt;/span>
+&lt;span class="nx">get&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s1">&amp;#39;todos&amp;#39;&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;span class="p">.&lt;/span>&lt;span class="nx">then&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nx">arr&lt;/span> &lt;span class="p">=&amp;gt;&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;span class="c1">// If the array is stored from a previous session, assign it to todos
+&lt;/span>&lt;span class="c1">&lt;/span> &lt;span class="k">if&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nx">arr&lt;/span> &lt;span class="o">!==&lt;/span> &lt;span class="kc">undefined&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;span class="nx">todos&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="nx">arr&lt;/span>
+&lt;span class="p">})&lt;/span>
+&lt;/code>&lt;/pre>&lt;/div>&lt;/p>
+&lt;p>Then we need to store the todos array everytime we add or delete tasks from it&lt;/p>
+&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-javascript" data-lang="javascript">&lt;span class="kd">function&lt;/span> &lt;span class="nx">addTask&lt;/span>&lt;span class="p">()&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;span class="k">if&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nx">task&lt;/span>&lt;span class="o">!=&lt;/span>&lt;span class="s2">&amp;#34;&amp;#34;&lt;/span>&lt;span class="p">){&lt;/span>
+&lt;span class="nx">todos&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">push&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nx">task&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;span class="nx">todos&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="nx">todos&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;span class="c1">// Store the array
+&lt;/span>&lt;span class="c1">&lt;/span> &lt;span class="nx">set&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s1">&amp;#39;todos&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nx">todos&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;span class="nx">task&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s2">&amp;#34;&amp;#34;&lt;/span>
+&lt;span class="p">}&lt;/span>
+&lt;span class="p">}&lt;/span>
+&lt;span class="kd">function&lt;/span> &lt;span class="nx">removeTask&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nx">index&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;span class="nx">todos&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="nx">todos&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">slice&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="mi">0&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nx">index&lt;/span>&lt;span class="p">).&lt;/span>&lt;span class="nx">concat&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nx">todos&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">slice&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nx">index&lt;/span> &lt;span class="o">+&lt;/span> &lt;span class="mi">1&lt;/span>&lt;span class="p">));&lt;/span>
+&lt;span class="c1">// Store the array
+&lt;/span>&lt;span class="c1">&lt;/span> &lt;span class="nx">set&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s1">&amp;#39;todos&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nx">todos&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;span class="nx">console&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">log&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nx">index&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;span class="p">}&lt;/span>
+&lt;/code>&lt;/pre>&lt;/div>
+&lt;p>Now the list wont get reset everytime you refresh the page.&lt;/p>
+&lt;h1 id="deploying-to-netlify">Deploying to Netlify&lt;/h1>
+&lt;p>First we&amp;rsquo;re going to add a &lt;code>.gitignore&lt;/code> with a single line-&lt;/p>
+&lt;pre>&lt;code>node_modules
+&lt;/code>&lt;/pre>&lt;p>Create a new project on GitHub or GitLab (Bitbucket is also available) then &lt;code>cd&lt;/code> to your project folder and run the following&lt;/p>
+&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-bash" data-lang="bash">$ git init
+$ git remote add origin &amp;lt;git URL of your project&amp;gt;
+$ git add .
+$ git commit -m &lt;span class="s2">&amp;#34;Initial commit&amp;#34;&lt;/span>
+$ git push origin master
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>Open &lt;a href="https://www.netlify.com/">Netlify&lt;/a> in your browser and sign up for an account if you don&amp;rsquo;t already have one. Go to your &lt;a href="https://app.netlify.com/account/sites">sites&lt;/a> and click &lt;code>New site from Git&lt;/code> then follow the steps-&lt;/p>
+&lt;ol>
+&lt;li>select your git provider.&lt;/li>
+&lt;/ol>
+&lt;ul>
+&lt;li>Choose the repository that you just created and committed to.&lt;/li>
+&lt;li>Under build options go to basic build settings and fill in the following 2 fields:
+&lt;ul>
+&lt;li>Build command&lt;/li>
+&lt;/ul>
+&lt;pre>&lt;code>npm run build
+&lt;/code>&lt;/pre>&lt;ul>
+&lt;li>Publish directory&lt;/li>
+&lt;/ul>
+&lt;pre>&lt;code>public/
+&lt;/code>&lt;/pre>&lt;/li>
+&lt;/ul>
+&lt;p>Then click deploy. When the deploy is finished visit the site url given in the overview, it should look something like this &lt;a href="https://svelte-tut.netlify.com/">Demo&lt;/a>&lt;/p>
+&lt;!-- raw HTML omitted -->
+&lt;!-- raw HTML omitted --></description></item></channel></rss>

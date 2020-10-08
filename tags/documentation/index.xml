@@ -1,3 +1,222 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>documentation on Aveek's Blog</title><link>https://home.aveek.io/blog/tags/documentation/</link><description>Recent content in documentation on Aveek's Blog</description><generator>Hugo -- gohugo.io</generator><managingEditor>aveek.s98@gmail.com (Aveek Saha)</managingEditor><webMaster>aveek.s98@gmail.com (Aveek Saha)</webMaster><lastBuildDate>Mon, 24 Dec 2018 00:00:00 +0000</lastBuildDate><atom:link href="https://home.aveek.io/blog/tags/documentation/index.xml" rel="self" type="application/rss+xml"/><item><title>Build a documentation website with VuePress</title><link>https://home.aveek.io/blog/post/build-a-documentation-site-with-vuepress/</link><pubDate>Mon, 24 Dec 2018 00:00:00 +0000</pubDate><author>aveek.s98@gmail.com (Aveek Saha)</author><guid>https://home.aveek.io/blog/post/build-a-documentation-site-with-vuepress/</guid><description>&lt;p>Live example - &lt;a href="https://vuepress-tut.netlify.com/">&lt;code>Demo&lt;/code>&lt;/a>&lt;/p>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>documentation on Aveek's Blog</title><link>https://home.aveek.io/blog/tags/documentation/</link><description>Recent content in documentation on Aveek's Blog</description><generator>Hugo -- gohugo.io</generator><managingEditor>aveek.s98@gmail.com (Aveek Saha)</managingEditor><webMaster>aveek.s98@gmail.com (Aveek Saha)</webMaster><lastBuildDate>Mon, 24 Dec 2018 00:00:00 +0000</lastBuildDate><atom:link href="https://home.aveek.io/blog/tags/documentation/index.xml" rel="self" type="application/rss+xml"/><item><title>Build a documentation website with VuePress</title><link>https://home.aveek.io/blog/post/build-a-documentation-site-with-vuepress/</link><pubDate>Mon, 24 Dec 2018 00:00:00 +0000</pubDate><author>aveek.s98@gmail.com (Aveek Saha)</author><guid>https://home.aveek.io/blog/post/build-a-documentation-site-with-vuepress/</guid><description>
+&lt;p>Live example - &lt;a href="https://vuepress-tut.netlify.com/">&lt;code>Demo&lt;/code>&lt;/a>&lt;/p>
 &lt;p>Code for this project - &lt;a href="https://gitlab.com/aveeksaha/vuepress-tut">&lt;code>Code&lt;/code>&lt;/a>
-&lt;!-- raw HTML omitted -->&lt;/p></description></item></channel></rss>
+&lt;!-- raw HTML omitted -->&lt;/p>
+&lt;p>Live example - &lt;a href="https://vuepress-tut.netlify.com/">&lt;code>Demo&lt;/code>&lt;/a>&lt;/p>
+&lt;p>Code for this project - &lt;a href="https://gitlab.com/aveeksaha/vuepress-tut">&lt;code>Code&lt;/code>&lt;/a>
+&lt;!-- raw HTML omitted -->&lt;/p>
+&lt;h1 id="introduction">Introduction&lt;/h1>
+&lt;p>&lt;a href="https://vuepress.vuejs.org/">VuePress&lt;/a> is a static site generator powered by Vue. VuePress uses markdown to generate pages so you can focus on just the writing. Also it alows you to use Vue components in markdown and use custom themes. By default VuePress ships with a responsive theme, which is what we&amp;rsquo;ll be using for this project.&lt;/p>
+&lt;p>All these features make VuePress ideal for building documentation websites. This tutorial will show you how to get a documentation website up and running in 15 minutes.&lt;/p>
+&lt;h1 id="installation">Installation&lt;/h1>
+&lt;p>For this project you&amp;rsquo;ll need Node and npm. Then we&amp;rsquo;ll install VuePress globally so that we can use the cli and also locally for when we deploy.&lt;/p>
+&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-bash" data-lang="bash">$ npm install -g vuepress
+$ npm install -D vuepress
+&lt;/code>&lt;/pre>&lt;/div>&lt;h1 id="setup">Setup&lt;/h1>
+&lt;p>Create a new project folder and change your current working directory to this folder.&lt;/p>
+&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-bash" data-lang="bash">$ mkdir doc-tut &lt;span class="o">&amp;amp;&amp;amp;&lt;/span> &lt;span class="nb">cd&lt;/span> doc-tut
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>Then initialize this project with a &lt;code>package.json&lt;/code>&lt;/p>
+&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-bash" data-lang="bash">$ npm init -y
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>Create a folder called &lt;code>docs&lt;/code>&lt;/p>
+&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-bash" data-lang="bash">$ mkdir docs
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>In this &lt;code>docs&lt;/code> folder create a new folder called &lt;code>.vuepress&lt;/code> and add a file inside this called &lt;code>config.js&lt;/code>. Then create a &lt;code>readme.md&lt;/code> file in the &lt;code>docs&lt;/code> folder.&lt;/p>
+&lt;p>Each sub folder we add to the docs folder becomes a sub route. We&amp;rsquo;re going to add 2 new folders called &lt;code>guide&lt;/code> and &lt;code>get-started&lt;/code> and add a &lt;code>readme.md&lt;/code> file to both of these folders. This means that we now have two sub routes that point to &lt;code>/guide/&lt;/code> and &lt;code>/get-started/&lt;/code>.&lt;/p>
+&lt;p>Each markdown file in a folder becomes a HTML file with the route being the parent folder and the &lt;code>readme.md&lt;/code> file becomes the &lt;code>index.html&lt;/code> file for that subroute&lt;/p>
+&lt;p>Your current File structure should look like this&lt;/p>
+&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-js" data-lang="js">&lt;span class="nx">doc&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="nx">tut&lt;/span>
+&lt;span class="o">|----&lt;/span>&lt;span class="nx">docs&lt;/span>
+&lt;span class="o">|&lt;/span> &lt;span class="o">|--&lt;/span>&lt;span class="nx">readme&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">md&lt;/span> &lt;span class="c1">// index.html for the root directory
+&lt;/span>&lt;span class="c1">&lt;/span> &lt;span class="o">|&lt;/span> &lt;span class="o">|----&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">vuepress&lt;/span>
+&lt;span class="o">|&lt;/span> &lt;span class="o">|&lt;/span> &lt;span class="o">|&lt;/span>
+&lt;span class="o">|&lt;/span> &lt;span class="o">|&lt;/span> &lt;span class="o">|--&lt;/span>&lt;span class="nx">config&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">js&lt;/span> &lt;span class="c1">// configuration file for the default theme
+&lt;/span>&lt;span class="c1">&lt;/span> &lt;span class="o">|&lt;/span> &lt;span class="o">|&lt;/span>
+&lt;span class="o">|&lt;/span> &lt;span class="o">|----&lt;/span>&lt;span class="nx">getting&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="nx">started&lt;/span>
+&lt;span class="o">|&lt;/span> &lt;span class="o">|&lt;/span> &lt;span class="o">|&lt;/span>
+&lt;span class="o">|&lt;/span> &lt;span class="o">|&lt;/span> &lt;span class="o">|--&lt;/span>&lt;span class="nx">readme&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">md&lt;/span>
+&lt;span class="o">|&lt;/span> &lt;span class="o">|&lt;/span>
+&lt;span class="o">|&lt;/span> &lt;span class="o">|----&lt;/span>&lt;span class="nx">guide&lt;/span>
+&lt;span class="o">|&lt;/span> &lt;span class="o">|&lt;/span>
+&lt;span class="o">|&lt;/span> &lt;span class="o">|--&lt;/span>&lt;span class="nx">readme&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">md&lt;/span>
+&lt;span class="o">|&lt;/span>
+&lt;span class="o">|--&lt;/span>&lt;span class="kr">package&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">json&lt;/span>
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>Inside the &lt;code>config.js&lt;/code> file place the following code.&lt;/p>
+&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-javascript" data-lang="javascript">&lt;span class="nx">module&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">exports&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;span class="nx">title&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="s1">&amp;#39;New Docs&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="c1">// Title of the website
+&lt;/span>&lt;span class="c1">&lt;/span> &lt;span class="c1">// appears in the meta tag and as a subtitle
+&lt;/span>&lt;span class="c1">&lt;/span> &lt;span class="nx">description&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="s2">&amp;#34;A small documentation site&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;span class="c1">// Google Analytics tracking code
+&lt;/span>&lt;span class="c1">&lt;/span> &lt;span class="nx">ga&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="s2">&amp;#34;Analytics code&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;span class="nx">themeConfig&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;span class="nx">nav&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="p">[&lt;/span>
+&lt;span class="c1">// links that will appear in the top navbar
+&lt;/span>&lt;span class="c1">&lt;/span> &lt;span class="p">{&lt;/span> &lt;span class="nx">text&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="s1">&amp;#39;Guide&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nx">link&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="s1">&amp;#39;/guide/&amp;#39;&lt;/span> &lt;span class="p">},&lt;/span>
+&lt;span class="p">{&lt;/span> &lt;span class="nx">text&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="s1">&amp;#39;Get Started&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nx">link&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="s1">&amp;#39;/get-started/&amp;#39;&lt;/span> &lt;span class="p">},&lt;/span>
+&lt;span class="c1">// external link
+&lt;/span>&lt;span class="c1">&lt;/span> &lt;span class="p">{&lt;/span> &lt;span class="nx">text&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="s1">&amp;#39;Github&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nx">link&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="s1">&amp;#39;https://github.com/Aveek-Saha&amp;#39;&lt;/span> &lt;span class="p">},&lt;/span>
+&lt;span class="p">],&lt;/span>
+&lt;span class="nx">sidebar&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="p">[&lt;/span>
+&lt;span class="c1">// These links will appear in the sidebar
+&lt;/span>&lt;span class="c1">&lt;/span> &lt;span class="c1">// Create heading groups
+&lt;/span>&lt;span class="c1">&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;span class="nx">title&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="s1">&amp;#39;Getting Started&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;span class="nx">collapsable&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="kc">false&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;span class="nx">children&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="p">[&lt;/span>
+&lt;span class="c1">// These are pages we&amp;#39;ll add later
+&lt;/span>&lt;span class="c1">&lt;/span> &lt;span class="s1">&amp;#39;/get-started/installation&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;span class="s1">&amp;#39;/get-started/using&amp;#39;&lt;/span>
+&lt;span class="p">]&lt;/span>
+&lt;span class="p">},&lt;/span>
+&lt;span class="p">{&lt;/span>
+&lt;span class="nx">title&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="s1">&amp;#39;Guide&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;span class="nx">collapsable&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="kc">false&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;span class="nx">children&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="p">[&lt;/span>
+&lt;span class="c1">// These are pages we&amp;#39;ll add later
+&lt;/span>&lt;span class="c1">&lt;/span> &lt;span class="s1">&amp;#39;/guide/api-reference&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;span class="s1">&amp;#39;/guide/deploying&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;span class="p">]&lt;/span>
+&lt;span class="p">}&lt;/span>
+&lt;span class="p">]&lt;/span>
+&lt;span class="p">}&lt;/span>
+&lt;span class="p">}&lt;/span>
+&lt;/code>&lt;/pre>&lt;/div>
+&lt;h1 id="home-page">Home page&lt;/h1>
+&lt;p>Now we&amp;rsquo;re going to create the front page for out website. You can read more about the &lt;a href="https://v0.vuepress.vuejs.org/default-theme-config/">Default Theme Config&lt;/a> here.&lt;/p>
+&lt;p>In &lt;code>docs/readme.md&lt;/code> place the following code&lt;/p>
+&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-markdown" data-lang="markdown">---
+home: true
+actionText: 📝 Guide
+actionLink: /guide/api-reference
+features:
+&lt;span class="k">-&lt;/span> title: Simplicity First
+details: Minimal setup with markdown-centered project structure helps you focus on writing.
+&lt;span class="k">-&lt;/span> title: Vue-Powered
+details: Enjoy the dev experience of Vue + webpack, use Vue components in markdown, and develop custom themes with Vue.
+&lt;span class="k">-&lt;/span> title: Performant
+details: VuePress generates pre-rendered static HTML for each page, and runs as an SPA once a page is loaded.
+footer: Made with 💚 by Aveek Saha
+---
+&lt;span class="gh"># Installation
+&lt;/span>&lt;span class="gh">&lt;/span>Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+In interdum in sapien sed dictum. Phasellus placerat sem a eros rutrum efficitur.
+Proin vestibulum quam ut felis maximus lacinia.
+Vestibulum non cursus massa. Pellentesque quis leo at tellus aliquet porta.&lt;/code>&lt;/pre>&lt;/div>
+&lt;p>To see this live, open the project dir in your terminal run&lt;/p>
+&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-bash" data-lang="bash">$ vuepress dev docs
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>Once it finishes compiling go to http://localhost:8080/ to see the homepage we just created. It should look like this&lt;/p>
+&lt;!-- raw HTML omitted -->
+&lt;p>&lt;img src="https://home.aveek.io/blog/vuepress/screenshot1.png" alt="Screenshot1">&lt;/p>
+&lt;h1 id="adding-the-other-pages">Adding the other pages&lt;/h1>
+&lt;h2 id="get-started">Get Started&lt;/h2>
+&lt;p>If you remember, we added two children to the sidebar group Getting Started in &lt;code>config.js&lt;/code> (&lt;code>/get-started/installation&lt;/code> and &lt;code>/get-started/using&lt;/code>).&lt;/p>
+&lt;p>So we are going to add these files to the &lt;code>get-started&lt;/code> sub-directory. Create two files,&lt;code>installation.md&lt;/code> and &lt;code>using.md &lt;/code>.&lt;/p>
+&lt;p>Copy this in both the files&lt;/p>
+&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-markdown" data-lang="markdown">---
+title: Installation
+---
+&lt;span class="c">&amp;lt;!-- change the title to Using in using.md --&amp;gt;&lt;/span>
+&lt;span class="gh"># Installation
+&lt;/span>&lt;span class="gh">&lt;/span>
+There are two ways to include this in your project.
+&lt;span class="gu">### NPM
+&lt;/span>&lt;span class="gu">&lt;/span>&lt;span class="s">```sh
+&lt;/span>&lt;span class="s">&lt;/span>
+npm i some-lib
+&lt;span class="s">```&lt;/span>
+&lt;span class="gu">### CDN
+&lt;/span>&lt;span class="gu">&lt;/span>&lt;span class="s">```sh
+&lt;/span>&lt;span class="s">&lt;/span>
+https://cdn.jsdelivr.net/npm/something/something.js
+&lt;span class="s">```&lt;/span>&lt;/code>&lt;/pre>&lt;/div>
+&lt;p>Once you add the code, The site should look something like this&lt;/p>
+&lt;!-- raw HTML omitted -->
+&lt;p>&lt;img src="https://home.aveek.io/blog/vuepress/screenshot2.png" alt="Screenshot2">&lt;/p>
+&lt;h2 id="guide">Guide&lt;/h2>
+&lt;p>Another sidebar group we created called Guide also had two children, &lt;code>'/guide/api-reference'&lt;/code> and &lt;code>'/guide/deploying'&lt;/code>.&lt;/p>
+&lt;p>So we&amp;rsquo;ll add these files to the &lt;code>guide&lt;/code> sub-directory,&lt;code>api-reference.md&lt;/code> and &lt;code>deploying.md &lt;/code>.&lt;/p>
+&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-markdown" data-lang="markdown">---
+title: API reference
+---
+&lt;span class="gh"># API reference
+&lt;/span>&lt;span class="gh">&lt;/span>
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. In interdum in sapien sed dictum.
+Phasellus placerat sem a eros rutrum efficitur.
+Proin vestibulum quam ut felis maximus lacinia. Vestibulum non cursus massa.
+Pellentesque quis leo at tellus aliquet porta. Quisque volutpat sollicitudin tincidunt.
+In gravida ante nisl, at pretium nibh scelerisque eget. Phasellus eleifend pretium imperdiet.
+Nunc egestas finibus dui a rhoncus. Integer viverra dapibus posuere.
+Donec ut augue neque. Aliquam sed sem eu lacus posuere semper sit amet quis orci.
+&lt;span class="gu">### Code
+&lt;/span>&lt;span class="gu">&lt;/span>&lt;span class="s">```py
+&lt;/span>&lt;span class="s">&lt;/span>
+&lt;span class="k">for&lt;/span> &lt;span class="n">x&lt;/span> &lt;span class="ow">in&lt;/span> &lt;span class="nb">range&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="mi">10&lt;/span>&lt;span class="p">):&lt;/span>
+&lt;span class="k">print&lt;/span> &lt;span class="n">x&lt;/span>&lt;span class="o">+&lt;/span>&lt;span class="mi">1&lt;/span>
+&lt;span class="s">```&lt;/span>&lt;/code>&lt;/pre>&lt;/div>
+&lt;p>Once you finish, The site should look something like this&lt;/p>
+&lt;!-- raw HTML omitted -->
+&lt;p>&lt;img src="https://home.aveek.io/blog/vuepress/screenshot3.png" alt="Screenshot3">&lt;/p>
+&lt;h1 id="deploying-to-netlify">Deploying to Netlify&lt;/h1>
+&lt;p>First we&amp;rsquo;re going to add a &lt;code>.gitignore&lt;/code> with a single line-&lt;/p>
+&lt;pre>&lt;code>node_modules
+&lt;/code>&lt;/pre>&lt;p>Create a new project on GitHub or GitLab (Bitbucket is also available) then cd to your project folder and run the following&lt;/p>
+&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-bash" data-lang="bash">$ git init
+$ git remote add origin &amp;lt;git URL of your project&amp;gt;
+$ git add .
+$ git commit -m &lt;span class="s2">&amp;#34;Initial commit&amp;#34;&lt;/span>
+$ git push origin master
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>Open &lt;a href="https://www.netlify.com/">Netlify&lt;/a> in your browser and sign up for an account if you don&amp;rsquo;t already have one. Go to your &lt;a href="https://app.netlify.com/account/sites">sites&lt;/a> and click &lt;code>New site from Git&lt;/code> then follow the steps-&lt;/p>
+&lt;ol>
+&lt;li>select your git provider.&lt;/li>
+&lt;/ol>
+&lt;ul>
+&lt;li>Choose the repository that you just created and commited to.&lt;/li>
+&lt;li>Under build options go to basic build settings and fill in the following 2 fields:
+&lt;ul>
+&lt;li>Build command&lt;/li>
+&lt;/ul>
+&lt;pre>&lt;code>vuepress build docs
+&lt;/code>&lt;/pre>&lt;ul>
+&lt;li>Publish directory&lt;/li>
+&lt;/ul>
+&lt;pre>&lt;code>docs/.vuepress/dist/
+&lt;/code>&lt;/pre>&lt;/li>
+&lt;/ul>
+&lt;p>Here are some screenshots of the process.
+&lt;div class="gallery caption-position-bottom caption-effect-fade hover-effect-zoom hover-transition" itemscope itemtype="http://schema.org/ImageGallery">
+&lt;link rel="stylesheet" href="https://home.aveek.io/blog/css/hugo-easy-gallery.css" />
+&lt;div class="box" >
+&lt;figure itemprop="associatedMedia" itemscope itemtype="http://schema.org/ImageObject">
+&lt;div class="img" style="background-image: url('/vuepress/screenshot4.png');">
+&lt;img itemprop="thumbnail" src="https://home.aveek.io/blog/vuepress/screenshot4.png" alt="Step 1"/>
+&lt;/div>
+&lt;figcaption>
+&lt;p>Step 1&lt;/p>
+&lt;/figcaption>
+&lt;a href="https://home.aveek.io/blog/vuepress/screenshot4.png" itemprop="contentUrl">&lt;/a>
+&lt;/figure>
+&lt;/div>
+&lt;div class="box" >
+&lt;figure itemprop="associatedMedia" itemscope itemtype="http://schema.org/ImageObject">
+&lt;div class="img" style="background-image: url('/vuepress/screenshot5.png');">
+&lt;img itemprop="thumbnail" src="https://home.aveek.io/blog/vuepress/screenshot5.png" alt="Step 2"/>
+&lt;/div>
+&lt;figcaption>
+&lt;p>Step 2&lt;/p>
+&lt;/figcaption>
+&lt;a href="https://home.aveek.io/blog/vuepress/screenshot5.png" itemprop="contentUrl">&lt;/a>
+&lt;/figure>
+&lt;/div>
+&lt;div class="box" >
+&lt;figure itemprop="associatedMedia" itemscope itemtype="http://schema.org/ImageObject">
+&lt;div class="img" style="background-image: url('/vuepress/screenshot6.png');">
+&lt;img itemprop="thumbnail" src="https://home.aveek.io/blog/vuepress/screenshot6.png" alt="Step 3"/>
+&lt;/div>
+&lt;figcaption>
+&lt;p>Step 3&lt;/p>
+&lt;/figcaption>
+&lt;a href="https://home.aveek.io/blog/vuepress/screenshot6.png" itemprop="contentUrl">&lt;/a>
+&lt;/figure>
+&lt;/div>
+&lt;/div>&lt;/p>
+&lt;p>Then click deploy. The first deploy might take a while, so dont hold your breath. When the deploy is finished visit the site url given in the overview, it should look something like this &lt;a href="https://vuepress-tut.netlify.com/">Demo&lt;/a>&lt;/p>
+&lt;!-- raw HTML omitted -->
+&lt;!-- raw HTML omitted --></description></item></channel></rss>
