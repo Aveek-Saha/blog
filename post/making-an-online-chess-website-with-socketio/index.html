@@ -23,82 +23,82 @@ Check out the code in action here, play it yourself - <a href=https://chess0.her
 </code></pre></div></p><h1 id=setup>Setup</h1><p>Create a new project folder, cd to that directory and then run</p><pre><code>npm init
 </code></pre><p>After that go to <a href=http://chessboardjs.com/><code>Chessboard.js</code></a> and download the latest version. Extract the contents to the <code>chessboard</code> folder. Copy the <code>img</code> folder from <code>chessboard</code> to the root directory . We&rsquo;re going to use this library to display and interact with the chessboard and the pieces.</p><p>Now we&rsquo;ll create the <code>index.html</code> and <code>game.js</code> files. Go to this <a href=http://chessboardjs.com/examples#5003><code>Highlight Legal Moves</code></a> example on the <a href=http://chessboardjs.com/><code>Chessboard.js</code></a> website.</p><p>For checking valid moves, piece placement and check/checkmate detection we&rsquo;ll be using another library called <a href=https://github.com/jhlywa/chess.js><code>Chess.js</code></a>. We&rsquo;re going to include this via CDN in <code>index.html</code></p><p>Copy the JavaScript section of the code into <code>game.js</code>. Your File should look like this.</p><div class=highlight><pre class=chroma><code class=language-javascript data-lang=javascript> 
 <span class=kd>var</span> <span class=nx>board</span><span class=p>,</span>
- <span class=nx>game</span> <span class=o>=</span> <span class=k>new</span> <span class=nx>Chess</span><span class=p>();</span>
- 
-<span class=kd>var</span> <span class=nx>removeGreySquares</span> <span class=o>=</span> <span class=kd>function</span><span class=p>()</span> <span class=p>{</span>
- <span class=nx>$</span><span class=p>(</span><span class=s1>&#39;#board .square-55d63&#39;</span><span class=p>).</span><span class=nx>css</span><span class=p>(</span><span class=s1>&#39;background&#39;</span><span class=p>,</span> <span class=s1>&#39;&#39;</span><span class=p>);</span>
+<span class=nx>game</span> <span class=o>=</span> <span class=k>new</span> <span class=nx>Chess</span><span class=p>();</span>
+
+<span class=kd>var</span> <span class=nx>removeGreySquares</span> <span class=o>=</span> <span class=kd>function</span> <span class=p>()</span> <span class=p>{</span>
+    <span class=nx>$</span><span class=p>(</span><span class=s1>&#39;#board .square-55d63&#39;</span><span class=p>).</span><span class=nx>css</span><span class=p>(</span><span class=s1>&#39;background&#39;</span><span class=p>,</span> <span class=s1>&#39;&#39;</span><span class=p>);</span>
 <span class=p>};</span>
- 
-<span class=kd>var</span> <span class=nx>greySquare</span> <span class=o>=</span> <span class=kd>function</span><span class=p>(</span><span class=nx>square</span><span class=p>)</span> <span class=p>{</span>
- <span class=kd>var</span> <span class=nx>squareEl</span> <span class=o>=</span> <span class=nx>$</span><span class=p>(</span><span class=s1>&#39;#board .square-&#39;</span> <span class=o>+</span> <span class=nx>square</span><span class=p>);</span>
-  <span class=kd>var</span> <span class=nx>background</span> <span class=o>=</span> <span class=s1>&#39;#a9a9a9&#39;</span><span class=p>;</span>
- <span class=k>if</span> <span class=p>(</span><span class=nx>squareEl</span><span class=p>.</span><span class=nx>hasClass</span><span class=p>(</span><span class=s1>&#39;black-3c85d&#39;</span><span class=p>)</span> <span class=o>===</span> <span class=kc>true</span><span class=p>)</span> <span class=p>{</span>
-   <span class=nx>background</span> <span class=o>=</span> <span class=s1>&#39;#696969&#39;</span><span class=p>;</span>
- <span class=p>}</span>
- 
- <span class=nx>squareEl</span><span class=p>.</span><span class=nx>css</span><span class=p>(</span><span class=s1>&#39;background&#39;</span><span class=p>,</span> <span class=nx>background</span><span class=p>);</span>
+
+<span class=kd>var</span> <span class=nx>greySquare</span> <span class=o>=</span> <span class=kd>function</span> <span class=p>(</span><span class=nx>square</span><span class=p>)</span> <span class=p>{</span>
+    <span class=kd>var</span> <span class=nx>squareEl</span> <span class=o>=</span> <span class=nx>$</span><span class=p>(</span><span class=s1>&#39;#board .square-&#39;</span> <span class=o>+</span> <span class=nx>square</span><span class=p>);</span>
+    <span class=kd>var</span> <span class=nx>background</span> <span class=o>=</span> <span class=s1>&#39;#a9a9a9&#39;</span><span class=p>;</span>
+    <span class=k>if</span> <span class=p>(</span><span class=nx>squareEl</span><span class=p>.</span><span class=nx>hasClass</span><span class=p>(</span><span class=s1>&#39;black-3c85d&#39;</span><span class=p>)</span> <span class=o>===</span> <span class=kc>true</span><span class=p>)</span> <span class=p>{</span>
+        <span class=nx>background</span> <span class=o>=</span> <span class=s1>&#39;#696969&#39;</span><span class=p>;</span>
+    <span class=p>}</span>
+
+    <span class=nx>squareEl</span><span class=p>.</span><span class=nx>css</span><span class=p>(</span><span class=s1>&#39;background&#39;</span><span class=p>,</span> <span class=nx>background</span><span class=p>);</span>
 <span class=p>};</span>
- 
-<span class=kd>var</span> <span class=nx>onDragStart</span> <span class=o>=</span> <span class=kd>function</span><span class=p>(</span><span class=nx>source</span><span class=p>,</span> <span class=nx>piece</span><span class=p>)</span> <span class=p>{</span>
- <span class=c1>// do not pick up pieces if the game is over
-</span><span class=c1></span> <span class=c1>// or if it&#39;s not that side&#39;s turn
-</span><span class=c1></span> <span class=k>if</span> <span class=p>(</span><span class=nx>game</span><span class=p>.</span><span class=nx>game_over</span><span class=p>()</span> <span class=o>===</span> <span class=kc>true</span> <span class=o>||</span>
-     <span class=p>(</span><span class=nx>game</span><span class=p>.</span><span class=nx>turn</span><span class=p>()</span> <span class=o>===</span> <span class=s1>&#39;w&#39;</span> <span class=o>&amp;&amp;</span> <span class=nx>piece</span><span class=p>.</span><span class=nx>search</span><span class=p>(</span><span class=sr>/^b/</span><span class=p>)</span> <span class=o>!==</span> <span class=o>-</span><span class=mi>1</span><span class=p>)</span> <span class=o>||</span>
-     <span class=p>(</span><span class=nx>game</span><span class=p>.</span><span class=nx>turn</span><span class=p>()</span> <span class=o>===</span> <span class=s1>&#39;b&#39;</span> <span class=o>&amp;&amp;</span> <span class=nx>piece</span><span class=p>.</span><span class=nx>search</span><span class=p>(</span><span class=sr>/^w/</span><span class=p>)</span> <span class=o>!==</span> <span class=o>-</span><span class=mi>1</span><span class=p>))</span> <span class=p>{</span>
-   <span class=k>return</span> <span class=kc>false</span><span class=p>;</span>
- <span class=p>}</span>
+
+<span class=kd>var</span> <span class=nx>onDragStart</span> <span class=o>=</span> <span class=kd>function</span> <span class=p>(</span><span class=nx>source</span><span class=p>,</span> <span class=nx>piece</span><span class=p>)</span> <span class=p>{</span>
+    <span class=c1>// do not pick up pieces if the game is over
+</span><span class=c1></span>    <span class=c1>// or if it&#39;s not that side&#39;s turn
+</span><span class=c1></span>    <span class=k>if</span> <span class=p>(</span><span class=nx>game</span><span class=p>.</span><span class=nx>game_over</span><span class=p>()</span> <span class=o>===</span> <span class=kc>true</span> <span class=o>||</span>
+        <span class=p>(</span><span class=nx>game</span><span class=p>.</span><span class=nx>turn</span><span class=p>()</span> <span class=o>===</span> <span class=s1>&#39;w&#39;</span> <span class=o>&amp;&amp;</span> <span class=nx>piece</span><span class=p>.</span><span class=nx>search</span><span class=p>(</span><span class=sr>/^b/</span><span class=p>)</span> <span class=o>!==</span> <span class=o>-</span><span class=mi>1</span><span class=p>)</span> <span class=o>||</span>
+        <span class=p>(</span><span class=nx>game</span><span class=p>.</span><span class=nx>turn</span><span class=p>()</span> <span class=o>===</span> <span class=s1>&#39;b&#39;</span> <span class=o>&amp;&amp;</span> <span class=nx>piece</span><span class=p>.</span><span class=nx>search</span><span class=p>(</span><span class=sr>/^w/</span><span class=p>)</span> <span class=o>!==</span> <span class=o>-</span><span class=mi>1</span><span class=p>))</span> <span class=p>{</span>
+        <span class=k>return</span> <span class=kc>false</span><span class=p>;</span>
+    <span class=p>}</span>
 <span class=p>};</span>
- 
-<span class=kd>var</span> <span class=nx>onDrop</span> <span class=o>=</span> <span class=kd>function</span><span class=p>(</span><span class=nx>source</span><span class=p>,</span> <span class=nx>target</span><span class=p>)</span> <span class=p>{</span>
- <span class=nx>removeGreySquares</span><span class=p>();</span>
- 
- <span class=c1>// see if the move is legal
-</span><span class=c1></span> <span class=kd>var</span> <span class=nx>move</span> <span class=o>=</span> <span class=nx>game</span><span class=p>.</span><span class=nx>move</span><span class=p>({</span>
-   <span class=nx>from</span><span class=o>:</span> <span class=nx>source</span><span class=p>,</span>
-   <span class=nx>to</span><span class=o>:</span> <span class=nx>target</span><span class=p>,</span>
-   <span class=nx>promotion</span><span class=o>:</span> <span class=s1>&#39;q&#39;</span>
-   <span class=c1>// NOTE: always promote to a queen for example simplicity
-</span><span class=c1></span> <span class=p>});</span>
- 
- <span class=c1>// illegal move
-</span><span class=c1></span> <span class=k>if</span> <span class=p>(</span><span class=nx>move</span> <span class=o>===</span> <span class=kc>null</span><span class=p>)</span> <span class=k>return</span> <span class=s1>&#39;snapback&#39;</span><span class=p>;</span>
+
+<span class=kd>var</span> <span class=nx>onDrop</span> <span class=o>=</span> <span class=kd>function</span> <span class=p>(</span><span class=nx>source</span><span class=p>,</span> <span class=nx>target</span><span class=p>)</span> <span class=p>{</span>
+    <span class=nx>removeGreySquares</span><span class=p>();</span>
+
+    <span class=c1>// see if the move is legal
+</span><span class=c1></span>    <span class=kd>var</span> <span class=nx>move</span> <span class=o>=</span> <span class=nx>game</span><span class=p>.</span><span class=nx>move</span><span class=p>({</span>
+        <span class=nx>from</span><span class=o>:</span> <span class=nx>source</span><span class=p>,</span>
+        <span class=nx>to</span><span class=o>:</span> <span class=nx>target</span><span class=p>,</span>
+        <span class=nx>promotion</span><span class=o>:</span> <span class=s1>&#39;q&#39;</span>
+        <span class=c1>// NOTE: always promote to a queen for example simplicity
+</span><span class=c1></span>    <span class=p>});</span>
+
+    <span class=c1>// illegal move
+</span><span class=c1></span>    <span class=k>if</span> <span class=p>(</span><span class=nx>move</span> <span class=o>===</span> <span class=kc>null</span><span class=p>)</span> <span class=k>return</span> <span class=s1>&#39;snapback&#39;</span><span class=p>;</span>
 <span class=p>};</span>
- 
-<span class=kd>var</span> <span class=nx>onMouseoverSquare</span> <span class=o>=</span> <span class=kd>function</span><span class=p>(</span><span class=nx>square</span><span class=p>,</span> <span class=nx>piece</span><span class=p>)</span> <span class=p>{</span>
- <span class=c1>// get list of possible moves for this square
-</span><span class=c1></span> <span class=kd>var</span> <span class=nx>moves</span> <span class=o>=</span> <span class=nx>game</span><span class=p>.</span><span class=nx>moves</span><span class=p>({</span>
-   <span class=nx>square</span><span class=o>:</span> <span class=nx>square</span><span class=p>,</span>
-   <span class=nx>verbose</span><span class=o>:</span> <span class=kc>true</span>
- <span class=p>});</span>
- 
- <span class=c1>// exit if there are no moves available for this square
-</span><span class=c1></span> <span class=k>if</span> <span class=p>(</span><span class=nx>moves</span><span class=p>.</span><span class=nx>length</span> <span class=o>===</span> <span class=mi>0</span><span class=p>)</span> <span class=k>return</span><span class=p>;</span>
- 
- <span class=c1>// highlight the square they moused over
-</span><span class=c1></span> <span class=nx>greySquare</span><span class=p>(</span><span class=nx>square</span><span class=p>);</span>
- 
- <span class=c1>// highlight the possible squares for this piece
-</span><span class=c1></span> <span class=k>for</span> <span class=p>(</span><span class=kd>var</span> <span class=nx>i</span> <span class=o>=</span> <span class=mi>0</span><span class=p>;</span> <span class=nx>i</span> <span class=o>&lt;</span> <span class=nx>moves</span><span class=p>.</span><span class=nx>length</span><span class=p>;</span> <span class=nx>i</span><span class=o>++</span><span class=p>)</span> <span class=p>{</span>
-   <span class=nx>greySquare</span><span class=p>(</span><span class=nx>moves</span><span class=p>[</span><span class=nx>i</span><span class=p>].</span><span class=nx>to</span><span class=p>);</span>
- <span class=p>}</span>
+
+<span class=kd>var</span> <span class=nx>onMouseoverSquare</span> <span class=o>=</span> <span class=kd>function</span> <span class=p>(</span><span class=nx>square</span><span class=p>,</span> <span class=nx>piece</span><span class=p>)</span> <span class=p>{</span>
+    <span class=c1>// get list of possible moves for this square
+</span><span class=c1></span>    <span class=kd>var</span> <span class=nx>moves</span> <span class=o>=</span> <span class=nx>game</span><span class=p>.</span><span class=nx>moves</span><span class=p>({</span>
+        <span class=nx>square</span><span class=o>:</span> <span class=nx>square</span><span class=p>,</span>
+        <span class=nx>verbose</span><span class=o>:</span> <span class=kc>true</span>
+    <span class=p>});</span>
+
+    <span class=c1>// exit if there are no moves available for this square
+</span><span class=c1></span>    <span class=k>if</span> <span class=p>(</span><span class=nx>moves</span><span class=p>.</span><span class=nx>length</span> <span class=o>===</span> <span class=mi>0</span><span class=p>)</span> <span class=k>return</span><span class=p>;</span>
+
+    <span class=c1>// highlight the square they moused over
+</span><span class=c1></span>    <span class=nx>greySquare</span><span class=p>(</span><span class=nx>square</span><span class=p>);</span>
+
+    <span class=c1>// highlight the possible squares for this piece
+</span><span class=c1></span>    <span class=k>for</span> <span class=p>(</span><span class=kd>var</span> <span class=nx>i</span> <span class=o>=</span> <span class=mi>0</span><span class=p>;</span> <span class=nx>i</span> <span class=o>&lt;</span> <span class=nx>moves</span><span class=p>.</span><span class=nx>length</span><span class=p>;</span> <span class=nx>i</span><span class=o>++</span><span class=p>)</span> <span class=p>{</span>
+        <span class=nx>greySquare</span><span class=p>(</span><span class=nx>moves</span><span class=p>[</span><span class=nx>i</span><span class=p>].</span><span class=nx>to</span><span class=p>);</span>
+    <span class=p>}</span>
 <span class=p>};</span>
- 
-<span class=kd>var</span> <span class=nx>onMouseoutSquare</span> <span class=o>=</span> <span class=kd>function</span><span class=p>(</span><span class=nx>square</span><span class=p>,</span> <span class=nx>piece</span><span class=p>)</span> <span class=p>{</span>
- <span class=nx>removeGreySquares</span><span class=p>();</span>
+
+<span class=kd>var</span> <span class=nx>onMouseoutSquare</span> <span class=o>=</span> <span class=kd>function</span> <span class=p>(</span><span class=nx>square</span><span class=p>,</span> <span class=nx>piece</span><span class=p>)</span> <span class=p>{</span>
+    <span class=nx>removeGreySquares</span><span class=p>();</span>
 <span class=p>};</span>
- 
-<span class=kd>var</span> <span class=nx>onSnapEnd</span> <span class=o>=</span> <span class=kd>function</span><span class=p>()</span> <span class=p>{</span>
- <span class=nx>board</span><span class=p>.</span><span class=nx>position</span><span class=p>(</span><span class=nx>game</span><span class=p>.</span><span class=nx>fen</span><span class=p>());</span>
+
+<span class=kd>var</span> <span class=nx>onSnapEnd</span> <span class=o>=</span> <span class=kd>function</span> <span class=p>()</span> <span class=p>{</span>
+    <span class=nx>board</span><span class=p>.</span><span class=nx>position</span><span class=p>(</span><span class=nx>game</span><span class=p>.</span><span class=nx>fen</span><span class=p>());</span>
 <span class=p>};</span>
- 
+
 <span class=kd>var</span> <span class=nx>cfg</span> <span class=o>=</span> <span class=p>{</span>
- <span class=nx>draggable</span><span class=o>:</span> <span class=kc>true</span><span class=p>,</span>
- <span class=nx>position</span><span class=o>:</span> <span class=s1>&#39;start&#39;</span><span class=p>,</span>
- <span class=nx>onDragStart</span><span class=o>:</span> <span class=nx>onDragStart</span><span class=p>,</span>
- <span class=nx>onDrop</span><span class=o>:</span> <span class=nx>onDrop</span><span class=p>,</span>
- <span class=nx>onMouseoutSquare</span><span class=o>:</span> <span class=nx>onMouseoutSquare</span><span class=p>,</span>
- <span class=nx>onMouseoverSquare</span><span class=o>:</span> <span class=nx>onMouseoverSquare</span><span class=p>,</span>
- <span class=nx>onSnapEnd</span><span class=o>:</span> <span class=nx>onSnapEnd</span>
+    <span class=nx>draggable</span><span class=o>:</span> <span class=kc>true</span><span class=p>,</span>
+    <span class=nx>position</span><span class=o>:</span> <span class=s1>&#39;start&#39;</span><span class=p>,</span>
+    <span class=nx>onDragStart</span><span class=o>:</span> <span class=nx>onDragStart</span><span class=p>,</span>
+    <span class=nx>onDrop</span><span class=o>:</span> <span class=nx>onDrop</span><span class=p>,</span>
+    <span class=nx>onMouseoutSquare</span><span class=o>:</span> <span class=nx>onMouseoutSquare</span><span class=p>,</span>
+    <span class=nx>onMouseoverSquare</span><span class=o>:</span> <span class=nx>onMouseoverSquare</span><span class=p>,</span>
+    <span class=nx>onSnapEnd</span><span class=o>:</span> <span class=nx>onSnapEnd</span>
 <span class=p>};</span>
 <span class=nx>board</span> <span class=o>=</span> <span class=nx>ChessBoard</span><span class=p>(</span><span class=s1>&#39;board&#39;</span><span class=p>,</span> <span class=nx>cfg</span><span class=p>);</span>
  
@@ -151,8 +151,6 @@ Check out the code in action here, play it yourself - <a href=https://chess0.her
     <span class=p>&lt;</span><span class=nt>div</span> <span class=na>id</span><span class=o>=</span><span class=s>&#34;player&#34;</span> <span class=na>style</span><span class=o>=</span><span class=s>&#34;margin: auto&#34;</span><span class=p>&gt;</span>This room is full<span class=p>&lt;/</span><span class=nt>div</span><span class=p>&gt;</span>
 <span class=p>&lt;/</span><span class=nt>body</span><span class=p>&gt;</span>
  
- 
- 
 <span class=p>&lt;/</span><span class=nt>html</span><span class=p>&gt;</span>
  
 </code></pre></div><h1 id=packages>Packages</h1><p>For this project we will be using only <code>Express</code> and <code>Socket.io</code>. To install them, run</p><pre><code>npm install --save express
@@ -180,29 +178,29 @@ npm install --save socket.io
 <span class=c1>// create an array of 100 games and initialize them
 </span><span class=c1></span><span class=kd>var</span> <span class=nx>games</span> <span class=o>=</span> <span class=nb>Array</span><span class=p>(</span><span class=mi>100</span><span class=p>);</span>
 <span class=k>for</span> <span class=p>(</span><span class=kd>let</span> <span class=nx>i</span> <span class=o>=</span> <span class=mi>0</span><span class=p>;</span> <span class=nx>i</span> <span class=o>&lt;</span> <span class=mi>100</span><span class=p>;</span> <span class=nx>i</span><span class=o>++</span><span class=p>)</span> <span class=p>{</span>
-   <span class=nx>games</span><span class=p>[</span><span class=nx>i</span><span class=p>]</span> <span class=o>=</span> <span class=p>{</span><span class=nx>players</span><span class=o>:</span> <span class=mi>0</span> <span class=p>,</span> <span class=nx>pid</span><span class=o>:</span> <span class=p>[</span><span class=mi>0</span> <span class=p>,</span> <span class=mi>0</span><span class=p>]};</span>
+    <span class=nx>games</span><span class=p>[</span><span class=nx>i</span><span class=p>]</span> <span class=o>=</span> <span class=p>{</span><span class=nx>players</span><span class=o>:</span> <span class=mi>0</span> <span class=p>,</span> <span class=nx>pid</span><span class=o>:</span> <span class=p>[</span><span class=mi>0</span> <span class=p>,</span> <span class=mi>0</span><span class=p>]};</span>
 <span class=p>}</span>
  
 </code></pre></div><p>Our routing is simple, we only need to show <code>index.html</code> when &ldquo;/&rdquo; is accessed</p><div class=highlight><pre class=chroma><code class=language-javascript data-lang=javascript><span class=c1>// Add the static directory for our js and css files
 </span><span class=c1></span><span class=nx>app</span><span class=p>.</span><span class=nx>use</span><span class=p>(</span><span class=nx>express</span><span class=p>.</span><span class=kr>static</span><span class=p>(</span><span class=nx>__dirname</span> <span class=o>+</span> <span class=s2>&#34;/&#34;</span><span class=p>));</span>
  
 <span class=nx>app</span><span class=p>.</span><span class=nx>get</span><span class=p>(</span><span class=s1>&#39;/&#39;</span><span class=p>,</span> <span class=p>(</span><span class=nx>req</span><span class=p>,</span> <span class=nx>res</span><span class=p>)</span> <span class=p>=&gt;</span> <span class=p>{</span>
-   <span class=nx>res</span><span class=p>.</span><span class=nx>sendFile</span><span class=p>(</span><span class=nx>__dirname</span> <span class=o>+</span> <span class=s1>&#39;/index.html&#39;</span><span class=p>);</span>
+    <span class=nx>res</span><span class=p>.</span><span class=nx>sendFile</span><span class=p>(</span><span class=nx>__dirname</span> <span class=o>+</span> <span class=s1>&#39;/index.html&#39;</span><span class=p>);</span>
 <span class=p>});</span>
  
 </code></pre></div><p>Now its time to listen for the <code>connection</code> event on the server</p><div class=highlight><pre class=chroma><code class=language-javascript data-lang=javascript> 
 <span class=nx>io</span><span class=p>.</span><span class=nx>on</span><span class=p>(</span><span class=s1>&#39;connection&#39;</span><span class=p>,</span> <span class=kd>function</span> <span class=p>(</span><span class=nx>socket</span><span class=p>)</span> <span class=p>{</span>
- 
- <span class=c1>// just assign a random number to every player that has connected
-</span><span class=c1></span> <span class=c1>// the numbers have no significance so it
-</span><span class=c1></span> <span class=c1>// doesn&#39;t matter if 2 people get the same number
-</span><span class=c1></span> <span class=kd>var</span> <span class=nx>playerId</span> <span class=o>=</span>  <span class=nb>Math</span><span class=p>.</span><span class=nx>floor</span><span class=p>((</span><span class=nb>Math</span><span class=p>.</span><span class=nx>random</span><span class=p>()</span> <span class=o>*</span> <span class=mi>100</span><span class=p>)</span> <span class=o>+</span> <span class=mi>1</span><span class=p>)</span>
- <span class=nx>console</span><span class=p>.</span><span class=nx>log</span><span class=p>(</span><span class=nx>playerId</span> <span class=o>+</span> <span class=s1>&#39; connected&#39;</span><span class=p>);</span>
- 
- <span class=c1>// if a user disconnects just print their playerID
-</span><span class=c1></span> <span class=nx>socket</span><span class=p>.</span><span class=nx>on</span><span class=p>(</span><span class=s1>&#39;disconnect&#39;</span><span class=p>,</span> <span class=kd>function</span> <span class=p>()</span> <span class=p>{</span>
-   <span class=nx>console</span><span class=p>.</span><span class=nx>log</span><span class=p>(</span><span class=nx>playerId</span> <span class=o>+</span> <span class=s1>&#39; disconnected&#39;</span><span class=p>);</span>
- <span class=p>});</span>
+
+    <span class=c1>// just assign a random number to every player that has connected
+</span><span class=c1></span>    <span class=c1>// the numbers have no significance so it
+</span><span class=c1></span>    <span class=c1>// doesn&#39;t matter if 2 people get the same number
+</span><span class=c1></span>    <span class=kd>var</span> <span class=nx>playerId</span> <span class=o>=</span> <span class=nb>Math</span><span class=p>.</span><span class=nx>floor</span><span class=p>((</span><span class=nb>Math</span><span class=p>.</span><span class=nx>random</span><span class=p>()</span> <span class=o>*</span> <span class=mi>100</span><span class=p>)</span> <span class=o>+</span> <span class=mi>1</span><span class=p>)</span>
+    <span class=nx>console</span><span class=p>.</span><span class=nx>log</span><span class=p>(</span><span class=nx>playerId</span> <span class=o>+</span> <span class=s1>&#39; connected&#39;</span><span class=p>);</span>
+
+    <span class=c1>// if a user disconnects just print their playerID
+</span><span class=c1></span>    <span class=nx>socket</span><span class=p>.</span><span class=nx>on</span><span class=p>(</span><span class=s1>&#39;disconnect&#39;</span><span class=p>,</span> <span class=kd>function</span> <span class=p>()</span> <span class=p>{</span>
+        <span class=nx>console</span><span class=p>.</span><span class=nx>log</span><span class=p>(</span><span class=nx>playerId</span> <span class=o>+</span> <span class=s1>&#39; disconnected&#39;</span><span class=p>);</span>
+    <span class=p>});</span>
 <span class=p>});</span>
  
 </code></pre></div><h1 id=the-client>The Client</h1><p>Let&rsquo;s turn our attention back to the client, <code>index.html</code>. We&rsquo;re going to add an input box where the player enters the room number he wants to join and once he hits a button, if the room is not full, he&rsquo;ll join the room.</p><p>After adding that and a few divs to display some information, we add bootstrap and the final <code>index.html</code> looks like this:</p><div class=highlight><pre class=chroma><code class=language-html data-lang=html><span class=cp>&lt;!doctype html&gt;</span>
@@ -301,52 +299,57 @@ npm install --save socket.io
 </code></pre></div><h1 id=more-server-stuff>More Server Stuff</h1><p>We set up the client side socket, and we will be able to communicate between the client and server. But before that we have a few more things to set up here, inside</p><div class=highlight><pre class=chroma><code class=language-javascript data-lang=javascript><span class=nx>io</span><span class=p>.</span><span class=nx>on</span><span class=p>(</span><span class=s1>&#39;connection&#39;</span><span class=p>,</span> <span class=kd>function</span> <span class=p>(</span><span class=nx>socket</span><span class=p>)</span> <span class=p>{})</span>
 </code></pre></div><p>We&rsquo;ll be emitting and receiving some events from the client here and after this, we&rsquo;ll set up the emitters and receivers on the client side too.</p><p>What we&rsquo;ll use the for server here is basically passing on the message from one client to the other. So in most of the <code>socket.on()</code> function callbacks, you&rsquo;ll see a <code>socket.emit</code> function, so that the server can pass on the event to the rest of the clients. since the server will emit events to all clients. The clients will know if the event was meant for them because we pass the <code>roomId</code> in the message. The <code>roomId</code> is checked on the client side. This method isn&rsquo;t secure, but it&rsquo;s fine for our small application.</p><p>This part is added in the <code>io.on('connection')</code> callback in <code>index.js</code> after the playerID is generated. We&rsquo;ll also add a new function on <code>disconnect</code> to free up room space when players disconnect.</p><div class=highlight><pre class=chroma><code class=language-javascript data-lang=javascript> 
 <span class=kd>var</span> <span class=nx>color</span><span class=p>;</span> <span class=c1>// black or white
-</span><span class=c1></span> 
+</span><span class=c1></span>
 <span class=c1>// &#39;joined&#39; is emitted when the player enters a room number and clicks
 </span><span class=c1>// the connect button the room ID that the player entered gets passed as a message
-</span><span class=c1></span> 
+</span><span class=c1></span>
 <span class=nx>socket</span><span class=p>.</span><span class=nx>on</span><span class=p>(</span><span class=s1>&#39;joined&#39;</span><span class=p>,</span> <span class=kd>function</span> <span class=p>(</span><span class=nx>roomId</span><span class=p>)</span> <span class=p>{</span>
- <span class=c1>// if the room is not full then add the player to that room
-</span><span class=c1></span> <span class=k>if</span> <span class=p>(</span><span class=nx>games</span><span class=p>[</span><span class=nx>roomId</span><span class=p>].</span><span class=nx>players</span> <span class=o>&lt;</span> <span class=mi>2</span><span class=p>)</span> <span class=p>{</span>
-     <span class=nx>games</span><span class=p>[</span><span class=nx>roomId</span><span class=p>].</span><span class=nx>players</span><span class=o>++</span><span class=p>;</span>
-     <span class=nx>games</span><span class=p>[</span><span class=nx>roomId</span><span class=p>].</span><span class=nx>pid</span><span class=p>[</span><span class=nx>games</span><span class=p>[</span><span class=nx>roomId</span><span class=p>].</span><span class=nx>players</span> <span class=o>-</span> <span class=mi>1</span><span class=p>]</span> <span class=o>=</span> <span class=nx>playerId</span><span class=p>;</span>
- <span class=p>}</span> <span class=c1>// else emit the full event
-</span><span class=c1></span> <span class=k>else</span><span class=p>{</span>
-     <span class=nx>socket</span><span class=p>.</span><span class=nx>emit</span><span class=p>(</span><span class=s1>&#39;full&#39;</span><span class=p>,</span> <span class=nx>roomId</span><span class=p>)</span>
-     <span class=k>return</span><span class=p>;</span>
- <span class=p>}</span>
-  <span class=nx>console</span><span class=p>.</span><span class=nx>log</span><span class=p>(</span><span class=nx>games</span><span class=p>[</span><span class=nx>roomId</span><span class=p>]);</span>
- <span class=nx>players</span> <span class=o>=</span> <span class=nx>games</span><span class=p>[</span><span class=nx>roomId</span><span class=p>].</span><span class=nx>players</span>
-  <span class=c1>// the first player to join the room gets white
-</span><span class=c1></span> <span class=k>if</span> <span class=p>(</span><span class=nx>players</span> <span class=o>%</span> <span class=mi>2</span> <span class=o>==</span> <span class=mi>0</span><span class=p>)</span> <span class=nx>color</span> <span class=o>=</span> <span class=s1>&#39;black&#39;</span><span class=p>;</span>
- <span class=k>else</span> <span class=nx>color</span> <span class=o>=</span> <span class=s1>&#39;white&#39;</span><span class=p>;</span>
- 
- <span class=c1>// this is an important event because, once this is emitted the game
-</span><span class=c1></span> <span class=c1>// will be set up in the client side, and it&#39;ll display the chess board
-</span><span class=c1></span> <span class=nx>socket</span><span class=p>.</span><span class=nx>emit</span><span class=p>(</span><span class=s1>&#39;player&#39;</span><span class=p>,</span> <span class=p>{</span> <span class=nx>playerId</span><span class=p>,</span> <span class=nx>players</span><span class=p>,</span> <span class=nx>color</span><span class=p>,</span> <span class=nx>roomId</span> <span class=p>})</span>
- 
+    <span class=c1>// if the room is not full then add the player to that room
+</span><span class=c1></span>    <span class=k>if</span> <span class=p>(</span><span class=nx>games</span><span class=p>[</span><span class=nx>roomId</span><span class=p>].</span><span class=nx>players</span> <span class=o>&lt;</span> <span class=mi>2</span><span class=p>)</span> <span class=p>{</span>
+        <span class=nx>games</span><span class=p>[</span><span class=nx>roomId</span><span class=p>].</span><span class=nx>players</span><span class=o>++</span><span class=p>;</span>
+        <span class=nx>games</span><span class=p>[</span><span class=nx>roomId</span><span class=p>].</span><span class=nx>pid</span><span class=p>[</span><span class=nx>games</span><span class=p>[</span><span class=nx>roomId</span><span class=p>].</span><span class=nx>players</span> <span class=o>-</span> <span class=mi>1</span><span class=p>]</span> <span class=o>=</span> <span class=nx>playerId</span><span class=p>;</span>
+    <span class=p>}</span> <span class=c1>// else emit the full event
+</span><span class=c1></span>    <span class=k>else</span> <span class=p>{</span>
+        <span class=nx>socket</span><span class=p>.</span><span class=nx>emit</span><span class=p>(</span><span class=s1>&#39;full&#39;</span><span class=p>,</span> <span class=nx>roomId</span><span class=p>)</span>
+        <span class=k>return</span><span class=p>;</span>
+    <span class=p>}</span>
+    <span class=nx>console</span><span class=p>.</span><span class=nx>log</span><span class=p>(</span><span class=nx>games</span><span class=p>[</span><span class=nx>roomId</span><span class=p>]);</span>
+    <span class=nx>players</span> <span class=o>=</span> <span class=nx>games</span><span class=p>[</span><span class=nx>roomId</span><span class=p>].</span><span class=nx>players</span>
+    <span class=c1>// the first player to join the room gets white
+</span><span class=c1></span>    <span class=k>if</span> <span class=p>(</span><span class=nx>players</span> <span class=o>%</span> <span class=mi>2</span> <span class=o>==</span> <span class=mi>0</span><span class=p>)</span> <span class=nx>color</span> <span class=o>=</span> <span class=s1>&#39;black&#39;</span><span class=p>;</span>
+    <span class=k>else</span> <span class=nx>color</span> <span class=o>=</span> <span class=s1>&#39;white&#39;</span><span class=p>;</span>
+
+    <span class=c1>// this is an important event because, once this is emitted the game
+</span><span class=c1></span>    <span class=c1>// will be set up in the client side, and it&#39;ll display the chess board
+</span><span class=c1></span>    <span class=nx>socket</span><span class=p>.</span><span class=nx>emit</span><span class=p>(</span><span class=s1>&#39;player&#39;</span><span class=p>,</span> <span class=p>{</span>
+        <span class=nx>playerId</span><span class=p>,</span>
+        <span class=nx>players</span><span class=p>,</span>
+        <span class=nx>color</span><span class=p>,</span>
+        <span class=nx>roomId</span>
+    <span class=p>})</span>
+
 <span class=p>});</span>
- 
+
 <span class=c1>// The client side emits a &#39;move&#39; event when a valid move has been made.
 </span><span class=c1></span><span class=nx>socket</span><span class=p>.</span><span class=nx>on</span><span class=p>(</span><span class=s1>&#39;move&#39;</span><span class=p>,</span> <span class=kd>function</span> <span class=p>(</span><span class=nx>msg</span><span class=p>)</span> <span class=p>{</span>
- <span class=c1>// pass on the move event to the other clients
-</span><span class=c1></span> <span class=nx>socket</span><span class=p>.</span><span class=nx>broadcast</span><span class=p>.</span><span class=nx>emit</span><span class=p>(</span><span class=s1>&#39;move&#39;</span><span class=p>,</span> <span class=nx>msg</span><span class=p>);</span>
+    <span class=c1>// pass on the move event to the other clients
+</span><span class=c1></span>    <span class=nx>socket</span><span class=p>.</span><span class=nx>broadcast</span><span class=p>.</span><span class=nx>emit</span><span class=p>(</span><span class=s1>&#39;move&#39;</span><span class=p>,</span> <span class=nx>msg</span><span class=p>);</span>
 <span class=p>});</span>
- 
+
 <span class=c1>// &#39;play&#39; is emitted when both players have joined and the game can start
 </span><span class=c1></span><span class=nx>socket</span><span class=p>.</span><span class=nx>on</span><span class=p>(</span><span class=s1>&#39;play&#39;</span><span class=p>,</span> <span class=kd>function</span> <span class=p>(</span><span class=nx>msg</span><span class=p>)</span> <span class=p>{</span>
- <span class=nx>socket</span><span class=p>.</span><span class=nx>broadcast</span><span class=p>.</span><span class=nx>emit</span><span class=p>(</span><span class=s1>&#39;play&#39;</span><span class=p>,</span> <span class=nx>msg</span><span class=p>);</span>
- <span class=nx>console</span><span class=p>.</span><span class=nx>log</span><span class=p>(</span><span class=s2>&#34;ready &#34;</span> <span class=o>+</span> <span class=nx>msg</span><span class=p>);</span>
+    <span class=nx>socket</span><span class=p>.</span><span class=nx>broadcast</span><span class=p>.</span><span class=nx>emit</span><span class=p>(</span><span class=s1>&#39;play&#39;</span><span class=p>,</span> <span class=nx>msg</span><span class=p>);</span>
+    <span class=nx>console</span><span class=p>.</span><span class=nx>log</span><span class=p>(</span><span class=s2>&#34;ready &#34;</span> <span class=o>+</span> <span class=nx>msg</span><span class=p>);</span>
 <span class=p>});</span>
- 
+
 <span class=c1>// when the user disconnects from the server, remove him from the game room
 </span><span class=c1></span><span class=nx>socket</span><span class=p>.</span><span class=nx>on</span><span class=p>(</span><span class=s1>&#39;disconnect&#39;</span><span class=p>,</span> <span class=kd>function</span> <span class=p>()</span> <span class=p>{</span>
- <span class=k>for</span> <span class=p>(</span><span class=kd>let</span> <span class=nx>i</span> <span class=o>=</span> <span class=mi>0</span><span class=p>;</span> <span class=nx>i</span> <span class=o>&lt;</span> <span class=mi>100</span><span class=p>;</span> <span class=nx>i</span><span class=o>++</span><span class=p>)</span> <span class=p>{</span>
-     <span class=k>if</span> <span class=p>(</span><span class=nx>games</span><span class=p>[</span><span class=nx>i</span><span class=p>].</span><span class=nx>pid</span><span class=p>[</span><span class=mi>0</span><span class=p>]</span> <span class=o>==</span> <span class=nx>playerId</span> <span class=o>||</span> <span class=nx>games</span><span class=p>[</span><span class=nx>i</span><span class=p>].</span><span class=nx>pid</span><span class=p>[</span><span class=mi>1</span><span class=p>]</span> <span class=o>==</span> <span class=nx>playerId</span><span class=p>)</span>
-         <span class=nx>games</span><span class=p>[</span><span class=nx>i</span><span class=p>].</span><span class=nx>players</span><span class=o>--</span><span class=p>;</span>
- <span class=p>}</span>
- <span class=nx>console</span><span class=p>.</span><span class=nx>log</span><span class=p>(</span><span class=nx>playerId</span> <span class=o>+</span> <span class=s1>&#39; disconnected&#39;</span><span class=p>);</span>
- 
+    <span class=k>for</span> <span class=p>(</span><span class=kd>let</span> <span class=nx>i</span> <span class=o>=</span> <span class=mi>0</span><span class=p>;</span> <span class=nx>i</span> <span class=o>&lt;</span> <span class=mi>100</span><span class=p>;</span> <span class=nx>i</span><span class=o>++</span><span class=p>)</span> <span class=p>{</span>
+        <span class=k>if</span> <span class=p>(</span><span class=nx>games</span><span class=p>[</span><span class=nx>i</span><span class=p>].</span><span class=nx>pid</span><span class=p>[</span><span class=mi>0</span><span class=p>]</span> <span class=o>==</span> <span class=nx>playerId</span> <span class=o>||</span> <span class=nx>games</span><span class=p>[</span><span class=nx>i</span><span class=p>].</span><span class=nx>pid</span><span class=p>[</span><span class=mi>1</span><span class=p>]</span> <span class=o>==</span> <span class=nx>playerId</span><span class=p>)</span>
+            <span class=nx>games</span><span class=p>[</span><span class=nx>i</span><span class=p>].</span><span class=nx>players</span><span class=o>--</span><span class=p>;</span>
+    <span class=p>}</span>
+    <span class=nx>console</span><span class=p>.</span><span class=nx>log</span><span class=p>(</span><span class=nx>playerId</span> <span class=o>+</span> <span class=s1>&#39; disconnected&#39;</span><span class=p>);</span>
+
 <span class=p>});</span>
  
 </code></pre></div><h1 id=back-to-the-client>Back to the Client</h1><p>After setting up our server to relay messages back and forth from clients we set up the client to respond to the server emitted events. So let&rsquo;s get back to <code>game.js</code>.</p><p>First thing we&rsquo;ll do is set up a listener for the &lsquo;player&rsquo; event, which means that a player has joined the event and the board will be set up, along with the player&rsquo;s color. The code we wrote to create the board in the first step also goes in this.</p><p>Put this at the bottom of <code>game.js</code>, after removing the old <code>cfg</code> and <code>board</code> variables.</p><div class=highlight><pre class=chroma><code class=language-javascript data-lang=javascript> 
@@ -396,82 +399,87 @@ npm install --save socket.io
 (game.turn() === 'b' &amp;&amp; color === 'white')
 </code></pre><div class=highlight><pre class=chroma><code class=language-javascript data-lang=javascript> 
 <span class=kd>var</span> <span class=nx>onDragStart</span> <span class=o>=</span> <span class=kd>function</span> <span class=p>(</span><span class=nx>source</span><span class=p>,</span> <span class=nx>piece</span><span class=p>)</span> <span class=p>{</span>
- 
- <span class=c1>// A few more rules have been added
-</span><span class=c1></span> <span class=k>if</span> <span class=p>(</span><span class=nx>game</span><span class=p>.</span><span class=nx>game_over</span><span class=p>()</span> <span class=o>===</span> <span class=kc>true</span> <span class=o>||</span> <span class=nx>play</span> <span class=o>||</span>
-     <span class=p>(</span><span class=nx>game</span><span class=p>.</span><span class=nx>turn</span><span class=p>()</span> <span class=o>===</span> <span class=s1>&#39;w&#39;</span> <span class=o>&amp;&amp;</span> <span class=nx>piece</span><span class=p>.</span><span class=nx>search</span><span class=p>(</span><span class=sr>/^b/</span><span class=p>)</span> <span class=o>!==</span> <span class=o>-</span><span class=mi>1</span><span class=p>)</span> <span class=o>||</span>
-     <span class=p>(</span><span class=nx>game</span><span class=p>.</span><span class=nx>turn</span><span class=p>()</span> <span class=o>===</span> <span class=s1>&#39;b&#39;</span> <span class=o>&amp;&amp;</span> <span class=nx>piece</span><span class=p>.</span><span class=nx>search</span><span class=p>(</span><span class=sr>/^w/</span><span class=p>)</span> <span class=o>!==</span> <span class=o>-</span><span class=mi>1</span><span class=p>)</span> <span class=o>||</span>
-     <span class=p>(</span><span class=nx>game</span><span class=p>.</span><span class=nx>turn</span><span class=p>()</span> <span class=o>===</span> <span class=s1>&#39;w&#39;</span> <span class=o>&amp;&amp;</span> <span class=nx>color</span> <span class=o>===</span> <span class=s1>&#39;black&#39;</span><span class=p>)</span> <span class=o>||</span>
-     <span class=p>(</span><span class=nx>game</span><span class=p>.</span><span class=nx>turn</span><span class=p>()</span> <span class=o>===</span> <span class=s1>&#39;b&#39;</span> <span class=o>&amp;&amp;</span> <span class=nx>color</span> <span class=o>===</span> <span class=s1>&#39;white&#39;</span><span class=p>)</span> <span class=p>)</span> <span class=p>{</span>
-         <span class=k>return</span> <span class=kc>false</span><span class=p>;</span>
- <span class=p>}</span>
+
+    <span class=c1>// A few more rules have been added
+</span><span class=c1></span>    <span class=k>if</span> <span class=p>(</span><span class=nx>game</span><span class=p>.</span><span class=nx>game_over</span><span class=p>()</span> <span class=o>===</span> <span class=kc>true</span> <span class=o>||</span> <span class=nx>play</span> <span class=o>||</span>
+        <span class=p>(</span><span class=nx>game</span><span class=p>.</span><span class=nx>turn</span><span class=p>()</span> <span class=o>===</span> <span class=s1>&#39;w&#39;</span> <span class=o>&amp;&amp;</span> <span class=nx>piece</span><span class=p>.</span><span class=nx>search</span><span class=p>(</span><span class=sr>/^b/</span><span class=p>)</span> <span class=o>!==</span> <span class=o>-</span><span class=mi>1</span><span class=p>)</span> <span class=o>||</span>
+        <span class=p>(</span><span class=nx>game</span><span class=p>.</span><span class=nx>turn</span><span class=p>()</span> <span class=o>===</span> <span class=s1>&#39;b&#39;</span> <span class=o>&amp;&amp;</span> <span class=nx>piece</span><span class=p>.</span><span class=nx>search</span><span class=p>(</span><span class=sr>/^w/</span><span class=p>)</span> <span class=o>!==</span> <span class=o>-</span><span class=mi>1</span><span class=p>)</span> <span class=o>||</span>
+        <span class=p>(</span><span class=nx>game</span><span class=p>.</span><span class=nx>turn</span><span class=p>()</span> <span class=o>===</span> <span class=s1>&#39;w&#39;</span> <span class=o>&amp;&amp;</span> <span class=nx>color</span> <span class=o>===</span> <span class=s1>&#39;black&#39;</span><span class=p>)</span> <span class=o>||</span>
+        <span class=p>(</span><span class=nx>game</span><span class=p>.</span><span class=nx>turn</span><span class=p>()</span> <span class=o>===</span> <span class=s1>&#39;b&#39;</span> <span class=o>&amp;&amp;</span> <span class=nx>color</span> <span class=o>===</span> <span class=s1>&#39;white&#39;</span><span class=p>))</span> <span class=p>{</span>
+        <span class=k>return</span> <span class=kc>false</span><span class=p>;</span>
+    <span class=p>}</span>
 <span class=p>};</span>
+
 </code></pre></div><p>The function <code>onDrop</code>, is when the pieces are actually moved. So when the player makes a move and drops a move, the &lsquo;move&rsquo; event is emitted.</p><div class=highlight><pre class=chroma><code class=language-javascript data-lang=javascript> 
 <span class=kd>var</span> <span class=nx>onDrop</span> <span class=o>=</span> <span class=kd>function</span> <span class=p>(</span><span class=nx>source</span><span class=p>,</span> <span class=nx>target</span><span class=p>)</span> <span class=p>{</span>
- <span class=nx>removeGreySquares</span><span class=p>();</span>
- 
- <span class=c1>// see if the move is legal
-</span><span class=c1></span> <span class=kd>var</span> <span class=nx>move</span> <span class=o>=</span> <span class=nx>game</span><span class=p>.</span><span class=nx>move</span><span class=p>({</span>
-     <span class=nx>from</span><span class=o>:</span> <span class=nx>source</span><span class=p>,</span>
-     <span class=nx>to</span><span class=o>:</span> <span class=nx>target</span><span class=p>,</span>
-     <span class=nx>promotion</span><span class=o>:</span> <span class=s1>&#39;q&#39;</span>
- <span class=p>});</span>
- <span class=k>if</span> <span class=p>(</span><span class=nx>game</span><span class=p>.</span><span class=nx>game_over</span><span class=p>())</span> <span class=p>{</span>
-     <span class=nx>state</span><span class=p>.</span><span class=nx>innerHTML</span> <span class=o>=</span> <span class=s1>&#39;GAME OVER&#39;</span><span class=p>;</span>
-     <span class=nx>socket</span><span class=p>.</span><span class=nx>emit</span><span class=p>(</span><span class=s1>&#39;gameOver&#39;</span><span class=p>,</span> <span class=nx>roomId</span><span class=p>)</span>
- <span class=p>}</span>
- 
- <span class=c1>// illegal move
-</span><span class=c1></span> <span class=k>if</span> <span class=p>(</span><span class=nx>move</span> <span class=o>===</span> <span class=kc>null</span><span class=p>)</span> <span class=k>return</span> <span class=s1>&#39;snapback&#39;</span><span class=p>;</span>
- 
- <span class=c1>// if the move is allowed, emit the move event.
-</span><span class=c1></span> <span class=k>else</span>
-     <span class=nx>socket</span><span class=p>.</span><span class=nx>emit</span><span class=p>(</span><span class=s1>&#39;move&#39;</span><span class=p>,</span> <span class=p>{</span> <span class=nx>move</span><span class=o>:</span> <span class=nx>move</span><span class=p>,</span> <span class=nx>board</span><span class=o>:</span> <span class=nx>game</span><span class=p>.</span><span class=nx>fen</span><span class=p>(),</span> <span class=nx>room</span><span class=o>:</span> <span class=nx>roomId</span> <span class=p>});</span>
- 
+    <span class=nx>removeGreySquares</span><span class=p>();</span>
+
+    <span class=c1>// see if the move is legal
+</span><span class=c1></span>    <span class=kd>var</span> <span class=nx>move</span> <span class=o>=</span> <span class=nx>game</span><span class=p>.</span><span class=nx>move</span><span class=p>({</span>
+        <span class=nx>from</span><span class=o>:</span> <span class=nx>source</span><span class=p>,</span>
+        <span class=nx>to</span><span class=o>:</span> <span class=nx>target</span><span class=p>,</span>
+        <span class=nx>promotion</span><span class=o>:</span> <span class=s1>&#39;q&#39;</span>
+    <span class=p>});</span>
+    <span class=k>if</span> <span class=p>(</span><span class=nx>game</span><span class=p>.</span><span class=nx>game_over</span><span class=p>())</span> <span class=p>{</span>
+        <span class=nx>state</span><span class=p>.</span><span class=nx>innerHTML</span> <span class=o>=</span> <span class=s1>&#39;GAME OVER&#39;</span><span class=p>;</span>
+        <span class=nx>socket</span><span class=p>.</span><span class=nx>emit</span><span class=p>(</span><span class=s1>&#39;gameOver&#39;</span><span class=p>,</span> <span class=nx>roomId</span><span class=p>)</span>
+    <span class=p>}</span>
+
+    <span class=c1>// illegal move
+</span><span class=c1></span>    <span class=k>if</span> <span class=p>(</span><span class=nx>move</span> <span class=o>===</span> <span class=kc>null</span><span class=p>)</span> <span class=k>return</span> <span class=s1>&#39;snapback&#39;</span><span class=p>;</span>
+
+    <span class=c1>// if the move is allowed, emit the move event.
+</span><span class=c1></span>    <span class=k>else</span>
+        <span class=nx>socket</span><span class=p>.</span><span class=nx>emit</span><span class=p>(</span><span class=s1>&#39;move&#39;</span><span class=p>,</span> <span class=p>{</span>
+            <span class=nx>move</span><span class=o>:</span> <span class=nx>move</span><span class=p>,</span>
+            <span class=nx>board</span><span class=o>:</span> <span class=nx>game</span><span class=p>.</span><span class=nx>fen</span><span class=p>(),</span>
+            <span class=nx>room</span><span class=o>:</span> <span class=nx>roomId</span>
+        <span class=p>});</span>
+
 <span class=p>};</span>
  
 </code></pre></div><p>Now we need to add some listeners, so that changes that are sent via events are reflected in the client.</p><div class=highlight><pre class=chroma><code class=language-javascript data-lang=javascript> 
 <span class=c1>// if the room is full (players &gt; 2), redirect the user
 </span><span class=c1>// to the full.html page we made earlier
 </span><span class=c1></span><span class=nx>socket</span><span class=p>.</span><span class=nx>on</span><span class=p>(</span><span class=s1>&#39;full&#39;</span><span class=p>,</span> <span class=kd>function</span> <span class=p>(</span><span class=nx>msg</span><span class=p>)</span> <span class=p>{</span>
- <span class=k>if</span><span class=p>(</span><span class=nx>roomId</span> <span class=o>==</span> <span class=nx>msg</span><span class=p>)</span>
-   <span class=nb>window</span><span class=p>.</span><span class=nx>location</span><span class=p>.</span><span class=nx>assign</span><span class=p>(</span><span class=nb>window</span><span class=p>.</span><span class=nx>location</span><span class=p>.</span><span class=nx>href</span><span class=o>+</span> <span class=s1>&#39;full.html&#39;</span><span class=p>);</span>
+    <span class=k>if</span> <span class=p>(</span><span class=nx>roomId</span> <span class=o>==</span> <span class=nx>msg</span><span class=p>)</span>
+        <span class=nb>window</span><span class=p>.</span><span class=nx>location</span><span class=p>.</span><span class=nx>assign</span><span class=p>(</span><span class=nb>window</span><span class=p>.</span><span class=nx>location</span><span class=p>.</span><span class=nx>href</span> <span class=o>+</span> <span class=s1>&#39;full.html&#39;</span><span class=p>);</span>
 <span class=p>});</span>
- 
+
 <span class=c1>// change play to false when both players have
 </span><span class=c1>// joined the room, so that they can start playing
 </span><span class=c1>// (when play is false the players can play)
 </span><span class=c1></span><span class=nx>socket</span><span class=p>.</span><span class=nx>on</span><span class=p>(</span><span class=s1>&#39;play&#39;</span><span class=p>,</span> <span class=kd>function</span> <span class=p>(</span><span class=nx>msg</span><span class=p>)</span> <span class=p>{</span>
- <span class=k>if</span> <span class=p>(</span><span class=nx>msg</span> <span class=o>==</span> <span class=nx>roomId</span><span class=p>)</span> <span class=p>{</span>
-     <span class=nx>play</span> <span class=o>=</span> <span class=kc>false</span><span class=p>;</span>
-     <span class=nx>state</span><span class=p>.</span><span class=nx>innerHTML</span> <span class=o>=</span> <span class=s2>&#34;Game in progress&#34;</span>
- <span class=p>}</span>
+    <span class=k>if</span> <span class=p>(</span><span class=nx>msg</span> <span class=o>==</span> <span class=nx>roomId</span><span class=p>)</span> <span class=p>{</span>
+        <span class=nx>play</span> <span class=o>=</span> <span class=kc>false</span><span class=p>;</span>
+        <span class=nx>state</span><span class=p>.</span><span class=nx>innerHTML</span> <span class=o>=</span> <span class=s2>&#34;Game in progress&#34;</span>
+    <span class=p>}</span>
 <span class=p>});</span>
- 
+
 <span class=c1>// when a move happens, check if it was meant for the clients room
 </span><span class=c1>// if yes, then make the move on the clients board
 </span><span class=c1></span><span class=nx>socket</span><span class=p>.</span><span class=nx>on</span><span class=p>(</span><span class=s1>&#39;move&#39;</span><span class=p>,</span> <span class=kd>function</span> <span class=p>(</span><span class=nx>msg</span><span class=p>)</span> <span class=p>{</span>
- <span class=k>if</span> <span class=p>(</span><span class=nx>msg</span><span class=p>.</span><span class=nx>room</span> <span class=o>==</span> <span class=nx>roomId</span><span class=p>)</span> <span class=p>{</span>
-     <span class=nx>game</span><span class=p>.</span><span class=nx>move</span><span class=p>(</span><span class=nx>msg</span><span class=p>.</span><span class=nx>move</span><span class=p>);</span>
-     <span class=nx>board</span><span class=p>.</span><span class=nx>position</span><span class=p>(</span><span class=nx>game</span><span class=p>.</span><span class=nx>fen</span><span class=p>());</span>
-     <span class=nx>console</span><span class=p>.</span><span class=nx>log</span><span class=p>(</span><span class=s2>&#34;moved&#34;</span><span class=p>)</span>
- <span class=p>}</span>
+    <span class=k>if</span> <span class=p>(</span><span class=nx>msg</span><span class=p>.</span><span class=nx>room</span> <span class=o>==</span> <span class=nx>roomId</span><span class=p>)</span> <span class=p>{</span>
+        <span class=nx>game</span><span class=p>.</span><span class=nx>move</span><span class=p>(</span><span class=nx>msg</span><span class=p>.</span><span class=nx>move</span><span class=p>);</span>
+        <span class=nx>board</span><span class=p>.</span><span class=nx>position</span><span class=p>(</span><span class=nx>game</span><span class=p>.</span><span class=nx>fen</span><span class=p>());</span>
+        <span class=nx>console</span><span class=p>.</span><span class=nx>log</span><span class=p>(</span><span class=s2>&#34;moved&#34;</span><span class=p>)</span>
+    <span class=p>}</span>
 <span class=p>});</span>
  
 </code></pre></div><p>One last method requires implementation, the <code>connect</code> function. When we click the connect button it needs to emit an event with the room id that the player has entered.</p><div class=highlight><pre class=chroma><code class=language-javascript data-lang=javascript> 
-<span class=kd>var</span> <span class=nx>connect</span> <span class=o>=</span> <span class=kd>function</span><span class=p>(){</span>
- 
- <span class=c1>// extract the value of the input field
-</span><span class=c1></span> <span class=nx>roomId</span> <span class=o>=</span> <span class=nx>room</span><span class=p>.</span><span class=nx>value</span><span class=p>;</span>
- <span class=c1>// if the room number is valid
-</span><span class=c1></span> <span class=k>if</span> <span class=p>(</span><span class=nx>roomId</span> <span class=o>!==</span> <span class=s2>&#34;&#34;</span> <span class=o>&amp;&amp;</span> <span class=nb>parseInt</span><span class=p>(</span><span class=nx>roomId</span><span class=p>)</span> <span class=o>&lt;=</span> <span class=mi>100</span><span class=p>)</span> <span class=p>{</span>
-   <span class=nx>room</span><span class=p>.</span><span class=nx>remove</span><span class=p>();</span>
-   <span class=nx>roomNumber</span><span class=p>.</span><span class=nx>innerHTML</span> <span class=o>=</span> <span class=s2>&#34;Room Number &#34;</span> <span class=o>+</span> <span class=nx>roomId</span><span class=p>;</span>
-   <span class=nx>button</span><span class=p>.</span><span class=nx>remove</span><span class=p>();</span>
- 
-   <span class=c1>// emit the &#39;joined&#39; event which we have set up a listener for on the server
-</span><span class=c1></span>   <span class=nx>socket</span><span class=p>.</span><span class=nx>emit</span><span class=p>(</span><span class=s1>&#39;joined&#39;</span><span class=p>,</span> <span class=nx>roomId</span><span class=p>);</span>
- <span class=p>}</span>
+<span class=kd>var</span> <span class=nx>connect</span> <span class=o>=</span> <span class=kd>function</span> <span class=p>()</span> <span class=p>{</span>
+
+    <span class=c1>// extract the value of the input field
+</span><span class=c1></span>    <span class=nx>roomId</span> <span class=o>=</span> <span class=nx>room</span><span class=p>.</span><span class=nx>value</span><span class=p>;</span>
+    <span class=c1>// if the room number is valid
+</span><span class=c1></span>    <span class=k>if</span> <span class=p>(</span><span class=nx>roomId</span> <span class=o>!==</span> <span class=s2>&#34;&#34;</span> <span class=o>&amp;&amp;</span> <span class=nb>parseInt</span><span class=p>(</span><span class=nx>roomId</span><span class=p>)</span> <span class=o>&lt;=</span> <span class=mi>100</span><span class=p>)</span> <span class=p>{</span>
+        <span class=nx>room</span><span class=p>.</span><span class=nx>remove</span><span class=p>();</span>
+        <span class=nx>roomNumber</span><span class=p>.</span><span class=nx>innerHTML</span> <span class=o>=</span> <span class=s2>&#34;Room Number &#34;</span> <span class=o>+</span> <span class=nx>roomId</span><span class=p>;</span>
+        <span class=nx>button</span><span class=p>.</span><span class=nx>remove</span><span class=p>();</span>
+
+        <span class=c1>// emit the &#39;joined&#39; event which we have set up a listener for on the server
+</span><span class=c1></span>        <span class=nx>socket</span><span class=p>.</span><span class=nx>emit</span><span class=p>(</span><span class=s1>&#39;joined&#39;</span><span class=p>,</span> <span class=nx>roomId</span><span class=p>);</span>
+    <span class=p>}</span>
 <span class=p>}</span>
  
 </code></pre></div><h1 id=checking-if-it-works>Checking if it works</h1><p>For the complete code, check the repo, <a href=https://github.com/Aveek-Saha/Online-Chess><code>Online chess</code></a>.</p><p>cd to the project directory, and then run</p><pre><code>node index.js

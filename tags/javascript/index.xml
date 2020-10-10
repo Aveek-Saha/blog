@@ -267,10 +267,10 @@ console.log(msg);
 &lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-javascript" data-lang="javascript">
 &lt;span class="kd">var&lt;/span> &lt;span class="nx">board&lt;/span>&lt;span class="p">,&lt;/span>
 &lt;span class="nx">game&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="k">new&lt;/span> &lt;span class="nx">Chess&lt;/span>&lt;span class="p">();&lt;/span>
-&lt;span class="kd">var&lt;/span> &lt;span class="nx">removeGreySquares&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="kd">function&lt;/span>&lt;span class="p">()&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;span class="kd">var&lt;/span> &lt;span class="nx">removeGreySquares&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="kd">function&lt;/span> &lt;span class="p">()&lt;/span> &lt;span class="p">{&lt;/span>
 &lt;span class="nx">$&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s1">&amp;#39;#board .square-55d63&amp;#39;&lt;/span>&lt;span class="p">).&lt;/span>&lt;span class="nx">css&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s1">&amp;#39;background&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="s1">&amp;#39;&amp;#39;&lt;/span>&lt;span class="p">);&lt;/span>
 &lt;span class="p">};&lt;/span>
-&lt;span class="kd">var&lt;/span> &lt;span class="nx">greySquare&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="kd">function&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nx">square&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;span class="kd">var&lt;/span> &lt;span class="nx">greySquare&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="kd">function&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="nx">square&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
 &lt;span class="kd">var&lt;/span> &lt;span class="nx">squareEl&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="nx">$&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s1">&amp;#39;#board .square-&amp;#39;&lt;/span> &lt;span class="o">+&lt;/span> &lt;span class="nx">square&lt;/span>&lt;span class="p">);&lt;/span>
 &lt;span class="kd">var&lt;/span> &lt;span class="nx">background&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s1">&amp;#39;#a9a9a9&amp;#39;&lt;/span>&lt;span class="p">;&lt;/span>
 &lt;span class="k">if&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="nx">squareEl&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">hasClass&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s1">&amp;#39;black-3c85d&amp;#39;&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="o">===&lt;/span> &lt;span class="kc">true&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
@@ -278,7 +278,7 @@ console.log(msg);
 &lt;span class="p">}&lt;/span>
 &lt;span class="nx">squareEl&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">css&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s1">&amp;#39;background&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nx">background&lt;/span>&lt;span class="p">);&lt;/span>
 &lt;span class="p">};&lt;/span>
-&lt;span class="kd">var&lt;/span> &lt;span class="nx">onDragStart&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="kd">function&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nx">source&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nx">piece&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;span class="kd">var&lt;/span> &lt;span class="nx">onDragStart&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="kd">function&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="nx">source&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nx">piece&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
 &lt;span class="c1">// do not pick up pieces if the game is over
 &lt;/span>&lt;span class="c1">&lt;/span> &lt;span class="c1">// or if it&amp;#39;s not that side&amp;#39;s turn
 &lt;/span>&lt;span class="c1">&lt;/span> &lt;span class="k">if&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="nx">game&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">game_over&lt;/span>&lt;span class="p">()&lt;/span> &lt;span class="o">===&lt;/span> &lt;span class="kc">true&lt;/span> &lt;span class="o">||&lt;/span>
@@ -287,7 +287,7 @@ console.log(msg);
 &lt;span class="k">return&lt;/span> &lt;span class="kc">false&lt;/span>&lt;span class="p">;&lt;/span>
 &lt;span class="p">}&lt;/span>
 &lt;span class="p">};&lt;/span>
-&lt;span class="kd">var&lt;/span> &lt;span class="nx">onDrop&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="kd">function&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nx">source&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nx">target&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;span class="kd">var&lt;/span> &lt;span class="nx">onDrop&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="kd">function&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="nx">source&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nx">target&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
 &lt;span class="nx">removeGreySquares&lt;/span>&lt;span class="p">();&lt;/span>
 &lt;span class="c1">// see if the move is legal
 &lt;/span>&lt;span class="c1">&lt;/span> &lt;span class="kd">var&lt;/span> &lt;span class="nx">move&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="nx">game&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">move&lt;/span>&lt;span class="p">({&lt;/span>
@@ -299,7 +299,7 @@ console.log(msg);
 &lt;span class="c1">// illegal move
 &lt;/span>&lt;span class="c1">&lt;/span> &lt;span class="k">if&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="nx">move&lt;/span> &lt;span class="o">===&lt;/span> &lt;span class="kc">null&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="k">return&lt;/span> &lt;span class="s1">&amp;#39;snapback&amp;#39;&lt;/span>&lt;span class="p">;&lt;/span>
 &lt;span class="p">};&lt;/span>
-&lt;span class="kd">var&lt;/span> &lt;span class="nx">onMouseoverSquare&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="kd">function&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nx">square&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nx">piece&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;span class="kd">var&lt;/span> &lt;span class="nx">onMouseoverSquare&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="kd">function&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="nx">square&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nx">piece&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
 &lt;span class="c1">// get list of possible moves for this square
 &lt;/span>&lt;span class="c1">&lt;/span> &lt;span class="kd">var&lt;/span> &lt;span class="nx">moves&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="nx">game&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">moves&lt;/span>&lt;span class="p">({&lt;/span>
 &lt;span class="nx">square&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="nx">square&lt;/span>&lt;span class="p">,&lt;/span>
@@ -314,10 +314,10 @@ console.log(msg);
 &lt;span class="nx">greySquare&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nx">moves&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="nx">i&lt;/span>&lt;span class="p">].&lt;/span>&lt;span class="nx">to&lt;/span>&lt;span class="p">);&lt;/span>
 &lt;span class="p">}&lt;/span>
 &lt;span class="p">};&lt;/span>
-&lt;span class="kd">var&lt;/span> &lt;span class="nx">onMouseoutSquare&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="kd">function&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nx">square&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nx">piece&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;span class="kd">var&lt;/span> &lt;span class="nx">onMouseoutSquare&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="kd">function&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="nx">square&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nx">piece&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
 &lt;span class="nx">removeGreySquares&lt;/span>&lt;span class="p">();&lt;/span>
 &lt;span class="p">};&lt;/span>
-&lt;span class="kd">var&lt;/span> &lt;span class="nx">onSnapEnd&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="kd">function&lt;/span>&lt;span class="p">()&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;span class="kd">var&lt;/span> &lt;span class="nx">onSnapEnd&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="kd">function&lt;/span> &lt;span class="p">()&lt;/span> &lt;span class="p">{&lt;/span>
 &lt;span class="nx">board&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">position&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nx">game&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">fen&lt;/span>&lt;span class="p">());&lt;/span>
 &lt;span class="p">};&lt;/span>
 &lt;span class="kd">var&lt;/span> &lt;span class="nx">cfg&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="p">{&lt;/span>
@@ -514,7 +514,7 @@ npm install --save socket.io
 &lt;span class="nx">games&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="nx">roomId&lt;/span>&lt;span class="p">].&lt;/span>&lt;span class="nx">players&lt;/span>&lt;span class="o">++&lt;/span>&lt;span class="p">;&lt;/span>
 &lt;span class="nx">games&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="nx">roomId&lt;/span>&lt;span class="p">].&lt;/span>&lt;span class="nx">pid&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="nx">games&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="nx">roomId&lt;/span>&lt;span class="p">].&lt;/span>&lt;span class="nx">players&lt;/span> &lt;span class="o">-&lt;/span> &lt;span class="mi">1&lt;/span>&lt;span class="p">]&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="nx">playerId&lt;/span>&lt;span class="p">;&lt;/span>
 &lt;span class="p">}&lt;/span> &lt;span class="c1">// else emit the full event
-&lt;/span>&lt;span class="c1">&lt;/span> &lt;span class="k">else&lt;/span>&lt;span class="p">{&lt;/span>
+&lt;/span>&lt;span class="c1">&lt;/span> &lt;span class="k">else&lt;/span> &lt;span class="p">{&lt;/span>
 &lt;span class="nx">socket&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">emit&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s1">&amp;#39;full&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nx">roomId&lt;/span>&lt;span class="p">)&lt;/span>
 &lt;span class="k">return&lt;/span>&lt;span class="p">;&lt;/span>
 &lt;span class="p">}&lt;/span>
@@ -525,7 +525,12 @@ npm install --save socket.io
 &lt;span class="k">else&lt;/span> &lt;span class="nx">color&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s1">&amp;#39;white&amp;#39;&lt;/span>&lt;span class="p">;&lt;/span>
 &lt;span class="c1">// this is an important event because, once this is emitted the game
 &lt;/span>&lt;span class="c1">&lt;/span> &lt;span class="c1">// will be set up in the client side, and it&amp;#39;ll display the chess board
-&lt;/span>&lt;span class="c1">&lt;/span> &lt;span class="nx">socket&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">emit&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s1">&amp;#39;player&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="p">{&lt;/span> &lt;span class="nx">playerId&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nx">players&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nx">color&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nx">roomId&lt;/span> &lt;span class="p">})&lt;/span>
+&lt;/span>&lt;span class="c1">&lt;/span> &lt;span class="nx">socket&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">emit&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s1">&amp;#39;player&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;span class="nx">playerId&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;span class="nx">players&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;span class="nx">color&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;span class="nx">roomId&lt;/span>
+&lt;span class="p">})&lt;/span>
 &lt;span class="p">});&lt;/span>
 &lt;span class="c1">// The client side emits a &amp;#39;move&amp;#39; event when a valid move has been made.
 &lt;/span>&lt;span class="c1">&lt;/span>&lt;span class="nx">socket&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">on&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s1">&amp;#39;move&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="kd">function&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="nx">msg&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
@@ -597,7 +602,7 @@ npm install --save socket.io
 &lt;span class="p">(&lt;/span>&lt;span class="nx">game&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">turn&lt;/span>&lt;span class="p">()&lt;/span> &lt;span class="o">===&lt;/span> &lt;span class="s1">&amp;#39;w&amp;#39;&lt;/span> &lt;span class="o">&amp;amp;&amp;amp;&lt;/span> &lt;span class="nx">piece&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">search&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="sr">/^b/&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="o">!==&lt;/span> &lt;span class="o">-&lt;/span>&lt;span class="mi">1&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="o">||&lt;/span>
 &lt;span class="p">(&lt;/span>&lt;span class="nx">game&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">turn&lt;/span>&lt;span class="p">()&lt;/span> &lt;span class="o">===&lt;/span> &lt;span class="s1">&amp;#39;b&amp;#39;&lt;/span> &lt;span class="o">&amp;amp;&amp;amp;&lt;/span> &lt;span class="nx">piece&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">search&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="sr">/^w/&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="o">!==&lt;/span> &lt;span class="o">-&lt;/span>&lt;span class="mi">1&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="o">||&lt;/span>
 &lt;span class="p">(&lt;/span>&lt;span class="nx">game&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">turn&lt;/span>&lt;span class="p">()&lt;/span> &lt;span class="o">===&lt;/span> &lt;span class="s1">&amp;#39;w&amp;#39;&lt;/span> &lt;span class="o">&amp;amp;&amp;amp;&lt;/span> &lt;span class="nx">color&lt;/span> &lt;span class="o">===&lt;/span> &lt;span class="s1">&amp;#39;black&amp;#39;&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="o">||&lt;/span>
-&lt;span class="p">(&lt;/span>&lt;span class="nx">game&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">turn&lt;/span>&lt;span class="p">()&lt;/span> &lt;span class="o">===&lt;/span> &lt;span class="s1">&amp;#39;b&amp;#39;&lt;/span> &lt;span class="o">&amp;amp;&amp;amp;&lt;/span> &lt;span class="nx">color&lt;/span> &lt;span class="o">===&lt;/span> &lt;span class="s1">&amp;#39;white&amp;#39;&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;span class="p">(&lt;/span>&lt;span class="nx">game&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">turn&lt;/span>&lt;span class="p">()&lt;/span> &lt;span class="o">===&lt;/span> &lt;span class="s1">&amp;#39;b&amp;#39;&lt;/span> &lt;span class="o">&amp;amp;&amp;amp;&lt;/span> &lt;span class="nx">color&lt;/span> &lt;span class="o">===&lt;/span> &lt;span class="s1">&amp;#39;white&amp;#39;&lt;/span>&lt;span class="p">))&lt;/span> &lt;span class="p">{&lt;/span>
 &lt;span class="k">return&lt;/span> &lt;span class="kc">false&lt;/span>&lt;span class="p">;&lt;/span>
 &lt;span class="p">}&lt;/span>
 &lt;span class="p">};&lt;/span>
@@ -619,15 +624,19 @@ npm install --save socket.io
 &lt;/span>&lt;span class="c1">&lt;/span> &lt;span class="k">if&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="nx">move&lt;/span> &lt;span class="o">===&lt;/span> &lt;span class="kc">null&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="k">return&lt;/span> &lt;span class="s1">&amp;#39;snapback&amp;#39;&lt;/span>&lt;span class="p">;&lt;/span>
 &lt;span class="c1">// if the move is allowed, emit the move event.
 &lt;/span>&lt;span class="c1">&lt;/span> &lt;span class="k">else&lt;/span>
-&lt;span class="nx">socket&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">emit&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s1">&amp;#39;move&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="p">{&lt;/span> &lt;span class="nx">move&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="nx">move&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nx">board&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="nx">game&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">fen&lt;/span>&lt;span class="p">(),&lt;/span> &lt;span class="nx">room&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="nx">roomId&lt;/span> &lt;span class="p">});&lt;/span>
+&lt;span class="nx">socket&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">emit&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s1">&amp;#39;move&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;span class="nx">move&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="nx">move&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;span class="nx">board&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="nx">game&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">fen&lt;/span>&lt;span class="p">(),&lt;/span>
+&lt;span class="nx">room&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="nx">roomId&lt;/span>
+&lt;span class="p">});&lt;/span>
 &lt;span class="p">};&lt;/span>
 &lt;/code>&lt;/pre>&lt;/div>&lt;p>Now we need to add some listeners, so that changes that are sent via events are reflected in the client.&lt;/p>
 &lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-javascript" data-lang="javascript">
 &lt;span class="c1">// if the room is full (players &amp;gt; 2), redirect the user
 &lt;/span>&lt;span class="c1">// to the full.html page we made earlier
 &lt;/span>&lt;span class="c1">&lt;/span>&lt;span class="nx">socket&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">on&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s1">&amp;#39;full&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="kd">function&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="nx">msg&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
-&lt;span class="k">if&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nx">roomId&lt;/span> &lt;span class="o">==&lt;/span> &lt;span class="nx">msg&lt;/span>&lt;span class="p">)&lt;/span>
-&lt;span class="nb">window&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">location&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">assign&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nb">window&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">location&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">href&lt;/span>&lt;span class="o">+&lt;/span> &lt;span class="s1">&amp;#39;full.html&amp;#39;&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;span class="k">if&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="nx">roomId&lt;/span> &lt;span class="o">==&lt;/span> &lt;span class="nx">msg&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;span class="nb">window&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">location&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">assign&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nb">window&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">location&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">href&lt;/span> &lt;span class="o">+&lt;/span> &lt;span class="s1">&amp;#39;full.html&amp;#39;&lt;/span>&lt;span class="p">);&lt;/span>
 &lt;span class="p">});&lt;/span>
 &lt;span class="c1">// change play to false when both players have
 &lt;/span>&lt;span class="c1">// joined the room, so that they can start playing
@@ -649,7 +658,7 @@ npm install --save socket.io
 &lt;span class="p">});&lt;/span>
 &lt;/code>&lt;/pre>&lt;/div>&lt;p>One last method requires implementation, the &lt;code>connect&lt;/code> function. When we click the connect button it needs to emit an event with the room id that the player has entered.&lt;/p>
 &lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-javascript" data-lang="javascript">
-&lt;span class="kd">var&lt;/span> &lt;span class="nx">connect&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="kd">function&lt;/span>&lt;span class="p">(){&lt;/span>
+&lt;span class="kd">var&lt;/span> &lt;span class="nx">connect&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="kd">function&lt;/span> &lt;span class="p">()&lt;/span> &lt;span class="p">{&lt;/span>
 &lt;span class="c1">// extract the value of the input field
 &lt;/span>&lt;span class="c1">&lt;/span> &lt;span class="nx">roomId&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="nx">room&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">value&lt;/span>&lt;span class="p">;&lt;/span>
 &lt;span class="c1">// if the room number is valid
