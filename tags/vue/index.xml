@@ -76,7 +76,7 @@ $ npm install -D vuepress
 &lt;span class="p">}&lt;/span>
 &lt;/code>&lt;/pre>&lt;/div>
 &lt;h1 id="home-page">Home page&lt;/h1>
-&lt;p>Now we&amp;rsquo;re going to create the front page for out website. You can read more about the &lt;a href="https://v0.vuepress.vuejs.org/default-theme-config/">Default Theme Config&lt;/a> here.&lt;/p>
+&lt;p>Now we&amp;rsquo;re going to create the front page for our website. You can read more about the &lt;a href="https://v0.vuepress.vuejs.org/default-theme-config/">Default Theme Config&lt;/a> here.&lt;/p>
 &lt;p>In &lt;code>docs/readme.md&lt;/code> place the following code&lt;/p>
 &lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-markdown" data-lang="markdown">---
 home: true
@@ -164,7 +164,7 @@ $ git push origin master
 &lt;li>select your git provider.&lt;/li>
 &lt;/ol>
 &lt;ul>
-&lt;li>Choose the repository that you just created and commited to.&lt;/li>
+&lt;li>Choose the repository that you just created and committed to.&lt;/li>
 &lt;li>Under build options go to basic build settings and fill in the following 2 fields:
 &lt;ul>
 &lt;li>Build command&lt;/li>
@@ -287,7 +287,7 @@ You&amp;rsquo;ll get a prompt to choose a &lt;code>default&lt;/code> preset or &
 &lt;span class="p">&amp;lt;/&lt;/span>&lt;span class="nt">script&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
 &lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">style&lt;/span> &lt;span class="na">scoped&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
 &lt;span class="p">&amp;lt;/&lt;/span>&lt;span class="nt">style&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>&lt;/code>&lt;/pre>&lt;/div>
-&lt;p>We&amp;rsquo;re going to add a navbar, a container div and some styles to &lt;code>App.vue&lt;/code> and file should look like this.
+&lt;p>We&amp;rsquo;re going to add a navbar, a container div and some styles to &lt;code>App.vue&lt;/code> and the file should look like this.
 &lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-html" data-lang="html">&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">template&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
 &lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">div&lt;/span> &lt;span class="na">id&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;app&amp;#34;&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
 &lt;span class="c">&amp;lt;!-- added a navbar --&amp;gt;&lt;/span>
@@ -331,7 +331,7 @@ You&amp;rsquo;ll get a prompt to choose a &lt;code>default&lt;/code> preset or &
 &lt;span class="p">&amp;lt;/&lt;/span>&lt;span class="nt">style&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>&lt;/code>&lt;/pre>&lt;/div>
 This is basically all the modification we&amp;rsquo;ll be doing to &lt;code>App.vue&lt;/code>. All the magic happens in &lt;code>Data.vue&lt;/code>, where our main logic resides.&lt;/p>
 &lt;h3 id="datavue">Data.vue&lt;/h3>
-&lt;p>This is where we&amp;rsquo;ll be making the API requests and in order to use &lt;code>axios&lt;/code> it has to imported to the component. Along with this, we&amp;rsquo;ll also be creating some variables in the &lt;code>script&lt;/code> section of this component.&lt;/p>
+&lt;p>This is where we&amp;rsquo;ll be making the API requests and in order to use &lt;code>axios&lt;/code> it has to be imported to the component. Along with this, we&amp;rsquo;ll also be creating some variables in the &lt;code>script&lt;/code> section of this component.&lt;/p>
 &lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-javascript" data-lang="javascript">&lt;span class="c1">// import axios
 &lt;/span>&lt;span class="c1">&lt;/span>&lt;span class="kr">import&lt;/span> &lt;span class="nx">axios&lt;/span> &lt;span class="nx">from&lt;/span> &lt;span class="s1">&amp;#39;axios&amp;#39;&lt;/span>&lt;span class="p">;&lt;/span>
 &lt;span class="kr">export&lt;/span> &lt;span class="k">default&lt;/span> &lt;span class="p">{&lt;/span>
@@ -390,7 +390,7 @@ In this line below we use &lt;code>v-model=&amp;quot;username&amp;quot;&lt;/code
 &lt;/li>
 &lt;li>
 &lt;p>&lt;strong>Event Handling-&lt;/strong>
-Here we use &lt;code>v-on:click=&amp;quot;sendReq&amp;quot;&lt;/code> which means that when we click on this button it will call &lt;code>sendReq&lt;/code> which is a method we will be implimenting now.
+Here we use &lt;code>v-on:click=&amp;quot;sendReq&amp;quot;&lt;/code> which means that when we click on this button it will call &lt;code>sendReq&lt;/code> which is a method we will be implementing now.
 &lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-html" data-lang="html">&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">button&lt;/span> &lt;span class="na">class&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;btn btn-outline-dark&amp;#34;&lt;/span> &lt;span class="na">v-on:click&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;sendReq&amp;#34;&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>Submit&lt;span class="p">&amp;lt;/&lt;/span>&lt;span class="nt">button&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;/p>
 &lt;/li>
 &lt;/ul>
@@ -453,7 +453,7 @@ Here we use &lt;code>v-on:click=&amp;quot;sendReq&amp;quot;&lt;/code> which mean
 &lt;span class="p">}&lt;/span>
 &lt;/code>&lt;/pre>&lt;/div>
 &lt;p>So now if we enter a valid &lt;code>username&lt;/code> and &lt;code>repository&lt;/code> and click Submit, the response will be stored in &lt;code>releases&lt;/code>. Now we need a way to display the information that we got. Since &lt;code>releases&lt;/code> is an array, we&amp;rsquo;ll use &lt;code>v-for&lt;/code> to iteratively display one card for each release.&lt;/p>
-&lt;p>For this, we&amp;rsquo;re going to create a new component called &lt;code>Card&lt;/code>, and we&amp;rsquo;ll pass data from the &lt;code>Data&lt;/code> component via &lt;strong>props&lt;/strong> (Properties). This means that whatever value we pass to a prop from parent can be read by the child component and becomes a property of that component.&lt;/p>
+&lt;p>For this, we&amp;rsquo;re going to create a new component called &lt;code>Card&lt;/code>, and we&amp;rsquo;ll pass data from the &lt;code>Data&lt;/code> component via &lt;strong>props&lt;/strong> (Properties). This means that whatever value we pass to a prop from the parent can be read by the child component and becomes a property of that component.&lt;/p>
 &lt;p>Add the following lines to &lt;code>Data.vue&lt;/code>&lt;/p>
 &lt;p>In &lt;code>Template&lt;/code>
 &lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-html" data-lang="html">&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">div&lt;/span> &lt;span class="na">class&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;row justify-content-center&amp;#34;&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
@@ -489,7 +489,7 @@ No Releases
 &lt;ul>
 &lt;li>
 &lt;p>&lt;strong>List Rendering-&lt;/strong>
-The &lt;code>v-for&lt;/code> directive is used to render a list of items based on an array. Another way to use the &lt;code>v-for&lt;/code> directive is &lt;code>v-for=&amp;quot;item in items&amp;quot;&lt;/code>, which is simpler. In this case we render cards based on the values of the the &lt;code>releases&lt;/code> array.
+The &lt;code>v-for&lt;/code> directive is used to render a list of items based on an array. Another way to use the &lt;code>v-for&lt;/code> directive is &lt;code>v-for=&amp;quot;item in items&amp;quot;&lt;/code>, which is simpler. In this case we render cards based on the values of the &lt;code>releases&lt;/code> array.
 &lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-html" data-lang="html">&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">div&lt;/span> &lt;span class="na">class&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;card shadow-sm mb-3 rounded&amp;#34;&lt;/span>
 &lt;span class="na">v-for&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;(release , index) in releases&amp;#34;&lt;/span> &lt;span class="na">:key&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;index&amp;#34;&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;/p>
 &lt;/li>

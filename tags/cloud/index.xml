@@ -7,29 +7,28 @@ or read the next part here: &lt;a href="https://home.aveek.io/blog/post/deploy-s
 &lt;p>Cloud Functions for Firebase is a serverless framework that lets you automatically run backend code in response to events triggered by Firebase features and HTTPS requests.&lt;/p>
 &lt;/blockquote>
 &lt;p>What this means is essentially you can write code that will run when certain events take place. These events can be http requests or an event triggered by another firebase service, like their database or storage solution. This means that you can essentially write server side code without having to worry about the specifics of managing and scaling servers, which makes life a lot easier as a developer.&lt;/p>
-&lt;p>Not all servers can be replaced by cloud functions especially since only Javascript or Typescript is supported for Firebase as of now. However there are a lot of simple tasks that you might have been considering using a server for, that can be handled by a cloud function.&lt;/p>
-&lt;p>To demonstrate how to use Firebase cloud functions we&amp;rsquo;ll be creating a simple application. In this application you can upload an image which will be converted to &lt;a href="">ascii art&lt;/a>. Probably not the most useful application in the world, but a fun project to help you get started with firebase functions. The backend of this application will only use Firebase cloud functions and for the frontend we&amp;rsquo;ll be using &lt;a href="">Svelte&lt;/a>.&lt;/p>
-&lt;p>I&amp;rsquo;ll be tackling the Frontend in another post so stay tuned for that. So in this tutorial you&amp;rsquo;ll learn how to create and deploy a Firebase function.&lt;/p>
+&lt;p>Not all servers can be replaced by cloud functions especially since only JavaScript or Typescript is supported for Firebase as of now. However there are a lot of simple tasks that you might have been considering using a server for, that can be handled by a cloud function.&lt;/p>
+&lt;p>To demonstrate how to use Firebase cloud functions we’ll be creating a simple application. In this application you can upload an image which will be converted to ascii art. Probably not the most useful application in the world, but a fun project to help you get started with firebase functions. The backend of this application will only use Firebase cloud functions and for the frontend we’ll be using Svelte.&lt;/p>
+&lt;p>I’ll be tackling the Frontend in another post so stay tuned for that. So in this tutorial you’ll learn how to create and deploy a Firebase function.&lt;/p>
 &lt;h1 id="set-up-firebase">Set up Firebase&lt;/h1>
-&lt;p>Before we start you&amp;rsquo;ll need an account to log in to the &lt;a href="https://console.firebase.google.com/">&lt;code>Firebase Console&lt;/code>&lt;/a>, and then you can follow the steps below.&lt;/p>
+&lt;p>Before we start you’ll need an account to log in to the &lt;a href="https://console.firebase.google.com/">&lt;code>Firebase Console&lt;/code>&lt;/a>, and then you can follow the steps below.&lt;/p>
 &lt;h3 id="1-create-a-firebase-project-">1. Create a Firebase project-&lt;/h3>
-&lt;p>Go to the firebase console and create a new project. You can choose to set up Google analytics for the project, but it&amp;rsquo;s not really important for this application.&lt;/p>
+&lt;p>Go to the firebase console and create a new project. You can choose to set up Google analytics for the project, but it’s not really important for this application.&lt;/p>
 &lt;h3 id="2-set-up-firebase-cli-">2. Set up Firebase CLI-&lt;/h3>
-&lt;p>You&amp;rsquo;ll need to have Node.js installed already on your system. Install the cli through npm by running &lt;code>npm install -g firebase-tools&lt;/code>&lt;/p>
+&lt;p>You’ll need to have Node.js installed already on your system. Install the cli through npm by running &lt;code>npm install -g firebase-tools&lt;/code>&lt;/p>
 &lt;h3 id="3-initialize-the-firebase-sdk-">3. Initialize the Firebase SDK-&lt;/h3>
 &lt;p>Run &lt;code>firebase login&lt;/code> to log in to the CLI via the browser using the account your new project is linked to.&lt;/p>
-&lt;h3 id="4-initialze-the-project-">4. Initialze the project-&lt;/h3>
+&lt;h3 id="4-initialize-the-project-">4. Initialize the project-&lt;/h3>
 &lt;p>Create a new working directory for this project and navigate to that directory. Then run &lt;code>firebase init functions&lt;/code>.&lt;/p>
-&lt;p>During the setup, Use an existing project, and select the project you&amp;rsquo;d created through the console in the step before. Select JavaScript as the language and pick install dependencies using npm when it offers you the option. Once all the dependencies have finished isntalling you&amp;rsquo;re ready for the next step!&lt;/p>
+&lt;p>During the setup, Use an existing project, and select the project you’d created through the console in the step before. Select JavaScript as the language and pick install dependencies using npm when it offers you the option. Once all the dependencies have finished installing you’re ready for the next step!&lt;/p>
 &lt;h1 id="creating-the-firebase-function">Creating the Firebase function&lt;/h1>
 &lt;p>If the setup went correctly you should be seeing a folder called &lt;code>functions&lt;/code>. This is where the code for our function will be, specifically in &lt;code>index.js&lt;/code>.&lt;/p>
 &lt;h2 id="the-api">The API&lt;/h2>
-&lt;p>We&amp;rsquo;ll be setting up a basic Express server with only one endpoint that receives the uploaded image and then using this Express app as a cloud function.
-First install the required modules&lt;/p>
-&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-bash" data-lang="bash">npm i
+&lt;p>We’ll be setting up a basic Express server with only one endpoint that receives the uploaded image and then using this Express app as a cloud function. First install the required modules&lt;/p>
+&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-shell" data-lang="shell">npm i
 npm i express busboy
 &lt;/code>&lt;/pre>&lt;/div>&lt;p>If you want to test the function locally, run &lt;code>firebase serve&lt;/code> and then use the url specified in the console to test the function.&lt;/p>
-&lt;p>We&amp;rsquo;ll be uploading an image using a multipart form. Unfortunately common middleware for this purpose like Multer and Formidable dont work properly with express in Cloud functions, so we&amp;rsquo;ll have to use a method shown in the &lt;a href="https://cloud.google.com/functions/docs/writing/http#multipart_data">documentation&lt;/a> that uses Busboy. The documentation does a pretty good job of explaining the code, so I&amp;rsquo;ll just be copying it here in &lt;code>index.js&lt;/code>.&lt;/p>
+&lt;p>We’ll be uploading an image using a multipart form. Unfortunately common middleware for this purpose like Multer and Formidable don&amp;rsquo;t work properly with express in Cloud functions, so we’ll have to use a method shown in the &lt;a href="https://cloud.google.com/functions/docs/writing/http#multipart_data">documentation&lt;/a> that uses Busboy. The documentation does a pretty good job of explaining the code, so I’ll just be copying it here in &lt;code>index.js&lt;/code>.&lt;/p>
 &lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-javascript" data-lang="javascript">&lt;span class="kr">const&lt;/span> &lt;span class="nx">functions&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="nx">require&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s1">&amp;#39;firebase-functions&amp;#39;&lt;/span>&lt;span class="p">);&lt;/span>
 &lt;span class="kr">const&lt;/span> &lt;span class="nx">express&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="nx">require&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s1">&amp;#39;express&amp;#39;&lt;/span>&lt;span class="p">);&lt;/span>
 &lt;span class="kr">const&lt;/span> &lt;span class="nx">cors&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="nx">require&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s1">&amp;#39;cors&amp;#39;&lt;/span>&lt;span class="p">);&lt;/span>
@@ -81,14 +80,12 @@ npm i express busboy
 &lt;span class="p">});&lt;/span>
 &lt;span class="c1">// Expose Express API as a single Cloud Function:
 &lt;/span>&lt;span class="c1">&lt;/span>&lt;span class="nx">exports&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">ascii&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="nx">functions&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">runWith&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nx">runtimeOpts&lt;/span>&lt;span class="p">).&lt;/span>&lt;span class="nx">https&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">onRequest&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nx">app&lt;/span>&lt;span class="p">);&lt;/span>
-&lt;/code>&lt;/pre>&lt;/div>
-&lt;p>So now if we test the function using a service like Insomnia or Postman by uploading an image in a multi part form the path to the image uploaded should be logged in the console!&lt;/p>
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>So now if we test the function using a service like Insomnia or Postman by uploading an image in a multi part form the path to the image uploaded should be logged in the console!&lt;/p>
 &lt;h2 id="image-to-ascii">Image to ASCII&lt;/h2>
-&lt;p>We&amp;rsquo;ll be creating a separate module for the logic to convert the image the user uploads to ASCII art. To convert the image we&amp;rsquo;ll be using a module called &lt;code>Jimp&lt;/code>.&lt;/p>
-&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-bash" data-lang="bash">$ npm i jimp
+&lt;p>We’ll be creating a separate module for the logic to convert the image the user uploads to ASCII art. To convert the image we’ll be using a module called &lt;code>Jimp&lt;/code>.&lt;/p>
+&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-shell" data-lang="shell">npm i jimp
 &lt;/code>&lt;/pre>&lt;/div>&lt;p>Create a new file called &lt;code>img2ascii.js&lt;/code>.&lt;/p>
-&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-javascript" data-lang="javascript">
-&lt;span class="kr">const&lt;/span> &lt;span class="nx">Jimp&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="nx">require&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s1">&amp;#39;jimp&amp;#39;&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-javascript" data-lang="javascript">&lt;span class="kr">const&lt;/span> &lt;span class="nx">Jimp&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="nx">require&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s1">&amp;#39;jimp&amp;#39;&lt;/span>&lt;span class="p">);&lt;/span>
 &lt;span class="c1">// Export the function so we can call it from the cloud function
 &lt;/span>&lt;span class="c1">// The function takes the filepath, the dimensions of the image
 &lt;/span>&lt;span class="c1">// and the kind of ascii art as parameters
@@ -138,14 +135,12 @@ npm i express busboy
 &lt;span class="p">}&lt;/span>
 &lt;span class="p">)&lt;/span>
 &lt;span class="p">}&lt;/span>
-&lt;/code>&lt;/pre>&lt;/div>
-&lt;p>Now to convert the image the user has passed to the function, we have to make a few changes to &lt;code>index.js&lt;/code>.&lt;/p>
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>Now to convert the image the user has passed to the function, we have to make a few changes to &lt;code>index.js&lt;/code>.&lt;/p>
 &lt;p>Import the module we just created.&lt;/p>
 &lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-javascript" data-lang="javascript">&lt;span class="p">...&lt;/span>
 &lt;span class="kr">const&lt;/span> &lt;span class="nx">p2a&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="nx">require&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s1">&amp;#39;./img2ascii.js&amp;#39;&lt;/span>&lt;span class="p">)&lt;/span>
 &lt;span class="p">...&lt;/span>
-&lt;/code>&lt;/pre>&lt;/div>
-&lt;p>To take the file passed and do the conversion, modify this part of the cloud function
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>To take the file passed and do the conversion, modify this part of the cloud function&lt;/p>
 &lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-javascript" data-lang="javascript">&lt;span class="p">...&lt;/span>
 &lt;span class="p">...&lt;/span>
 &lt;span class="nx">busboy&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">on&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s1">&amp;#39;finish&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nx">async&lt;/span> &lt;span class="p">()&lt;/span> &lt;span class="p">=&amp;gt;&lt;/span> &lt;span class="p">{&lt;/span>
@@ -163,15 +158,13 @@ npm i express busboy
 &lt;span class="p">});&lt;/span>
 &lt;span class="p">...&lt;/span>
 &lt;span class="p">...&lt;/span>
-&lt;/code>&lt;/pre>&lt;/div>&lt;/p>
-&lt;p>At this stage if you test your function using Insomnia or Postman to create a multi part form, with an image, the width and the charset fields, and send it, you should see a string of ascii characters that represent your image being sent back in the response. We&amp;rsquo;re now ready for the next step!&lt;/p>
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>At this stage if you test your function using Insomnia or Postman to create a multi part form, with an image, the width and the charset fields, and send it, you should see a string of ascii characters that represent your image being sent back in the response. We’re now ready for the next step!&lt;/p>
 &lt;h1 id="deploy">Deploy&lt;/h1>
 &lt;p>To deploy the function just run this command in the &lt;code>functions&lt;/code> folder.&lt;/p>
-&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-bash" data-lang="bash">firebase deploy
-&lt;/code>&lt;/pre>&lt;/div>&lt;p>Once the application has been deployed, the CLI will give you a public url that you can access from anywhere. It should look something like this. &lt;code>https://us-central1-pix2ascii.cloudfunctions.net/ascii&lt;/code>. You can test this deployed function in the same way you were testing it localy, just replace the url.&lt;/p>
+&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-shell" data-lang="shell">firebase deploy
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>Once the application has been deployed, the CLI will give you a public url that you can access from anywhere. It should look something like this. &lt;code>https://us-central1-pix2ascii.cloudfunctions.net/ascii&lt;/code>. You can test this deployed function in the same way you were testing it locally, just replace the url.&lt;/p>
 &lt;h1 id="conclusion">Conclusion&lt;/h1>
-&lt;p>We&amp;rsquo;ve now successfully created and deployed a function to firebase that we can use to convert an image to ASCII art. If all you want is the backend then that&amp;rsquo;s all you need.&lt;/p>
-&lt;p>You&amp;rsquo;re free to use any hosting service along with any framework of your choice for the web UI. If you want to also learn how to build and deploy a svelte application to Firebase and automate the process using GitHub actions, be sure to look out for the next part of this tutorial.&lt;/p>
-&lt;!-- raw HTML omitted -->
+&lt;p>We’ve now successfully created and deployed a function to firebase that we can use to convert an image to ASCII art. If all you want is the backend then that’s all you need.&lt;/p>
+&lt;p>You’re free to use any hosting service along with any framework of your choice for the web UI. If you want to also learn how to build and deploy a svelte application to Firebase and automate the process using GitHub actions, be sure to look out for the next part of this tutorial.&lt;/p>
 &lt;!-- raw HTML omitted -->
 &lt;!-- raw HTML omitted --></description></item></channel></rss>

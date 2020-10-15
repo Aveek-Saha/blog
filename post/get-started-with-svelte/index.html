@@ -22,7 +22,7 @@ npm install
 </span><span class=c1></span>   <span class=kd>let</span> <span class=nx>todos</span> <span class=o>=</span> <span class=p>[</span><span class=s2>&#34;eat&#34;</span><span class=p>,</span> <span class=s2>&#34;sleep&#34;</span><span class=p>,</span> <span class=s2>&#34;code&#34;</span><span class=p>]</span>
   
    <span class=kd>function</span> <span class=nx>addTask</span><span class=p>()</span> <span class=p>{</span>
-       <span class=c1>// Dont add something if the input value is empty
+       <span class=c1>// Don&#39;t add something if the input value is empty
 </span><span class=c1></span>        <span class=k>if</span><span class=p>(</span><span class=nx>task</span><span class=o>!=</span><span class=s2>&#34;&#34;</span><span class=p>){</span>
            <span class=c1>// Push a new task to the array
 </span><span class=c1></span>           <span class=nx>todos</span><span class=p>.</span><span class=nx>push</span><span class=p>(</span><span class=nx>task</span><span class=p>)</span>
@@ -124,7 +124,7 @@ npm install
 </span><span class=c1></span>    <span class=nx>set</span><span class=p>(</span><span class=s1>&#39;todos&#39;</span><span class=p>,</span> <span class=nx>todos</span><span class=p>)</span>
     <span class=nx>console</span><span class=p>.</span><span class=nx>log</span><span class=p>(</span><span class=nx>index</span><span class=p>);</span>
 <span class=p>}</span>
-</code></pre></div><p>Now the list wont get reset everytime you refresh the page.</p><h1 id=deploying-to-netlify>Deploying to Netlify</h1><p>First we&rsquo;re going to add a <code>.gitignore</code> with a single line-</p><pre><code>node_modules
+</code></pre></div><p>Now the list won&rsquo;t get reset every time you refresh the page.</p><h1 id=deploying-to-netlify>Deploying to Netlify</h1><p>First we&rsquo;re going to add a <code>.gitignore</code> with a single line-</p><pre><code>node_modules
 </code></pre><p>Create a new project on GitHub or GitLab (Bitbucket is also available) then <code>cd</code> to your project folder and run the following</p><div class=highlight><pre class=chroma><code class=language-bash data-lang=bash>$ git init
 $ git remote add origin &lt;git URL of your project&gt;
 $ git add .

@@ -35,7 +35,7 @@ npm install
 &lt;span class="c1">// Array to store tasks
 &lt;/span>&lt;span class="c1">&lt;/span> &lt;span class="kd">let&lt;/span> &lt;span class="nx">todos&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="p">[&lt;/span>&lt;span class="s2">&amp;#34;eat&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="s2">&amp;#34;sleep&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="s2">&amp;#34;code&amp;#34;&lt;/span>&lt;span class="p">]&lt;/span>
 &lt;span class="kd">function&lt;/span> &lt;span class="nx">addTask&lt;/span>&lt;span class="p">()&lt;/span> &lt;span class="p">{&lt;/span>
-&lt;span class="c1">// Dont add something if the input value is empty
+&lt;span class="c1">// Don&amp;#39;t add something if the input value is empty
 &lt;/span>&lt;span class="c1">&lt;/span> &lt;span class="k">if&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nx">task&lt;/span>&lt;span class="o">!=&lt;/span>&lt;span class="s2">&amp;#34;&amp;#34;&lt;/span>&lt;span class="p">){&lt;/span>
 &lt;span class="c1">// Push a new task to the array
 &lt;/span>&lt;span class="c1">&lt;/span> &lt;span class="nx">todos&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">push&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nx">task&lt;/span>&lt;span class="p">)&lt;/span>
@@ -137,7 +137,7 @@ npm install
 &lt;span class="nx">console&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">log&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nx">index&lt;/span>&lt;span class="p">);&lt;/span>
 &lt;span class="p">}&lt;/span>
 &lt;/code>&lt;/pre>&lt;/div>
-&lt;p>Now the list wont get reset everytime you refresh the page.&lt;/p>
+&lt;p>Now the list won&amp;rsquo;t get reset every time you refresh the page.&lt;/p>
 &lt;h1 id="deploying-to-netlify">Deploying to Netlify&lt;/h1>
 &lt;p>First we&amp;rsquo;re going to add a &lt;code>.gitignore&lt;/code> with a single line-&lt;/p>
 &lt;pre>&lt;code>node_modules

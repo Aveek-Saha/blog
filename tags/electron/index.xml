@@ -175,7 +175,7 @@ The functions implemented are-&lt;/p>
 &lt;span class="p">}&lt;/span>
 &lt;/code>&lt;/pre>&lt;/div>
 &lt;p>Most audio files have some kind of metadata attached to them in the form of media tags. This metadata includes things like Title, Artist, Album and Album art.&lt;/p>
-&lt;p>These tags are read using JSmediatags using which we retrieve the name of the song, the artist and the album art. the album art is decoded from base64 and displayed as an image. If there are no media tags for a file, it simply displays the file name.&lt;/p>
+&lt;p>These tags are read using JSmediatags using which we retrieve the name of the song, the artist and the album art. The album art is decoded from base64 and displayed as an image. If there are no media tags for a file, it simply displays the file name.&lt;/p>
 &lt;h1 id="features">Features&lt;/h1>
 &lt;ul>
 &lt;li>Supports: mp3, opus, ogg, wav, aac, m4a, webm.&lt;/li>

@@ -76,7 +76,7 @@ $ npm install -D vuepress
 &lt;span class="p">}&lt;/span>
 &lt;/code>&lt;/pre>&lt;/div>
 &lt;h1 id="home-page">Home page&lt;/h1>
-&lt;p>Now we&amp;rsquo;re going to create the front page for out website. You can read more about the &lt;a href="https://v0.vuepress.vuejs.org/default-theme-config/">Default Theme Config&lt;/a> here.&lt;/p>
+&lt;p>Now we&amp;rsquo;re going to create the front page for our website. You can read more about the &lt;a href="https://v0.vuepress.vuejs.org/default-theme-config/">Default Theme Config&lt;/a> here.&lt;/p>
 &lt;p>In &lt;code>docs/readme.md&lt;/code> place the following code&lt;/p>
 &lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-markdown" data-lang="markdown">---
 home: true
@@ -164,7 +164,7 @@ $ git push origin master
 &lt;li>select your git provider.&lt;/li>
 &lt;/ol>
 &lt;ul>
-&lt;li>Choose the repository that you just created and commited to.&lt;/li>
+&lt;li>Choose the repository that you just created and committed to.&lt;/li>
 &lt;li>Under build options go to basic build settings and fill in the following 2 fields:
 &lt;ul>
 &lt;li>Build command&lt;/li>
