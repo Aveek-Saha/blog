@@ -1,4 +1,192 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>GitHub on Aveek's Blog</title><link>https://home.aveek.io/blog/tags/github/</link><description>Recent content in GitHub on Aveek's Blog</description><generator>Hugo -- gohugo.io</generator><managingEditor>aveek.s98@gmail.com (Aveek Saha)</managingEditor><webMaster>aveek.s98@gmail.com (Aveek Saha)</webMaster><lastBuildDate>Sat, 18 Jul 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://home.aveek.io/blog/tags/github/index.xml" rel="self" type="application/rss+xml"/><item><title>How to create a GitHub profile Readme</title><link>https://home.aveek.io/blog/post/create-github-profile-readme/</link><pubDate>Sat, 18 Jul 2020 00:00:00 +0000</pubDate><author>aveek.s98@gmail.com (Aveek Saha)</author><guid>https://home.aveek.io/blog/post/create-github-profile-readme/</guid><description>&lt;p>If you want to see what this looks like - &lt;a href="https://github.com/Aveek-Sahar">&lt;code>My gitHub Profile&lt;/code>&lt;/a> &lt;!-- raw HTML omitted -->
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>GitHub on Aveek's Blog</title><link>https://home.aveek.io/blog/tags/github/</link><description>Recent content in GitHub on Aveek's Blog</description><generator>Hugo -- gohugo.io</generator><managingEditor>aveek.s98@gmail.com (Aveek Saha)</managingEditor><webMaster>aveek.s98@gmail.com (Aveek Saha)</webMaster><lastBuildDate>Fri, 16 Oct 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://home.aveek.io/blog/tags/github/index.xml" rel="self" type="application/rss+xml"/><item><title>Create a bot that updates a pinned gist</title><link>https://home.aveek.io/blog/post/pinned-gist-bot/</link><pubDate>Fri, 16 Oct 2020 00:00:00 +0000</pubDate><author>aveek.s98@gmail.com (Aveek Saha)</author><guid>https://home.aveek.io/blog/post/pinned-gist-bot/</guid><description>&lt;p>Get the code here: &lt;a href="https://github.com/Aveek-Saha/blog-box">blog-box&lt;/a>&lt;/p>
+&lt;h1 id="introduction">Introduction&lt;/h1>
+&lt;p>I recently came across this &lt;a href="https://github.com/matchai/awesome-pinned-gists">awesome list for pinned gists&lt;/a> and it piqued my curiosity. So this is basically a collection of repositories that allow you to automatically update a gist periodically with some information. This gist can then be pinned to your GitHub page for people to see when they visit your profile.&lt;/p>
+&lt;p>For those of you that havent heard of gists, they&amp;rsquo;re a service provided by GitHub, you can check it out &lt;a href="https://gist.github.com/">here&lt;/a>. They&amp;rsquo;re basically a collection of files that can be forked and cloned like a GitHub repo.&lt;/p>
+&lt;p>These periodically updating pinned gists have a nickname, &lt;strong>boxes&lt;/strong>. Some examples of what you can put on these gists from &lt;code>awesome-pinned-gists&lt;/code> include, your &lt;a href="https://github.com/matchai/bird-box">most recent tweet&lt;/a>, &lt;a href="https://github.com/jacc/music-box">weekly music listening report&lt;/a>, &lt;a href="https://github.com/mdluo/goodreads-box">books you&amp;rsquo;re currently reading&lt;/a>, etc.&lt;/p>
+&lt;p>Basically if you know a service that has an API you can display it on a pinned gist. In this tutorial I&amp;rsquo;ll show you how to create a gist that updates regularly with Your latest Dev.to blog post, but this method can be adapted for any service with an API. You&amp;rsquo;re only limited by your imagination and publicly available APIs.&lt;/p>
+&lt;h1 id="setup">Setup&lt;/h1>
+&lt;p>This tutorial will have four parts-&lt;/p>
+&lt;ol>
+&lt;li>Setup all the prerequisites before you start coding.&lt;/li>
+&lt;li>Programatically update a gist.&lt;/li>
+&lt;li>Get data from the API and update the gist.&lt;/li>
+&lt;li>Setup a GitHub workflow to auto update.&lt;/li>
+&lt;/ol>
+&lt;h2 id="1-prerequisites">1. Prerequisites&lt;/h2>
+&lt;h3 id="create-a-github-token">Create a GitHub token&lt;/h3>
+&lt;p>Create a new personal access token at &lt;a href="https://github.com/settings/tokens">https://github.com/settings/tokens&lt;/a> and remember to save the token somewhere because you can only see it once.&lt;/p>
+&lt;h3 id="creating-the-gist">Creating the Gist&lt;/h3>
+&lt;p>The first thing we need to do is create a gist. So go to &lt;a href="https://gist.github.com/">https://gist.github.com/&lt;/a> and make one, create a file, name it whatever you want, and add whatever description and content you want for now. You&amp;rsquo;ll need to add some content to the file because you can&amp;rsquo;t create an empty gist.&lt;/p>
+&lt;p>Once you&amp;rsquo;ve created a gist, the url will look something like this &lt;code>https://gist.github.com/&amp;lt;username&amp;gt;/&lt;/code> &lt;strong>&lt;code>&amp;lt;gist id&amp;gt;&lt;/code>&lt;/strong>. Copy this gist id and keep it somewhere for later use.&lt;/p>
+&lt;h3 id="setup-the-project">Setup the project&lt;/h3>
+&lt;p>Create a new repository on GitHub, clone it to your local setup and make it your working directory. Then we&amp;rsquo;ll set up npm, answer the questions asked and it should create a &lt;code>package.json&lt;/code> for you.&lt;/p>
+&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-shell" data-lang="shell">npm init
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>Then we&amp;rsquo;ll create the other two important files in this project, &lt;code>index.js&lt;/code> which will be our main file and &lt;code>action.yml&lt;/code>, which we&amp;rsquo;ll be using later when we&amp;rsquo;re setting up the GitHub action. We also need to create a &lt;code>.env&lt;/code> file that has our environment variables for local development.&lt;/p>
+&lt;h3 id="install-the-dependencies">Install the dependencies&lt;/h3>
+&lt;p>We&amp;rsquo;ll need a few packages for this project, how they&amp;rsquo;re used will become clear as you progress through this tutorial&lt;/p>
+&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-shell" data-lang="shell">npm i @octokit/rest axios dotenv wrap-ansi
+&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="2-updating-the-gist">2. Updating the Gist&lt;/h2>
+&lt;h3 id="environment-variables">Environment variables&lt;/h3>
+&lt;p>Before we do anything else, first add the environment variables to the &lt;code>.env&lt;/code> file. You can keep the &lt;code>DEV_USERNAME&lt;/code> field empty for now.&lt;/p>
+&lt;p>You can store any API keys or secrets in this file. This file won&amp;rsquo;t be pushed to your repo, instead you&amp;rsquo;ll have to add the variables in this file as secrets under repository settings. Since I&amp;rsquo;m using the dev.to API, which doesn&amp;rsquo;t need an API key to get posts, I&amp;rsquo;m storing the username which is the only parameter you need to retrieve posts.&lt;/p>
+&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-toml" data-lang="toml">&lt;span class="nx">GIST_ID&lt;/span>&lt;span class="p">=&lt;/span>&lt;span class="s2">&amp;#34;&amp;lt;Your gist id&amp;gt;&amp;#34;&lt;/span>
+&lt;span class="nx">GH_TOKEN&lt;/span>&lt;span class="p">=&lt;/span>&lt;span class="s2">&amp;#34;&amp;lt;Your github token&amp;gt;&amp;#34;&lt;/span>
+&lt;span class="nx">DEV_USERNAME&lt;/span>&lt;span class="p">=&lt;/span>&lt;span class="s2">&amp;#34;&amp;#34;&lt;/span>
+&lt;/code>&lt;/pre>&lt;/div>&lt;h3 id="main-script">Main script&lt;/h3>
+&lt;p>Now we&amp;rsquo;ll write some code to update the gist we&amp;rsquo;ve created. Add this to &lt;code>index.js&lt;/code>.&lt;/p>
+&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-javascript" data-lang="javascript">&lt;span class="nx">require&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s1">&amp;#39;dotenv&amp;#39;&lt;/span>&lt;span class="p">).&lt;/span>&lt;span class="nx">config&lt;/span>&lt;span class="p">()&lt;/span>
+&lt;span class="kr">const&lt;/span> &lt;span class="p">{&lt;/span> &lt;span class="nx">Octokit&lt;/span> &lt;span class="p">}&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="nx">require&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s2">&amp;#34;@octokit/rest&amp;#34;&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;span class="c1">// Get the environment variables
+&lt;/span>&lt;span class="c1">&lt;/span>&lt;span class="kr">const&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;span class="nx">GIST_ID&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="nx">gistId&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;span class="nx">GH_TOKEN&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="nx">githubToken&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;span class="nx">DEV_USERNAME&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="nx">devUsername&lt;/span>
+&lt;span class="p">}&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="nx">process&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">env&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;span class="c1">// Authentication
+&lt;/span>&lt;span class="c1">&lt;/span>&lt;span class="kr">const&lt;/span> &lt;span class="nx">octokit&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="k">new&lt;/span> &lt;span class="nx">Octokit&lt;/span>&lt;span class="p">({&lt;/span>
+&lt;span class="nx">auth&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="sb">`token &lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nx">githubToken&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="sb">`&lt;/span>
+&lt;span class="p">});&lt;/span>
+&lt;span class="c1">// Function to update the gist contents
+&lt;/span>&lt;span class="c1">&lt;/span>&lt;span class="nx">async&lt;/span> &lt;span class="kd">function&lt;/span> &lt;span class="nx">updateGist&lt;/span>&lt;span class="p">()&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;span class="kd">let&lt;/span> &lt;span class="nx">gist&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;span class="k">try&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;span class="c1">// Get the gist you made using the gist id
+&lt;/span>&lt;span class="c1">&lt;/span> &lt;span class="nx">gist&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="nx">await&lt;/span> &lt;span class="nx">octokit&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">gists&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">get&lt;/span>&lt;span class="p">({&lt;/span> &lt;span class="nx">gist_id&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="nx">gistId&lt;/span> &lt;span class="p">});&lt;/span>
+&lt;span class="p">}&lt;/span> &lt;span class="k">catch&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="nx">error&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;span class="nx">console&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">error&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="sb">`Unable to get gist&lt;/span>&lt;span class="err">\&lt;/span>&lt;span class="sb">n&lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nx">error&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="sb">`&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;span class="p">}&lt;/span>
+&lt;span class="c1">// Only one file was created, so fetch it&amp;#39;s filename
+&lt;/span>&lt;span class="c1">&lt;/span> &lt;span class="kr">const&lt;/span> &lt;span class="nx">filename&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="nb">Object&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">keys&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nx">gist&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">data&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">files&lt;/span>&lt;span class="p">)[&lt;/span>&lt;span class="mi">0&lt;/span>&lt;span class="p">];&lt;/span>
+&lt;span class="k">try&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;span class="c1">// Update the gist
+&lt;/span>&lt;span class="c1">&lt;/span> &lt;span class="c1">// The description is displayed when the gist is pinned
+&lt;/span>&lt;span class="c1">&lt;/span> &lt;span class="c1">// so we can update the description along with the contents
+&lt;/span>&lt;span class="c1">&lt;/span> &lt;span class="c1">// to show more information when it&amp;#39;s pinned
+&lt;/span>&lt;span class="c1">&lt;/span> &lt;span class="nx">await&lt;/span> &lt;span class="nx">octokit&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">gists&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">update&lt;/span>&lt;span class="p">({&lt;/span>
+&lt;span class="nx">gist_id&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="nx">gistId&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;span class="nx">description&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="sb">`This is some description`&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;span class="nx">files&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;span class="p">[&lt;/span>&lt;span class="nx">filename&lt;/span>&lt;span class="p">]&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;span class="nx">content&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="sb">`This is some example content`&lt;/span>
+&lt;span class="p">}&lt;/span>
+&lt;span class="p">}&lt;/span>
+&lt;span class="p">});&lt;/span>
+&lt;span class="p">}&lt;/span> &lt;span class="k">catch&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="nx">error&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;span class="nx">console&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">error&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="sb">`Unable to update gist&lt;/span>&lt;span class="err">\&lt;/span>&lt;span class="sb">n&lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nx">error&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="sb">`&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;span class="p">}&lt;/span>
+&lt;span class="p">}&lt;/span>
+&lt;span class="p">(&lt;/span>&lt;span class="nx">async&lt;/span> &lt;span class="p">()&lt;/span> &lt;span class="p">=&amp;gt;&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;span class="nx">await&lt;/span> &lt;span class="nx">updateGist&lt;/span>&lt;span class="p">();&lt;/span>
+&lt;span class="p">})();&lt;/span>
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>To test whether this script works, run&lt;/p>
+&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-shell" data-lang="shell">node index.js
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>If you check your gist, the description and content should have updated to whatever strings you passed to the update functions.&lt;/p>
+&lt;h2 id="3-fetching-the-data">3. Fetching the data&lt;/h2>
+&lt;p>Now we&amp;rsquo;re going to shift our focus to getting the most recent post from our dev.to account. In &lt;code>index.js&lt;/code> update/add these functions.&lt;/p>
+&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-javascript" data-lang="javascript">
+&lt;span class="c1">// The endpoint for the request
+&lt;/span>&lt;span class="c1">&lt;/span>&lt;span class="kr">const&lt;/span> &lt;span class="nx">baseURL&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s1">&amp;#39;https://dev.to/api/articles&amp;#39;&lt;/span>
+&lt;span class="c1">// Parameters to pass to the dev.to api
+&lt;/span>&lt;span class="c1">&lt;/span>&lt;span class="kr">const&lt;/span> &lt;span class="nx">options&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;span class="nx">params&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;span class="nx">username&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="nx">devUsername&lt;/span>
+&lt;span class="p">}&lt;/span>
+&lt;span class="p">}&lt;/span>
+&lt;span class="c1">// This is useful if the string is too long to display on the pinned gist
+&lt;/span>&lt;span class="c1">&lt;/span>&lt;span class="kd">function&lt;/span> &lt;span class="nx">truncate&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nx">str&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nx">n&lt;/span>&lt;span class="p">){&lt;/span>
+&lt;span class="k">return&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="nx">str&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">length&lt;/span> &lt;span class="o">&amp;gt;&lt;/span> &lt;span class="nx">n&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="o">?&lt;/span> &lt;span class="nx">str&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">substr&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="mi">0&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nx">n&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="mi">2&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="o">+&lt;/span> &lt;span class="s1">&amp;#39;…&amp;#39;&lt;/span> &lt;span class="o">:&lt;/span> &lt;span class="nx">str&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;span class="p">};&lt;/span>
+&lt;span class="c1">// Get the most recent post
+&lt;/span>&lt;span class="c1">&lt;/span>&lt;span class="nx">async&lt;/span> &lt;span class="kd">function&lt;/span> &lt;span class="nx">getPost&lt;/span>&lt;span class="p">()&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;span class="k">try&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;span class="kr">const&lt;/span> &lt;span class="nx">response&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="nx">await&lt;/span> &lt;span class="nx">axios&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">get&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nx">baseURL&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nx">options&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;span class="kr">const&lt;/span> &lt;span class="nx">post&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="nx">response&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">data&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="mi">0&lt;/span>&lt;span class="p">];&lt;/span>
+&lt;span class="c1">// Pass the post as a parameter
+&lt;/span>&lt;span class="c1">&lt;/span> &lt;span class="nx">await&lt;/span> &lt;span class="nx">updateGist&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nx">post&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;span class="p">}&lt;/span> &lt;span class="k">catch&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="nx">error&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;span class="nx">console&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">error&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nx">error&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;span class="p">}&lt;/span>
+&lt;span class="p">}&lt;/span>
+&lt;span class="c1">// Pass the post as a parameter
+&lt;/span>&lt;span class="c1">&lt;/span>&lt;span class="nx">async&lt;/span> &lt;span class="kd">function&lt;/span> &lt;span class="nx">updateGist&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nx">post&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;span class="kd">let&lt;/span> &lt;span class="nx">gist&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;span class="k">try&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;span class="nx">gist&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="nx">await&lt;/span> &lt;span class="nx">octokit&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">gists&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">get&lt;/span>&lt;span class="p">({&lt;/span> &lt;span class="nx">gist_id&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="nx">gistId&lt;/span> &lt;span class="p">});&lt;/span>
+&lt;span class="p">}&lt;/span> &lt;span class="k">catch&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="nx">error&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;span class="nx">console&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">error&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="sb">`Unable to get gist&lt;/span>&lt;span class="err">\&lt;/span>&lt;span class="sb">n&lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nx">error&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="sb">`&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;span class="p">}&lt;/span>
+&lt;span class="kr">const&lt;/span> &lt;span class="nx">filename&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="nb">Object&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">keys&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nx">gist&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">data&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">files&lt;/span>&lt;span class="p">)[&lt;/span>&lt;span class="mi">0&lt;/span>&lt;span class="p">];&lt;/span>
+&lt;span class="c1">// Tags from the post
+&lt;/span>&lt;span class="c1">&lt;/span> &lt;span class="kr">const&lt;/span> &lt;span class="nx">tags&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s1">&amp;#39;#&amp;#39;&lt;/span> &lt;span class="o">+&lt;/span> &lt;span class="nx">post&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">tag_list&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">join&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s2">&amp;#34;, #&amp;#34;&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;span class="c1">// In the gist show the title, a short excerpt from the post
+&lt;/span>&lt;span class="c1">&lt;/span> &lt;span class="c1">// and the date the post was published in the contents of the gist
+&lt;/span>&lt;span class="c1">&lt;/span> &lt;span class="kr">const&lt;/span> &lt;span class="nx">content&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="sb">`📜 &lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nx">truncate&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nx">post&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">title&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="mi">60&lt;/span>&lt;span class="p">).&lt;/span>&lt;span class="nx">replace&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="sr">/\s+/g&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="s1">&amp;#39; &amp;#39;&lt;/span>&lt;span class="p">)&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="sb"> &lt;/span>&lt;span class="err">\&lt;/span>&lt;span class="sb">n ▶ &lt;/span>&lt;span class="si">${&lt;/span>
+&lt;span class="nx">truncate&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nx">post&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">description&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="mi">100&lt;/span>&lt;span class="p">).&lt;/span>&lt;span class="nx">replace&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="sr">/\s+/g&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="s1">&amp;#39; &amp;#39;&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;span class="si">}&lt;/span>&lt;span class="sb"> &lt;/span>&lt;span class="err">\&lt;/span>&lt;span class="sb">n🔖 &lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nx">tags&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="sb"> &lt;/span>&lt;span class="err">\&lt;/span>&lt;span class="sb">n📆 &lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nx">post&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">readable_publish_date&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">replace&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="sr">/\s+/g&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="s1">&amp;#39; &amp;#39;&lt;/span>&lt;span class="p">)&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="sb">`&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;span class="k">try&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;span class="c1">// In the post description show the username, number of likes and comments
+&lt;/span>&lt;span class="c1">&lt;/span> &lt;span class="nx">await&lt;/span> &lt;span class="nx">octokit&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">gists&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">update&lt;/span>&lt;span class="p">({&lt;/span>
+&lt;span class="nx">gist_id&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="nx">gistId&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;span class="nx">description&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="sb">`dev.to/&lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nx">devUsername&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="sb"> | ❤ &lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nx">post&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">public_reactions_count&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="sb"> | 💬 &lt;/span>&lt;span class="si">${&lt;/span>
+&lt;span class="nx">post&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">comments_count&lt;/span>
+&lt;span class="si">}&lt;/span>&lt;span class="sb">`&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;span class="nx">files&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;span class="p">[&lt;/span>&lt;span class="nx">filename&lt;/span>&lt;span class="p">]&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;span class="nx">content&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="nx">wrapAnsi&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nx">content&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="mi">60&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="p">{&lt;/span> &lt;span class="nx">hard&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="kc">true&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nx">trim&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="kc">false&lt;/span> &lt;span class="p">})&lt;/span>
+&lt;span class="p">}&lt;/span>
+&lt;span class="p">}&lt;/span>
+&lt;span class="p">});&lt;/span>
+&lt;span class="p">}&lt;/span> &lt;span class="k">catch&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="nx">error&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;span class="nx">console&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">error&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="sb">`Unable to update gist&lt;/span>&lt;span class="err">\&lt;/span>&lt;span class="sb">n&lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nx">error&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="sb">`&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;span class="p">}&lt;/span>
+&lt;span class="p">}&lt;/span>
+&lt;span class="p">(&lt;/span>&lt;span class="nx">async&lt;/span> &lt;span class="p">()&lt;/span> &lt;span class="p">=&amp;gt;&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;span class="nx">await&lt;/span> &lt;span class="nx">getPost&lt;/span>&lt;span class="p">();&lt;/span>
+&lt;span class="p">})();&lt;/span>
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>The &lt;code>wrapAnsii&lt;/code> library is used to wrap text that&amp;rsquo;s longer than a certain length. Otherwise the text will be abruptly cut off if it&amp;rsquo;s too long when pinned.&lt;/p>
+&lt;p>Pin the gist to your profile and then run this script. You should get something that looks like this.&lt;/p>
+&lt;p>&lt;img src="https://user-images.githubusercontent.com/31800695/95653499-c52a4580-0b16-11eb-863a-e23c43e4ae21.png" alt="Screenshot">&lt;/p>
+&lt;p>If you want to use a different API this step will vary for you, but the basic idea is still the same. Extract the data you need from the API and pass it to the update function so that it can display it on the gist.&lt;/p>
+&lt;h2 id="4-setup-github-action">4. Setup GitHub Action&lt;/h2>
+&lt;p>Now we have a script that updates our pinned gist with the desired blog post, but we&amp;rsquo;re running it manually. Now we&amp;rsquo;ll set up a GitHub action with a cron job so that it runs on a schedule and updates automatically.&lt;/p>
+&lt;h3 id="setup-run-command">Setup run command&lt;/h3>
+&lt;p>In &lt;code>action.yml&lt;/code> we&amp;rsquo;ll set up node and the file that should be run using node.&lt;/p>
+&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-yaml" data-lang="yaml">&lt;span class="k">name&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>blog-box&lt;span class="w">
+&lt;/span>&lt;span class="w">&lt;/span>&lt;span class="k">author&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&amp;lt;your-username&amp;gt;&lt;span class="w">
+&lt;/span>&lt;span class="w">&lt;/span>&lt;span class="k">description&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>GitHub&lt;span class="w"> &lt;/span>Action&lt;span class="w"> &lt;/span>for&lt;span class="w"> &lt;/span>updating&lt;span class="w"> &lt;/span>a&lt;span class="w"> &lt;/span>gist&lt;span class="w"> &lt;/span>with&lt;span class="w"> &lt;/span>your&lt;span class="w"> &lt;/span>latest&lt;span class="w"> &lt;/span>blog&lt;span class="w"> &lt;/span>post.&lt;span class="w">
+&lt;/span>&lt;span class="w">
+&lt;/span>&lt;span class="w">&lt;/span>&lt;span class="k">runs&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
+&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="k">using&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>node12&lt;span class="w">
+&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="k">main&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>./index.js&lt;span class="w">
+&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h3 id="setup-workflow">Setup workflow&lt;/h3>
+&lt;p>Create a new folder under &lt;code>.github/workflows/&lt;/code> and add a GitHub action file named &lt;code>update.yml&lt;/code>.&lt;/p>
+&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-yaml" data-lang="yaml">&lt;span class="k">name&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>Update&lt;span class="w"> &lt;/span>gist&lt;span class="w"> &lt;/span>with&lt;span class="w"> &lt;/span>latest&lt;span class="w"> &lt;/span>songs&lt;span class="w">
+&lt;/span>&lt;span class="w">&lt;/span>&lt;span class="k">on&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
+&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="c"># THis option allows you to run the script manually&lt;/span>&lt;span class="w">
+&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="k">workflow_dispatch&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
+&lt;/span>&lt;span class="w">
+&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="c"># This sets up a cron job that runs the script once a day&lt;/span>&lt;span class="w">
+&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="k">schedule&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
+&lt;/span>&lt;span class="w"> &lt;/span>- &lt;span class="k">cron&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="s2">&amp;#34;0 0 * * *&amp;#34;&lt;/span>&lt;span class="w">
+&lt;/span>&lt;span class="w">
+&lt;/span>&lt;span class="w">&lt;/span>&lt;span class="k">jobs&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
+&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="c"># Create a job&lt;/span>&lt;span class="w">
+&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="k">blog-box&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
+&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="k">runs-on&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>ubuntu-latest&lt;span class="w">
+&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="k">steps&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
+&lt;/span>&lt;span class="w"> &lt;/span>- &lt;span class="k">uses&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>actions/checkout@v2&lt;span class="w">
+&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="c"># Install dependencies&lt;/span>&lt;span class="w">
+&lt;/span>&lt;span class="w"> &lt;/span>- &lt;span class="k">run&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>npm&lt;span class="w"> &lt;/span>install&lt;span class="w">
+&lt;/span>&lt;span class="w"> &lt;/span>- &lt;span class="k">name&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>Update&lt;span class="w">
+&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="k">uses&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>./&lt;span class="w">
+&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="c"># Use the secrets as environment variables&lt;/span>&lt;span class="w">
+&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="k">env&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
+&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="k">GH_TOKEN&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>${{&lt;span class="w"> &lt;/span>secrets.GH_TOKEN&lt;span class="w"> &lt;/span>}}&lt;span class="w">
+&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="k">GIST_ID&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>${{&lt;span class="w"> &lt;/span>secrets.GIST_ID&lt;span class="w"> &lt;/span>}}&lt;span class="w">
+&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="k">DEV_USERNAME&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>${{&lt;span class="w"> &lt;/span>secrets.DEV_USERNAME&lt;span class="w"> &lt;/span>}}&lt;span class="w">
+&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>If you want to find out more about cron jobs and how to schedule them, check out this website: &lt;a href="https://crontab.guru/">https://crontab.guru/&lt;/a>.&lt;/p>
+&lt;h1 id="conclusion">Conclusion&lt;/h1>
+&lt;p>Once you push your changes, go to &lt;code>actions &amp;gt; Update gist with latest post &amp;gt; Run workflow&lt;/code> in your GitHub repository. The action should run successfully and your pinned gist will show your most recent &lt;code>dev.tp&lt;/code> blog post. The workflow will run at 00:00 UTC automatically every day.&lt;/p></description></item><item><title>How to create a GitHub profile Readme</title><link>https://home.aveek.io/blog/post/create-github-profile-readme/</link><pubDate>Sat, 18 Jul 2020 00:00:00 +0000</pubDate><author>aveek.s98@gmail.com (Aveek Saha)</author><guid>https://home.aveek.io/blog/post/create-github-profile-readme/</guid><description>&lt;p>If you want to see what this looks like - &lt;a href="https://github.com/Aveek-Sahar">&lt;code>My gitHub Profile&lt;/code>&lt;/a> &lt;!-- raw HTML omitted -->
 You can also check out the repository here - &lt;a href="https://github.com/Aveek-Saha/aveek-saha">&lt;code>Aveek-Saha&lt;/code>&lt;/a>&lt;/p>
 &lt;h1 id="introduction">Introduction&lt;/h1>
 &lt;p>GitHub has recently added the ability to create a README for your profile that acts as an About Me section or an Introduction to your profile.&lt;/p>
