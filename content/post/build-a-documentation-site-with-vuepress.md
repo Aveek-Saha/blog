@@ -14,7 +14,7 @@ Code for this project - [`Code`](https://gitlab.com/aveeksaha/vuepress-tut)
 <!--more-->
 
 # Introduction
-[VuePress](https://vuepress.vuejs.org/) is a static site generator powered by Vue. VuePress uses markdown to generate pages so you can focus on just the writing. Also it alows you to use Vue components in markdown and use custom themes. By default VuePress ships with a responsive theme, which is what we'll be using for this project. 
+[VuePress](https://vuepress.vuejs.org/) is a static site generator powered by Vue. VuePress uses markdown to generate pages so you can focus on just the writing. Also it allows you to use Vue components in markdown and use custom themes. By default VuePress ships with a responsive theme, which is what we'll be using for this project. 
 
 All these features make VuePress ideal for building documentation websites. This tutorial will show you how to get a documentation website up and running in 15 minutes.
 

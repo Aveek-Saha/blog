@@ -1,6 +1,6 @@
 ---
 title: Getting started with Vuejs and the GitHub API
-subtitle: A beginers tutorial on how to make a web app with Vue.js
+subtitle: A beginners tutorial on how to make a web app with Vue.js
 date: 2018-11-10
 # bigimg: [{src: "/img/duskplayer.png", desc: "Screenshot"}]
 tags: [ "Vue" , "Vuejs" , "GitHub" , "Website" ]
@@ -106,11 +106,11 @@ In ```Data.vue``` remove everything in between the ```style``` tag and the ```te
 {{< highlight html >}}
 
 <template>
- </template>
+</template>
 
 <script>
 export default {
- name: 'Data',
+  name: 'Data',
 }
 </script>
 
@@ -147,28 +147,28 @@ We're going to add a navbar, a container div and some styles to ```App.vue``` an
 import Data from './components/Data.vue'
 
 export default {
- name: 'app',
- components: {
-   Data
- }
+    name: 'app',
+    components: {
+        Data
+    }
 }
 </script>
 
 <style>
    /* global styles */
 body{
- background-color: #FEFEFE
+    background-color: #FEFEFE
 }
 
 .asset{
- word-break: break-all;
+    word-break: break-all;
 }
 
 #app {
- font-family: 'Avenir', Helvetica, Arial, sans-serif;
- -webkit-font-smoothing: antialiased;
- -moz-osx-font-smoothing: grayscale;
- text-align: center;
+    font-family: 'Avenir', Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-align: center;
 }
 </style>
 

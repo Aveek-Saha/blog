@@ -75,82 +75,82 @@ Copy the JavaScript section of the code into ```game.js```. Your File should loo
 ```javascript
  
 var board,
- game = new Chess();
- 
-var removeGreySquares = function() {
- $('#board .square-55d63').css('background', '');
+game = new Chess();
+
+var removeGreySquares = function () {
+    $('#board .square-55d63').css('background', '');
 };
- 
-var greySquare = function(square) {
- var squareEl = $('#board .square-' + square);
-  var background = '#a9a9a9';
- if (squareEl.hasClass('black-3c85d') === true) {
-   background = '#696969';
- }
- 
- squareEl.css('background', background);
+
+var greySquare = function (square) {
+    var squareEl = $('#board .square-' + square);
+    var background = '#a9a9a9';
+    if (squareEl.hasClass('black-3c85d') === true) {
+        background = '#696969';
+    }
+
+    squareEl.css('background', background);
 };
- 
-var onDragStart = function(source, piece) {
- // do not pick up pieces if the game is over
- // or if it's not that side's turn
- if (game.game_over() === true ||
-     (game.turn() === 'w' && piece.search(/^b/) !== -1) ||
-     (game.turn() === 'b' && piece.search(/^w/) !== -1)) {
-   return false;
- }
+
+var onDragStart = function (source, piece) {
+    // do not pick up pieces if the game is over
+    // or if it's not that side's turn
+    if (game.game_over() === true ||
+        (game.turn() === 'w' && piece.search(/^b/) !== -1) ||
+        (game.turn() === 'b' && piece.search(/^w/) !== -1)) {
+        return false;
+    }
 };
- 
-var onDrop = function(source, target) {
- removeGreySquares();
- 
- // see if the move is legal
- var move = game.move({
-   from: source,
-   to: target,
-   promotion: 'q'
-   // NOTE: always promote to a queen for example simplicity
- });
- 
- // illegal move
- if (move === null) return 'snapback';
+
+var onDrop = function (source, target) {
+    removeGreySquares();
+
+    // see if the move is legal
+    var move = game.move({
+        from: source,
+        to: target,
+        promotion: 'q'
+        // NOTE: always promote to a queen for example simplicity
+    });
+
+    // illegal move
+    if (move === null) return 'snapback';
 };
- 
-var onMouseoverSquare = function(square, piece) {
- // get list of possible moves for this square
- var moves = game.moves({
-   square: square,
-   verbose: true
- });
- 
- // exit if there are no moves available for this square
- if (moves.length === 0) return;
- 
- // highlight the square they moused over
- greySquare(square);
- 
- // highlight the possible squares for this piece
- for (var i = 0; i < moves.length; i++) {
-   greySquare(moves[i].to);
- }
+
+var onMouseoverSquare = function (square, piece) {
+    // get list of possible moves for this square
+    var moves = game.moves({
+        square: square,
+        verbose: true
+    });
+
+    // exit if there are no moves available for this square
+    if (moves.length === 0) return;
+
+    // highlight the square they moused over
+    greySquare(square);
+
+    // highlight the possible squares for this piece
+    for (var i = 0; i < moves.length; i++) {
+        greySquare(moves[i].to);
+    }
 };
- 
-var onMouseoutSquare = function(square, piece) {
- removeGreySquares();
+
+var onMouseoutSquare = function (square, piece) {
+    removeGreySquares();
 };
- 
-var onSnapEnd = function() {
- board.position(game.fen());
+
+var onSnapEnd = function () {
+    board.position(game.fen());
 };
- 
+
 var cfg = {
- draggable: true,
- position: 'start',
- onDragStart: onDragStart,
- onDrop: onDrop,
- onMouseoutSquare: onMouseoutSquare,
- onMouseoverSquare: onMouseoverSquare,
- onSnapEnd: onSnapEnd
+    draggable: true,
+    position: 'start',
+    onDragStart: onDragStart,
+    onDrop: onDrop,
+    onMouseoutSquare: onMouseoutSquare,
+    onMouseoverSquare: onMouseoverSquare,
+    onSnapEnd: onSnapEnd
 };
 board = ChessBoard('board', cfg);
  
@@ -216,8 +216,6 @@ In case a user tries to join a game that already has 2 players in it, we'll redi
     <div id="player" style="margin: auto">This room is full</div>
 </body>
  
- 
- 
 </html>
  
 ```
@@ -264,7 +262,7 @@ var players;
 // create an array of 100 games and initialize them
 var games = Array(100);
 for (let i = 0; i < 100; i++) {
-   games[i] = {players: 0 , pid: [0 , 0]};
+    games[i] = {players: 0 , pid: [0 , 0]};
 }
  
 ```
@@ -276,7 +274,7 @@ Our routing is simple, we only need to show ```index.html``` when "/" is accesse
 app.use(express.static(__dirname + "/"));
  
 app.get('/', (req, res) => {
-   res.sendFile(__dirname + '/index.html');
+    res.sendFile(__dirname + '/index.html');
 });
  
 ```
@@ -286,17 +284,17 @@ Now its time to listen for the ```connection``` event on the server
 ```javascript
  
 io.on('connection', function (socket) {
- 
- // just assign a random number to every player that has connected
- // the numbers have no significance so it
- // doesn't matter if 2 people get the same number
- var playerId =  Math.floor((Math.random() * 100) + 1)
- console.log(playerId + ' connected');
- 
- // if a user disconnects just print their playerID
- socket.on('disconnect', function () {
-   console.log(playerId + ' disconnected');
- });
+
+    // just assign a random number to every player that has connected
+    // the numbers have no significance so it
+    // doesn't matter if 2 people get the same number
+    var playerId = Math.floor((Math.random() * 100) + 1)
+    console.log(playerId + ' connected');
+
+    // if a user disconnects just print their playerID
+    socket.on('disconnect', function () {
+        console.log(playerId + ' disconnected');
+    });
 });
  
 ```
@@ -431,52 +429,57 @@ This part is added in the `io.on('connection')` callback in ```index.js``` after
 ```javascript
  
 var color; // black or white
- 
+
 // 'joined' is emitted when the player enters a room number and clicks
 // the connect button the room ID that the player entered gets passed as a message
- 
+
 socket.on('joined', function (roomId) {
- // if the room is not full then add the player to that room
- if (games[roomId].players < 2) {
-     games[roomId].players++;
-     games[roomId].pid[games[roomId].players - 1] = playerId;
- } // else emit the full event
- else{
-     socket.emit('full', roomId)
-     return;
- }
-  console.log(games[roomId]);
- players = games[roomId].players
-  // the first player to join the room gets white
- if (players % 2 == 0) color = 'black';
- else color = 'white';
- 
- // this is an important event because, once this is emitted the game
- // will be set up in the client side, and it'll display the chess board
- socket.emit('player', { playerId, players, color, roomId })
- 
+    // if the room is not full then add the player to that room
+    if (games[roomId].players < 2) {
+        games[roomId].players++;
+        games[roomId].pid[games[roomId].players - 1] = playerId;
+    } // else emit the full event
+    else {
+        socket.emit('full', roomId)
+        return;
+    }
+    console.log(games[roomId]);
+    players = games[roomId].players
+    // the first player to join the room gets white
+    if (players % 2 == 0) color = 'black';
+    else color = 'white';
+
+    // this is an important event because, once this is emitted the game
+    // will be set up in the client side, and it'll display the chess board
+    socket.emit('player', {
+        playerId,
+        players,
+        color,
+        roomId
+    })
+
 });
- 
+
 // The client side emits a 'move' event when a valid move has been made.
 socket.on('move', function (msg) {
- // pass on the move event to the other clients
- socket.broadcast.emit('move', msg);
+    // pass on the move event to the other clients
+    socket.broadcast.emit('move', msg);
 });
- 
+
 // 'play' is emitted when both players have joined and the game can start
 socket.on('play', function (msg) {
- socket.broadcast.emit('play', msg);
- console.log("ready " + msg);
+    socket.broadcast.emit('play', msg);
+    console.log("ready " + msg);
 });
- 
+
 // when the user disconnects from the server, remove him from the game room
 socket.on('disconnect', function () {
- for (let i = 0; i < 100; i++) {
-     if (games[i].pid[0] == playerId || games[i].pid[1] == playerId)
-         games[i].players--;
- }
- console.log(playerId + ' disconnected');
- 
+    for (let i = 0; i < 100; i++) {
+        if (games[i].pid[0] == playerId || games[i].pid[1] == playerId)
+            games[i].players--;
+    }
+    console.log(playerId + ' disconnected');
+
 });
  
 ```
@@ -551,16 +554,17 @@ Add these extra checks to the function.
 ```javascript
  
 var onDragStart = function (source, piece) {
- 
- // A few more rules have been added
- if (game.game_over() === true || play ||
-     (game.turn() === 'w' && piece.search(/^b/) !== -1) ||
-     (game.turn() === 'b' && piece.search(/^w/) !== -1) ||
-     (game.turn() === 'w' && color === 'black') ||
-     (game.turn() === 'b' && color === 'white') ) {
-         return false;
- }
+
+    // A few more rules have been added
+    if (game.game_over() === true || play ||
+        (game.turn() === 'w' && piece.search(/^b/) !== -1) ||
+        (game.turn() === 'b' && piece.search(/^w/) !== -1) ||
+        (game.turn() === 'w' && color === 'black') ||
+        (game.turn() === 'b' && color === 'white')) {
+        return false;
+    }
 };
+
 ```
  
 The function ```onDrop```, is when the pieces are actually moved. So when the player makes a move and drops a move, the 'move' event is emitted.
@@ -568,26 +572,30 @@ The function ```onDrop```, is when the pieces are actually moved. So when the pl
 ```javascript
  
 var onDrop = function (source, target) {
- removeGreySquares();
- 
- // see if the move is legal
- var move = game.move({
-     from: source,
-     to: target,
-     promotion: 'q'
- });
- if (game.game_over()) {
-     state.innerHTML = 'GAME OVER';
-     socket.emit('gameOver', roomId)
- }
- 
- // illegal move
- if (move === null) return 'snapback';
- 
- // if the move is allowed, emit the move event.
- else
-     socket.emit('move', { move: move, board: game.fen(), room: roomId });
- 
+    removeGreySquares();
+
+    // see if the move is legal
+    var move = game.move({
+        from: source,
+        to: target,
+        promotion: 'q'
+    });
+    if (game.game_over()) {
+        state.innerHTML = 'GAME OVER';
+        socket.emit('gameOver', roomId)
+    }
+
+    // illegal move
+    if (move === null) return 'snapback';
+
+    // if the move is allowed, emit the move event.
+    else
+        socket.emit('move', {
+            move: move,
+            board: game.fen(),
+            room: roomId
+        });
+
 };
  
 ```
@@ -600,28 +608,28 @@ Now we need to add some listeners, so that changes that are sent via events are 
 // if the room is full (players > 2), redirect the user
 // to the full.html page we made earlier
 socket.on('full', function (msg) {
- if(roomId == msg)
-   window.location.assign(window.location.href+ 'full.html');
+    if (roomId == msg)
+        window.location.assign(window.location.href + 'full.html');
 });
- 
+
 // change play to false when both players have
 // joined the room, so that they can start playing
 // (when play is false the players can play)
 socket.on('play', function (msg) {
- if (msg == roomId) {
-     play = false;
-     state.innerHTML = "Game in progress"
- }
+    if (msg == roomId) {
+        play = false;
+        state.innerHTML = "Game in progress"
+    }
 });
- 
+
 // when a move happens, check if it was meant for the clients room
 // if yes, then make the move on the clients board
 socket.on('move', function (msg) {
- if (msg.room == roomId) {
-     game.move(msg.move);
-     board.position(game.fen());
-     console.log("moved")
- }
+    if (msg.room == roomId) {
+        game.move(msg.move);
+        board.position(game.fen());
+        console.log("moved")
+    }
 });
  
 ```
@@ -630,19 +638,19 @@ One last method requires implementation, the ```connect``` function. When we cli
  
 ```javascript
  
-var connect = function(){
- 
- // extract the value of the input field
- roomId = room.value;
- // if the room number is valid
- if (roomId !== "" && parseInt(roomId) <= 100) {
-   room.remove();
-   roomNumber.innerHTML = "Room Number " + roomId;
-   button.remove();
- 
-   // emit the 'joined' event which we have set up a listener for on the server
-   socket.emit('joined', roomId);
- }
+var connect = function () {
+
+    // extract the value of the input field
+    roomId = room.value;
+    // if the room number is valid
+    if (roomId !== "" && parseInt(roomId) <= 100) {
+        room.remove();
+        roomNumber.innerHTML = "Room Number " + roomId;
+        button.remove();
+
+        // emit the 'joined' event which we have set up a listener for on the server
+        socket.emit('joined', roomId);
+    }
 }
  
 ```
