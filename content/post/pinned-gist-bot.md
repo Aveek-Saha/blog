@@ -1,9 +1,9 @@
 ---
 title: Create a bot that updates a pinned gist
 subtitle: Auto update a pinned gist on your GitHub profile to show some content.
-date: 2020-10-17
+date: 2020-10-16
 #bigimg: [{src: "/img/wordSearch.png", desc: "Screenshot"}]
-tags: [ "JavaScript" , "Axios" , "Desktop", "Electron" ]
+tags: [ "GitHub" , "javascript" , "nodejs", "github-actions" ]
 ---
  
 Get the code here: [blog-box](https://github.com/Aveek-Saha/blog-box)
