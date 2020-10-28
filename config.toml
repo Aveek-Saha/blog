@@ -33,7 +33,7 @@ googleAnalytics = "UA-120301630-1"
 
 [[Params.bigimg]]
   src = "img/front.jpg"
-  desc = "That's me"
+  desc = ""
 
 [Author]
   name = "Aveek Saha"
