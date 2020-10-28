@@ -74,8 +74,8 @@ Player.prototype = {
 
 Most audio files have some kind of metadata attached to them in the form of media tags. This metadata includes things like Title, Artist, Album and Album art. 
 
-These tags are read using JSmediatags using which we retrieve the name of the song, the artist and the album art. the album art is decoded from base64 and displayed as an image. If there are no media tags for a file, it simply displays the file name.
-
+These tags are read using JSmediatags using which we retrieve the name of the song, the artist and the album art. The album art is decoded from base64 and displayed as an image. If there are no media tags for a file, it simply displays the file name.
+ 
 # Features
 - Supports: mp3, opus, ogg, wav, aac, m4a, webm.
 - Quickly switch tracks in the same folder, from the playlist button.
@@ -83,7 +83,7 @@ These tags are read using JSmediatags using which we retrieve the name of the so
 - Loads music from the last selected directory.
 - Fine tune the volume from the volume slider.
 - Reads ID3 tags and displays the artist and album art (if they exist).
-
+ 
 <!-- {{< highlight javascript >}}
 {{< / highlight >}} -->
 <br>

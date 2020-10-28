@@ -101,7 +101,7 @@ for line in tqdm(sent):
      x.append(entity['text'])
 {{< / highlight >}}
  
-The `x` array contains all the occurences of characters mentioned in the book. Then the punctuation like commas and semicolons that might occour in the names is removed.
+The `x` array contains all the occurences of characters mentioned in the book. Then the punctuation like commas and semicolons that might occur in the names is removed.
  
 {{< highlight python >}}
 # Remove any punctuation within the names
@@ -176,5 +176,3 @@ While it's beyond the scope of this post, the interaction network for all main c
 <!-- {{< highlight javascript >}}
 {{< / highlight >}} -->
 <br>
-
-

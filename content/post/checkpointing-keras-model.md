@@ -89,7 +89,7 @@ from google.colab import drive
 drive.mount('/content/gdrive')
 {{< / highlight >}}
 
-When you run this, it generates a link, click on it. Select the google account whose drive you want to mount. Then it takes you to a new tab that says `Google Drive File Stream wants to access your Google Account`. On clicking `allow` it generates an authorization code that you have to paste in a text box that appears bellow the code you just ran. Paste the code and hit `enter`.
+When you run this, it generates a link, click on it. Select the google account whose drive you want to mount. Then it takes you to a new tab that says `Google Drive File Stream wants to access your Google Account`. On clicking `allow` it generates an authorization code that you have to paste in a text box that appears below the code you just ran. Paste the code and hit `enter`.
 
 On refreshing your file browser, you should see a folder called `gdrive`, that's the mounted drive folder.
 

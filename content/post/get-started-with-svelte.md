@@ -75,7 +75,7 @@ We can use Svelte to bind the variable `task` to an input element, and add a fun
    let todos = ["eat", "sleep", "code"]
   
    function addTask() {
-       // Dont add something if the input value is empty
+       // Don't add something if the input value is empty
         if(task!=""){
            // Push a new task to the array
            todos.push(task)
@@ -220,7 +220,7 @@ function removeTask(index) {
 }
 {{< / highlight >}}
 
-Now the list wont get reset everytime you refresh the page.
+Now the list won't get reset every time you refresh the page.
 
 # Deploying to Netlify
 

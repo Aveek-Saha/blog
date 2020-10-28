@@ -120,7 +120,7 @@ module.exports = {
 
 # Home page
 
-Now we're going to create the front page for out website. You can read more about the [Default Theme Config](https://v0.vuepress.vuejs.org/default-theme-config/) here.
+Now we're going to create the front page for our website. You can read more about the [Default Theme Config](https://v0.vuepress.vuejs.org/default-theme-config/) here.
 
 In ```docs/readme.md``` place the following code
 
@@ -251,7 +251,7 @@ $ git push origin master
 Open [Netlify](https://www.netlify.com/) in your browser and sign up for an account if you don't already have one. Go to your [sites](https://app.netlify.com/account/sites) and click `New site from Git` then follow the steps-
 
 1. select your git provider. 
-+ Choose the repository that you just created and commited to.
++ Choose the repository that you just created and committed to.
 + Under build options go to basic build settings and fill in the following 2 fields:
     - Build command 
     ```

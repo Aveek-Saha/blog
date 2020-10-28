@@ -44,7 +44,7 @@ The boilerplate code was taken from [`Joshua Morony's website`](https://www.josh
 # Assets
 We need three basic kinds of tiles- the ground, the player and the obstacles. I'll be using 2 different png files for the obstacles and the ground. For the player I'm going to use a sprite sheet because it can be animated.
 
-The ground and obstacle tiles were Made by [`Kenny`](http://kenney.nl/assets?q=2d) and the player spritesheet was made by [`arks`](https://arks.itch.io/dino-characters).
+The ground and obstacle tiles were Made by [`Kenny`](http://kenney.nl/assets?q=2d) and the player sprite sheet was made by [`arks`](https://arks.itch.io/dino-characters).
 
 # Preload.js
 Here we load the assets that we need before we use them. In preload.js, change 
@@ -202,7 +202,7 @@ createPlayer: function () {
 ### Add the Obstacles
 Just having the player jump without anything to jump over would be pretty boring, so we're going to add some boxes. In case you haven't realized already, we haven't given the player a velocity. This is because the player isn't actually going to move, we can simply create the illusion of movement by giving the obstacles a velocity in the direction of the player.
 
-Also to keep things interesting, the height of the obstacles the player has to jump over is random and based on that the player can either do a single jump or a double jump. We'll be implementation the jumping function later.
+Also to keep things interesting, the height of the obstacles the player has to jump over is random and based on that the player can either do a single jump or a double jump. We'll implement the jumping function later.
 
 {{< highlight javascript >}}
 addObstacles: function () {
@@ -247,7 +247,7 @@ addBox: function (x, y) {
 {{< / highlight >}}<br>
 
 ### Movement
-Now we need to give the player a way to actually jump over the boxes when we press the UP arrow. This is taken care of in the ```update``` function which can constantly checks for input. We'll also be implementing a double jump mechanism that we talked about earlier.
+Now we need to give the player a way to actually jump over the boxes when we press the UP arrow. This is taken care of in the ```update``` function which can constantly check for input. We'll also be implementing a double jump mechanism that we talked about earlier.
 This isn't a part of the original game, but makes it more interesting. We'll also be checking for collisions between the other tiles and the player.If the player touches a box, the game is over.
 
 {{< highlight javascript >}}
@@ -282,7 +282,7 @@ update: function() {
 }
 {{< / highlight >}}
 
-There are 2 more methods we need to implement, one for checking if the up arrow is held down, and one to check if its released.
+There are 2 more methods we need to implement, one for checking if the up arrow is held down, and one to check if it's released.
 
 {{< highlight javascript >}}
 

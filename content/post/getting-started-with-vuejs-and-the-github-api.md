@@ -120,7 +120,7 @@ export default {
 
 {{< / highlight >}}
 
-We're going to add a navbar, a container div and some styles to ```App.vue``` and file should look like this.
+We're going to add a navbar, a container div and some styles to ```App.vue``` and the file should look like this.
 {{< highlight html >}}
 
 <template>
@@ -176,7 +176,7 @@ body{
 This is basically all the modification we'll be doing to ```App.vue```. All the magic happens in ```Data.vue```, where our main logic resides.
 
 ### Data.vue
-This is where we'll be making the API requests and in order to use ```axios``` it has to imported to the component. Along with this, we'll also be creating some variables in the ```script``` section of this component.
+This is where we'll be making the API requests and in order to use ```axios``` it has to be imported to the component. Along with this, we'll also be creating some variables in the ```script``` section of this component.
 
 {{< highlight javascript >}}
 // import axios
@@ -252,7 +252,7 @@ v-model="username" id="username" placeholder="Your username" >
 
 
 - **Event Handling-**
-Here we use `v-on:click="sendReq"` which means that when we click on this button it will call `sendReq` which is a method we will be implimenting now.
+Here we use `v-on:click="sendReq"` which means that when we click on this button it will call `sendReq` which is a method we will be implementing now.
 {{< highlight html >}}
 
 <button class="btn btn-outline-dark" v-on:click="sendReq">Submit</button>
@@ -334,7 +334,7 @@ export default {
 
 So now if we enter a valid ```username``` and ```repository``` and click Submit, the response will be stored in `releases`. Now we need a way to display the information that we got. Since `releases` is an array, we'll use `v-for` to iteratively display one card for each release.
 
-For this, we're going to create a new component called `Card`, and we'll pass data from the `Data` component via **props** (Properties). This means that whatever value we pass to a prop from parent can be read by the child component and becomes a property of that component.
+For this, we're going to create a new component called `Card`, and we'll pass data from the `Data` component via **props** (Properties). This means that whatever value we pass to a prop from the parent can be read by the child component and becomes a property of that component.
 
 Add the following lines to `Data.vue`
 
@@ -383,7 +383,7 @@ export default {
 Here we get to see 3 more important features of Vue:
 
 - **List Rendering-**
-The `v-for` directive is used to render a list of items based on an array. Another way to use the `v-for` directive is `v-for="item in items"`, which is simpler. In this case we render cards based on the values of the the `releases` array.
+The `v-for` directive is used to render a list of items based on an array. Another way to use the `v-for` directive is `v-for="item in items"`, which is simpler. In this case we render cards based on the values of the `releases` array.
 {{< highlight html >}}
 <div class="card shadow-sm mb-3 rounded"
 v-for="(release , index) in releases" :key="index">
