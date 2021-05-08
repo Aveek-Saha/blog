@@ -1,4 +1,149 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>deep learning on Aveek's Blog</title><link>https://home.aveek.io/blog/tags/deep-learning/</link><description>Recent content in deep learning on Aveek's Blog</description><generator>Hugo -- gohugo.io</generator><managingEditor>aveek.s98@gmail.com (Aveek Saha)</managingEditor><webMaster>aveek.s98@gmail.com (Aveek Saha)</webMaster><lastBuildDate>Mon, 24 Jun 2019 00:00:00 +0000</lastBuildDate><atom:link href="https://home.aveek.io/blog/tags/deep-learning/index.xml" rel="self" type="application/rss+xml"/><item><title>Saving a Keras model to persistent storage</title><link>https://home.aveek.io/blog/post/checkpointing-keras-model/</link><pubDate>Mon, 24 Jun 2019 00:00:00 +0000</pubDate><author>aveek.s98@gmail.com (Aveek Saha)</author><guid>https://home.aveek.io/blog/post/checkpointing-keras-model/</guid><description>&lt;p>Learn how to save Keras models to persistent storage or your Google drive and resume training it from where you left off.&lt;/p>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>deep learning on Aveek's Blog</title><link>https://home.aveek.io/blog/tags/deep-learning/</link><description>Recent content in deep learning on Aveek's Blog</description><generator>Hugo -- gohugo.io</generator><managingEditor>aveek.s98@gmail.com (Aveek Saha)</managingEditor><webMaster>aveek.s98@gmail.com (Aveek Saha)</webMaster><lastBuildDate>Thu, 18 Mar 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://home.aveek.io/blog/tags/deep-learning/index.xml" rel="self" type="application/rss+xml"/><item><title>Analysing Twitter's fake news network: Part 1</title><link>https://home.aveek.io/blog/post/twitter-fake-net-1/</link><pubDate>Thu, 18 Mar 2021 00:00:00 +0000</pubDate><author>aveek.s98@gmail.com (Aveek Saha)</author><guid>https://home.aveek.io/blog/post/twitter-fake-net-1/</guid><description>&lt;p>Find the code and instructions on how to run &lt;a href="https://github.com/Aveek-Saha/TwitterFakeNet">&lt;code>on GitHub&lt;/code>&lt;/a>&lt;/p>
+&lt;h1 id="introduction">Introduction&lt;/h1>
+&lt;p>This is an exploration of Twitter&amp;rsquo;s Verified users and the news articles they tweet. Specifically looking into how likely is it that an article shared by the user is fake. The same trends are also studied in unverified users as a comparison.&lt;/p>
+&lt;p>This article is going to be a little longer than my usual content, so it&amp;rsquo;ll be splitting it into three parts. I&amp;rsquo;ll do my best to keep each part as interesting as possible, and I hope you&amp;rsquo;ll have as much fun exploring this as I did.&lt;/p>
+&lt;h2 id="the-plan">The Plan&lt;/h2>
+&lt;ul>
+&lt;li>&lt;strong>Part 1&lt;/strong> - Background and Dataset creation&lt;/li>
+&lt;li>&lt;strong>Part 2&lt;/strong> - Feature extraction and classification&lt;/li>
+&lt;li>&lt;strong>Part 3&lt;/strong> - Result analysis and conclusion&lt;/li>
+&lt;/ul>
+&lt;!-- raw HTML omitted -->
+&lt;h1 id="background">Background&lt;/h1>
+&lt;h2 id="what-is-a-verified-user">What is a verified user?&lt;/h2>
+&lt;p>Every user that is verified is given a blue/white badge and this lets people know that an account of public interest is authentic.&lt;/p>
+&lt;p>According to Twitter-&lt;/p>
+&lt;blockquote>
+&lt;p>An account may be verified if it is determined to be an account of public interest. Typically this includes accounts maintained by users in music, acting, fashion, government, politics, religion, journalism, media, sports, business, and other key interest areas. A verified badge does not imply an endorsement by Twitter.&lt;/p>
+&lt;/blockquote>
+&lt;p>So accounts are generally verified if they belong to public figures, like politicians, comedians, businessmen, etc or organizations like news networks, sports teams, corporations and so on.&lt;/p>
+&lt;h2 id="why-analyse-verified-users">Why analyse verified users?&lt;/h2>
+&lt;p>The verified status does not make the account any more credible than it was before verification and from recent papers, &lt;a href="https://security.cs.georgetown.edu/~tavish/twitter-credibility-chi2019.pdf">Does Being Verified Make You More Credible?&lt;/a> we can see that most users understand this.&lt;/p>
+&lt;p>Because of the nature of accounts that get the verified status, they generally have a relatively large following, &lt;code>average: 117k, median: 10k&lt;/code>, comapred to the sample of unverified accounts analysed, &lt;code>average: 2.7k, median: 416&lt;/code>. So the verified users are crucial in the dissemination and propagation of information. This is why it&amp;rsquo;s worthwhile exploring how reliable or trustworthy these users are as news sources.&lt;/p>
+&lt;h2 id="how-to-tell-if-a-user-is-verified">How to tell if a user is verified?&lt;/h2>
+&lt;p>When you go to a users profile, if they have a small blue/white icon next to their username with a tick, that looks like this &lt;!-- raw HTML omitted -->, then that user is verified but there is no obvious way to write a script to collect details of all such users.&lt;/p>
+&lt;p>There is an official Twitter Verified account &lt;a href="https://twitter.com/verified">@verified&lt;/a>, and if you look closely at all the accounts it follows, it&amp;rsquo;s easy to see it follows every verified account on Twitter. A few people might have blocked @verified but we can assume that the number is small and can be ignored.&lt;/p>
+&lt;p>I picked up this method and some ideas for analysis from an article by &lt;a href="https://medium.com/startup-grind/analyzing-205-718-verified-twitter-users-cf0811781ac8">Luca Hammer&lt;/a>.&lt;/p>
+&lt;h1 id="dataset">Dataset&lt;/h1>
+&lt;p>The goal is to classify users as likely or unlikely to share fake news. For this we need a database of tweets and retweets that have been manually classified as real or fake, that contain the user data. Such a dataset doesnt already exist, but can be generated with the help of some simple tools.&lt;/p>
+&lt;h2 id="1-twecoll">1. Twecoll&lt;/h2>
+&lt;p>&lt;a href="https://github.com/jdevoo/twecoll">Twecoll&lt;/a> is a command line tool used to retrieve data from Twitter. Using twecoll, we can generate a list of all users that a user follows, and then generate a follower graph from this data.&lt;/p>
+&lt;p>Once &lt;code>twecoll&lt;/code> is done getting the list of users that @verified follows, it generates a &lt;code>&amp;lt;username&amp;gt;.dat&lt;/code> file containing information about every user in that list. The important information downloaded is-&lt;/p>
+&lt;ul>
+&lt;li>User ID- a unique identifier for the user&lt;/li>
+&lt;li>Name- the display name of the user&lt;/li>
+&lt;li>Friends, Followers, Listed, Statuses count- number of: friends, followers a user has, lists a user is included in, statuses(tweets) a user has made&lt;/li>
+&lt;li>Date created- the date the account was created&lt;/li>
+&lt;li>Location- where the user is located, this location is self reported, and Twitter has no autocomplete for this location, so spelling mistakes are common and the data is not very reliable&lt;/li>
+&lt;/ul>
+&lt;h2 id="2-fakenewsnet">2. FakeNewsNet&lt;/h2>
+&lt;p>&lt;a href="https://github.com/KaiDMML/FakeNewsNet">FakeNewsNet&lt;/a> is a fake news data repository, which contains two comprehensive datasets that includes news content, social context, and dynamic information. The full paper can be found &lt;a href="https://arxiv.org/pdf/1809.01286.pdf">here&lt;/a>. The news is obtained from &lt;em>two&lt;/em> fact-checking websites to obtain news with ground truth labels for fake news and true news, these websites are-&lt;/p>
+&lt;ul>
+&lt;li>
+&lt;h4 id="politifact">PolitiFact&lt;/h4>
+In PolitiFact, journalists and domain experts review the political news and provide fact-checking evaluation results to claim news articles as fake or real.&lt;/li>
+&lt;li>
+&lt;h4 id="gossipcop">GossipCop&lt;/h4>
+GossipCop is a website for fact-checking entertainment stories aggregated from various media outlets. GossipCop provides rating scores on the
+scale of 0 to 10 to classify a news story as the degree from fake to real.&lt;/li>
+&lt;/ul>
+&lt;p>The most important feature of FakeNewsNet is that it also downloads tweets and retweets sharing the news articles from Twitter. This means that we can get the profile of users that shared the tweets from Twitter, and then combine it with our list of verified users to see how many fake/real news articles every verified user shared.&lt;/p>
+&lt;h1 id="analysing-the-dataset">Analysing the Dataset&lt;/h1>
+&lt;p>TO start with, lets check some basic statistics from both groups of users, verified and unverified&lt;/p>
+&lt;p>&lt;strong>Total number of verified users as of Oct 2019:&lt;/strong> 335018&lt;/p>
+&lt;table>
+&lt;thead>
+&lt;tr>
+&lt;th>&lt;/th>
+&lt;th>Friends&lt;/th>
+&lt;th>Followers&lt;/th>
+&lt;th>Listed&lt;/th>
+&lt;th>Statuses&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr>
+&lt;td>mean&lt;/td>
+&lt;td>2074.95&lt;/td>
+&lt;td>116570.99&lt;/td>
+&lt;td>510.01&lt;/td>
+&lt;td>16671.92&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>median&lt;/td>
+&lt;td>532.00&lt;/td>
+&lt;td>10152.00&lt;/td>
+&lt;td>122.00&lt;/td>
+&lt;td>5366.00&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>min&lt;/td>
+&lt;td>0.0&lt;/td>
+&lt;td>0.0&lt;/td>
+&lt;td>0.0&lt;/td>
+&lt;td>0.0&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>max&lt;/td>
+&lt;td>4494592.00&lt;/td>
+&lt;td>108831215.00&lt;/td>
+&lt;td>3177668.00&lt;/td>
+&lt;td>50437226.00&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table>
+&lt;p>&lt;strong>Sample size of unverified users:&lt;/strong> 559329&lt;/p>
+&lt;table>
+&lt;thead>
+&lt;tr>
+&lt;th>&lt;/th>
+&lt;th>Friends&lt;/th>
+&lt;th>Followers&lt;/th>
+&lt;th>Listed&lt;/th>
+&lt;th>Statuses&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr>
+&lt;td>mean&lt;/td>
+&lt;td>1634.92&lt;/td>
+&lt;td>2667.76&lt;/td>
+&lt;td>41.95&lt;/td>
+&lt;td>30861.99&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>median&lt;/td>
+&lt;td>488.00&lt;/td>
+&lt;td>416.00&lt;/td>
+&lt;td>6.00&lt;/td>
+&lt;td>9852.00&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>min&lt;/td>
+&lt;td>0.0&lt;/td>
+&lt;td>-73.00&lt;/td>
+&lt;td>0.0&lt;/td>
+&lt;td>0.0&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>max&lt;/td>
+&lt;td>998039.00&lt;/td>
+&lt;td>6037107.00&lt;/td>
+&lt;td>21171.00&lt;/td>
+&lt;td>4047961.00&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table>
+&lt;p>From a quick glance is evident that the average verified account has far more reach that an unverified user.&lt;/p>
+&lt;h2 id="trends-on-account-creation-by-year">Trends on account creation by year&lt;/h2>
+&lt;!-- raw HTML omitted -->
+&lt;h3 id="for-verified-users">For verified users&lt;/h3>
+&lt;p>&lt;img src="https://home.aveek.io/blog/twitterfakenet/by_year.png" alt="Verified users">&lt;/p>
+&lt;h3 id="for-unverified-users">For unverified users&lt;/h3>
+&lt;p>&lt;img src="https://home.aveek.io/blog/twitterfakenet/unverified_by_year.png" alt="Unverified users">&lt;/p>
+&lt;p>For unverified users, the decline we saw after 2009 is present, but is not as prominent as for verified users. This is because twitter has slowed down the verification of accounts and the slowdown in verficatiion of accounts does not affect unverified users&lt;/p>
+&lt;!-- raw HTML omitted -->
+&lt;!-- raw HTML omitted --></description></item><item><title>Saving a Keras model to persistent storage</title><link>https://home.aveek.io/blog/post/checkpointing-keras-model/</link><pubDate>Mon, 24 Jun 2019 00:00:00 +0000</pubDate><author>aveek.s98@gmail.com (Aveek Saha)</author><guid>https://home.aveek.io/blog/post/checkpointing-keras-model/</guid><description>&lt;p>Learn how to save Keras models to persistent storage or your Google drive and resume training it from where you left off.&lt;/p>
 &lt;h1 id="introduction">Introduction&lt;/h1>
 &lt;p>A lot of the time deep learning models can take several hours, days or weeks to train and if the machine that it&amp;rsquo;s running on shuts down unexpectedly before training is finished, it can lead to all that work going to waste. This introduces the need for a way to save and load models so that training can be continued from a certain checkpoint.&lt;/p>
 &lt;p>Luckily Keras has got us covered with the &lt;a href="https://keras.io/callbacks/#modelcheckpoint">&lt;code>ModelCheckpoint&lt;/code>&lt;/a> callback class.&lt;/p>
