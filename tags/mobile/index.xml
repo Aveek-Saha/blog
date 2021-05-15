@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Mobile on Aveek's Blog</title><link>https://home.aveek.io/blog/tags/mobile/</link><description>Recent content in Mobile on Aveek's Blog</description><generator>Hugo -- gohugo.io</generator><managingEditor>aveek.s98@gmail.com (Aveek Saha)</managingEditor><webMaster>aveek.s98@gmail.com (Aveek Saha)</webMaster><lastBuildDate>Tue, 01 Dec 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://home.aveek.io/blog/tags/mobile/index.xml" rel="self" type="application/rss+xml"/><item><title>Getting started with Ionic</title><link>https://home.aveek.io/blog/post/getting-started-with-ionic4/</link><pubDate>Tue, 01 Dec 2020 00:00:00 +0000</pubDate><author>aveek.s98@gmail.com (Aveek Saha)</author><guid>https://home.aveek.io/blog/post/getting-started-with-ionic4/</guid><description>&lt;h1 id="introduction">Introduction&lt;/h1>
-&lt;h1 id="setup">Setup&lt;/h1>
-&lt;p>Install the Ionic CLI via this command-&lt;/p>
-&lt;pre>&lt;code>npm install -g ionic
-&lt;/code>&lt;/pre>&lt;p>Then using the CLI we can create a boilerplate for a basic application with a sidemenu&lt;/p>
-&lt;pre>&lt;code>ionic start movieApp sidemenu --type=angular
-&lt;/code>&lt;/pre>&lt;p>Then if you do &lt;code>ionic serve&lt;/code> it should show you the basic starter on localhost.&lt;/p>
-&lt;!-- raw HTML omitted -->
-&lt;!-- raw HTML omitted --></description></item></channel></rss>
