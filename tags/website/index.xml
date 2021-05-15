@@ -900,8 +900,13 @@ The &lt;code>v-bind:class&lt;/code> or &lt;code>v-bind:style&lt;/code> can be us
 &lt;!-- raw HTML omitted -->
 &lt;!-- raw HTML omitted --></description></item><item><title>Making an online chess website with Socket.io</title><link>https://home.aveek.io/blog/post/making-an-online-chess-website-with-socketio/</link><pubDate>Sat, 20 Oct 2018 00:00:00 +0000</pubDate><author>aveek.s98@gmail.com (Aveek Saha)</author><guid>https://home.aveek.io/blog/post/making-an-online-chess-website-with-socketio/</guid><description>&lt;p>If you want the code for this project, fork this GitHub repo - &lt;a href="https://github.com/Aveek-Saha/Online-Chess">&lt;code>Online chess&lt;/code>&lt;/a> &lt;!-- raw HTML omitted -->
 Check out the code in action here, play it yourself - &lt;a href="https://chess0.herokuapp.com">&lt;code>Live demo&lt;/code>&lt;/a>&lt;/p>
+&lt;p>Play the new and improved version here - &lt;a href="http://firechess0.web.app/">&lt;code>FireChess&lt;/code>&lt;/a>
+Check out the new and improved codebase here - &lt;a href="https://github.com/Aveek-Saha/FireChess">&lt;code>FireChess GitHub&lt;/code>&lt;/a>&lt;/p>
 &lt;h1 id="introduction">Introduction&lt;/h1>
 &lt;p>In this tutorial you&amp;rsquo;ll learn how to build a basic online Chess platform with multiple rooms, where people can play against each other. We will be using Sockets to communicate between the client and the server.&lt;/p>
+&lt;h3 id="note">Note:&lt;/h3>
+&lt;p>At the time I had created the project as a showcase for websockets first and as an actual place to play chess second. However this project has had far more users on the website playing chess than I anticipated and I kept running out of resources for the free Heroku tier. This meant that I got a lot of complaints that the website was inaccessible.&lt;/p>
+&lt;p>FireChess is another approach to this problem that solves a lot of issues and adds more functionality. Check it out here &lt;a href="http://firechess0.web.app/">&lt;code>FireChess&lt;/code>&lt;/a> if you just want a place to play chess with some friends.&lt;/p>
 &lt;h1 id="socketio">Socket.io&lt;/h1>
 &lt;p>From the socket.io documentation -&lt;/p>
 &lt;blockquote>
