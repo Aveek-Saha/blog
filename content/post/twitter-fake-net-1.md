@@ -1,8 +1,7 @@
 ---
 title: "Analysing Twitter's fake news network: Part 1"
 subtitle: Classifying Verified users on Twitter based on how likely they are to share Fake News articles
-
-date: 2021-03-18
+date: 2023-03-18
 # bigimg: [{src: "/img/duskplayer.png", desc: "Screenshot"}]
 tags: [ "Python", "Twitter", "Social network analytics", "neural network", "deep learning" ]
 ---
