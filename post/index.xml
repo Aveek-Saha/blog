@@ -2562,4 +2562,36 @@ I used an Apache server to host this application.&lt;/p>
 &lt;p>If you want the code for this project, fork this Github repo - &lt;a href="https://github.com/Aveek-Saha/Autocorrect-and-spellcheck-webapp">https://github.com/Aveek-Saha/Autocorrect-and-spellcheck-webapp&lt;/a> &lt;!-- raw HTML omitted -->
 If you want to see a live demo, check this out – &lt;a href="https://autocorrect-and-spellcheck.herokuapp.com/">https://autocorrect-and-spellcheck.herokuapp.com/&lt;/a>
 Note: For the live demo I’m taking the input directly from the word list in php by storing the txt file in an array, this is because the ‘exec’ function does not work on the server.&lt;/p>
-&lt;!-- raw HTML omitted --></description></item><item><title/><link>https://home.aveek.io/blog/post/attention-is-all-you-need/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><author>aveek.s98@gmail.com (Aveek Saha)</author><guid>https://home.aveek.io/blog/post/attention-is-all-you-need/</guid><description/></item><item><title/><link>https://home.aveek.io/blog/post/creating-npm-package/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><author>aveek.s98@gmail.com (Aveek Saha)</author><guid>https://home.aveek.io/blog/post/creating-npm-package/</guid><description/></item><item><title/><link>https://home.aveek.io/blog/post/discord-bot-free-hosting/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><author>aveek.s98@gmail.com (Aveek Saha)</author><guid>https://home.aveek.io/blog/post/discord-bot-free-hosting/</guid><description/></item><item><title/><link>https://home.aveek.io/blog/post/gist-blog/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><author>aveek.s98@gmail.com (Aveek Saha)</author><guid>https://home.aveek.io/blog/post/gist-blog/</guid><description/></item><item><title/><link>https://home.aveek.io/blog/post/graph-attention-networks/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><author>aveek.s98@gmail.com (Aveek Saha)</author><guid>https://home.aveek.io/blog/post/graph-attention-networks/</guid><description/></item><item><title/><link>https://home.aveek.io/blog/post/graph-convolutional-networks/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><author>aveek.s98@gmail.com (Aveek Saha)</author><guid>https://home.aveek.io/blog/post/graph-convolutional-networks/</guid><description/></item><item><title/><link>https://home.aveek.io/blog/post/graph-neural-networks-intro/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><author>aveek.s98@gmail.com (Aveek Saha)</author><guid>https://home.aveek.io/blog/post/graph-neural-networks-intro/</guid><description/></item></channel></rss>
+&lt;!-- raw HTML omitted --></description></item><item><title/><link>https://home.aveek.io/blog/post/attention-is-all-you-need/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><author>aveek.s98@gmail.com (Aveek Saha)</author><guid>https://home.aveek.io/blog/post/attention-is-all-you-need/</guid><description/></item><item><title/><link>https://home.aveek.io/blog/post/creating-npm-package/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><author>aveek.s98@gmail.com (Aveek Saha)</author><guid>https://home.aveek.io/blog/post/creating-npm-package/</guid><description/></item><item><title/><link>https://home.aveek.io/blog/post/discord-bot-free-hosting/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><author>aveek.s98@gmail.com (Aveek Saha)</author><guid>https://home.aveek.io/blog/post/discord-bot-free-hosting/</guid><description/></item><item><title/><link>https://home.aveek.io/blog/post/getting-started-with-ionic/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><author>aveek.s98@gmail.com (Aveek Saha)</author><guid>https://home.aveek.io/blog/post/getting-started-with-ionic/</guid><description>&lt;ol>
+&lt;li>Install ionic cli&lt;/li>
+&lt;li>Start an iconic app&lt;/li>
+&lt;/ol>
+&lt;pre>&lt;code>npm install -g @ionic/cli
+ionic start MovieVue sidemenu --type vue
+&lt;/code>&lt;/pre>&lt;ol start="3">
+&lt;li>
+&lt;p>cd into it and run
+ionic serve&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>do coding&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>Build
+ionic build&lt;/p>
+&lt;/li>
+&lt;/ol>
+&lt;p>ionic cap add android&lt;/p>
+&lt;ol start="6">
+&lt;li>Download android studio
+Use standard install type&lt;/li>
+&lt;/ol>
+&lt;p>ionic cap open android&lt;/p>
+&lt;p>wait for gradle to sync&lt;/p>
+&lt;p>open SDK tools if needed&lt;/p>
+&lt;p>Build, then run&lt;/p>
+&lt;p>Icons in the app &amp;gt; res &amp;gt; mipmap folder&lt;/p>
+&lt;p>select image using path&lt;/p>
+&lt;p>build &amp;gt; Build bundles/ apk &amp;gt; Build Apk&lt;/p>
+&lt;p>build under path&lt;/p>
+&lt;p>MovieVue\android\app\build\outputs\apk\debug&lt;/p></description></item><item><title/><link>https://home.aveek.io/blog/post/gist-blog/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><author>aveek.s98@gmail.com (Aveek Saha)</author><guid>https://home.aveek.io/blog/post/gist-blog/</guid><description/></item><item><title/><link>https://home.aveek.io/blog/post/graph-attention-networks/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><author>aveek.s98@gmail.com (Aveek Saha)</author><guid>https://home.aveek.io/blog/post/graph-attention-networks/</guid><description/></item><item><title/><link>https://home.aveek.io/blog/post/graph-convolutional-networks/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><author>aveek.s98@gmail.com (Aveek Saha)</author><guid>https://home.aveek.io/blog/post/graph-convolutional-networks/</guid><description/></item><item><title/><link>https://home.aveek.io/blog/post/graph-neural-networks-intro/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><author>aveek.s98@gmail.com (Aveek Saha)</author><guid>https://home.aveek.io/blog/post/graph-neural-networks-intro/</guid><description/></item></channel></rss>
