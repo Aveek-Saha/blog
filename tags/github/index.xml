@@ -23,7 +23,7 @@ Download the app here - &lt;a href="https://github.com/Aveek-Saha/MovieVue/relea
 &lt;/ol>
 &lt;p>To get our movies, we&amp;rsquo;ll be using the &lt;a href="https://developers.themoviedb.org/3/movies/get-now-playing">&lt;code>TMDb api&lt;/code>&lt;/a> and to get our location we&amp;rsquo;ll be using &lt;a href="http://ip-api.com/json/">&lt;code>ip-api&lt;/code>&lt;/a>.&lt;/p>
 &lt;h3 id="result">Result&lt;/h3>
-&lt;p>{{ &lt;!-- raw HTML omitted --> &lt;!-- raw HTML omitted --> }}&lt;/p>
+&lt;p>&lt;img src="https://home.aveek.io/blog/ionicvue/screen.gif" alt="Movie Vue Demo">&lt;/p>
 &lt;ol>
 &lt;li>Install ionic cli&lt;/li>
 &lt;li>Start an iconic app&lt;/li>
