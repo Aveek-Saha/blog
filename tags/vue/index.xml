@@ -1,4 +1,62 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Vue on Aveek's Blog</title><link>https://home.aveek.io/blog/tags/vue/</link><description>Recent content in Vue on Aveek's Blog</description><generator>Hugo -- gohugo.io</generator><managingEditor>aveek.s98@gmail.com (Aveek Saha)</managingEditor><webMaster>aveek.s98@gmail.com (Aveek Saha)</webMaster><lastBuildDate>Mon, 24 Dec 2018 00:00:00 +0000</lastBuildDate><atom:link href="https://home.aveek.io/blog/tags/vue/index.xml" rel="self" type="application/rss+xml"/><item><title>Build a documentation website with VuePress</title><link>https://home.aveek.io/blog/post/build-a-documentation-site-with-vuepress/</link><pubDate>Mon, 24 Dec 2018 00:00:00 +0000</pubDate><author>aveek.s98@gmail.com (Aveek Saha)</author><guid>https://home.aveek.io/blog/post/build-a-documentation-site-with-vuepress/</guid><description>&lt;p>Live example - &lt;a href="https://vuepress-tut.netlify.com/">&lt;code>Demo&lt;/code>&lt;/a>&lt;/p>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Vue on Aveek's Blog</title><link>https://home.aveek.io/blog/tags/vue/</link><description>Recent content in Vue on Aveek's Blog</description><generator>Hugo -- gohugo.io</generator><managingEditor>aveek.s98@gmail.com (Aveek Saha)</managingEditor><webMaster>aveek.s98@gmail.com (Aveek Saha)</webMaster><lastBuildDate>Tue, 10 Nov 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://home.aveek.io/blog/tags/vue/index.xml" rel="self" type="application/rss+xml"/><item><title>Getting started with Ionic 5 and Vue</title><link>https://home.aveek.io/blog/post/getting-started-with-ionic-vue/</link><pubDate>Tue, 10 Nov 2020 00:00:00 +0000</pubDate><author>aveek.s98@gmail.com (Aveek Saha)</author><guid>https://home.aveek.io/blog/post/getting-started-with-ionic-vue/</guid><description>&lt;p>If you want the code for this project, fork this GitHub repo - &lt;a href="https://github.com/Aveek-Saha/MovieVue/">&lt;code>Movie Vue&lt;/code>&lt;/a> &lt;!-- raw HTML omitted -->
+Download the app here - &lt;a href="https://github.com/Aveek-Saha/MovieVue/releases/">&lt;code>Download&lt;/code>&lt;/a>&lt;/p>
+&lt;h1 id="introduction">Introduction&lt;/h1>
+&lt;p>Javascript has come a long way from when it used to be just a way to make web pages more dynamic, now we can use it to write server side code and even make desktop and mobile applications. The later is what what we&amp;rsquo;ll be exploring today, using &lt;a href="https://ionicframework.com/">&lt;code>Ionic&lt;/code>&lt;/a> and &lt;a href="https://vuejs.org/">&lt;code>Vue.js&lt;/code>&lt;/a>.&lt;/p>
+&lt;p>In this tutorial we&amp;rsquo;ll be focusing on learning how to use &lt;code>Ionic&lt;/code>, and it assumes you have basic knowledge of &lt;code>Vue&lt;/code> concepts. If you want to learn &lt;code>Vue&lt;/code> check out this tutorial: &lt;a href="https://home.aveek.io/blog/post/getting-started-with-vuejs-and-the-github-api/">&lt;code>Getting started with Vue and the GitHub API&lt;/code>&lt;/a>, where I go over all the basic concepts in &lt;code>Vue&lt;/code>.&lt;/p>
+&lt;h1 id="what-is-ionic">What is Ionic?&lt;/h1>
+&lt;p>From the ionic team:&lt;/p>
+&lt;blockquote>
+&lt;p>Ionic is an open source mobile UI toolkit for building high quality, cross-platform native and web app experiences.&lt;/p>
+&lt;/blockquote>
+&lt;p>Ionic will provide us with UI components that will look at home on mobile platforms, and function virtually indistinguishably from any native app.&lt;/p>
+&lt;p>Ionic gives you a choice between Angular, React, Vue, or vanilla JavaScript. However, note that not all components are available for all frameworks, so take a look at all the components you want to use and check if they&amp;rsquo;re available for your framework before you start.&lt;/p>
+&lt;p>With Ionic you can also use native device functionality, like accessing the camera or using the location on a mobile service, though take note that this service is a part of their enterprise edition.&lt;/p>
+&lt;h1 id="what-are-we-building">What are we building?&lt;/h1>
+&lt;p>We&amp;rsquo;ll be building a mobile application where users can see a list of movies that are currently playing, popular movies, top rated movies and new movies that are going to release.&lt;/p>
+&lt;p>App Features:&lt;/p>
+&lt;ol>
+&lt;li>A slide out menu from where you can see the different movie lists, Now Playing, Popular, Upcoming, or Top Rated.&lt;/li>
+&lt;li>Each movie will have a background image, the title, the average rating of the movie and the description.&lt;/li>
+&lt;li>Infinite scroll, once you reach the end of the page, new content automatically loads.&lt;/li>
+&lt;li>Swipe down on any page to refresh it.&lt;/li>
+&lt;li>Show region specific movies&lt;/li>
+&lt;/ol>
+&lt;p>To get our movies, we&amp;rsquo;ll be using the &lt;a href="https://developers.themoviedb.org/3/movies/get-now-playing">&lt;code>TMDb api&lt;/code>&lt;/a> and to get our location we&amp;rsquo;ll be using &lt;a href="http://ip-api.com/json/">&lt;code>ip-api&lt;/code>&lt;/a>.&lt;/p>
+&lt;h3 id="result">Result`&lt;/h3>
+&lt;!-- raw HTML omitted -->
+&lt;ol>
+&lt;li>Install ionic cli&lt;/li>
+&lt;li>Start an iconic app&lt;/li>
+&lt;/ol>
+&lt;pre>&lt;code>npm install -g @ionic/cli
+ionic start MovieVue sidemenu --type vue
+&lt;/code>&lt;/pre>&lt;ol start="3">
+&lt;li>
+&lt;p>cd into it and run
+ionic serve&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>do coding&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>Build
+ionic build&lt;/p>
+&lt;/li>
+&lt;/ol>
+&lt;p>ionic cap add android&lt;/p>
+&lt;ol start="6">
+&lt;li>Download android studio
+Use standard install type&lt;/li>
+&lt;/ol>
+&lt;p>ionic cap open android&lt;/p>
+&lt;p>wait for gradle to sync&lt;/p>
+&lt;p>open SDK tools if needed&lt;/p>
+&lt;p>Build, then run&lt;/p>
+&lt;p>Icons in the app &amp;gt; res &amp;gt; mipmap folder&lt;/p>
+&lt;p>select image using path&lt;/p>
+&lt;p>build &amp;gt; Build bundles/ apk &amp;gt; Build Apk&lt;/p>
+&lt;p>build under path&lt;/p>
+&lt;p>MovieVue\android\app\build\outputs\apk\debug&lt;/p></description></item><item><title>Build a documentation website with VuePress</title><link>https://home.aveek.io/blog/post/build-a-documentation-site-with-vuepress/</link><pubDate>Mon, 24 Dec 2018 00:00:00 +0000</pubDate><author>aveek.s98@gmail.com (Aveek Saha)</author><guid>https://home.aveek.io/blog/post/build-a-documentation-site-with-vuepress/</guid><description>&lt;p>Live example - &lt;a href="https://vuepress-tut.netlify.com/">&lt;code>Demo&lt;/code>&lt;/a>&lt;/p>
 &lt;p>Code for this project - &lt;a href="https://gitlab.com/aveeksaha/vuepress-tut">&lt;code>Code&lt;/code>&lt;/a>
 &lt;!-- raw HTML omitted -->&lt;/p>
 &lt;h1 id="introduction">Introduction&lt;/h1>
