@@ -8,12 +8,21 @@ tags: [ "websockets" , "NodeJS" , "JavaScript" , "Website" ]
  
 If you want the code for this project, fork this GitHub repo - [`Online chess`](https://github.com/Aveek-Saha/Online-Chess) <br>
 Check out the code in action here, play it yourself - [`Live demo`](https://chess0.herokuapp.com)
+
+Play the new and improved version here - [`FireChess`](http://firechess0.web.app/)
+Check out the new and improved codebase here - [`FireChess GitHub`](https://github.com/Aveek-Saha/FireChess)
  
 <!--more-->
  
 # Introduction
  
 In this tutorial you'll learn how to build a basic online Chess platform with multiple rooms, where people can play against each other. We will be using Sockets to communicate between the client and the server.
+
+### Note:
+At the time I had created the project as a showcase for websockets first and as an actual place to play chess second. However this project has had far more users on the website playing chess than I anticipated and I kept running out of resources for the free Heroku tier. This meant that I got a lot of complaints that the website was inaccessible.
+
+FireChess is another approach to this problem that solves a lot of issues and adds more functionality. Check it out here [`FireChess`](http://firechess0.web.app/) if you just want a place to play chess with some friends.
+
  
 # Socket.io
 From the socket.io documentation -
