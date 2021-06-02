@@ -45,35 +45,39 @@ Download the app here - &lt;a href="https://github.com/Aveek-Saha/MovieVue/relea
 &lt;p>These changes have to be made to the &lt;code>./src/App.vue&lt;/code>.&lt;/p>
 &lt;p>We&amp;rsquo;ll only be modifying the template and the script here, so you can leave the styles unchanged.&lt;/p>
 &lt;p>Well need to rename the tabs to match the content we&amp;rsquo;ll be showing. The icons are a little mismatched too, so let&amp;rsquo;s fix that while we&amp;rsquo;re at it.&lt;/p>
-&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-vue" data-lang="vue">&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">template&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-html" data-lang="html">&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">template&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
 &lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">IonApp&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
-&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">IonSplitPane&lt;/span> &lt;span class="na">content&lt;/span>&lt;span class="nt">-id&lt;/span>&lt;span class="err">=&amp;#34;&lt;/span>&lt;span class="na">main&lt;/span>&lt;span class="nt">-content&lt;/span>&lt;span class="err">&amp;#34;&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
-&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">ion-menu&lt;/span> &lt;span class="na">content&lt;/span>&lt;span class="nt">-id&lt;/span>&lt;span class="err">=&amp;#34;&lt;/span>&lt;span class="na">main&lt;/span>&lt;span class="nt">-content&lt;/span>&lt;span class="err">&amp;#34;&lt;/span> &lt;span class="na">type&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;overlay&amp;#34;&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">IonSplitPane&lt;/span> &lt;span class="na">content-id&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;main-content&amp;#34;&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">ion-menu&lt;/span> &lt;span class="na">content-id&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;main-content&amp;#34;&lt;/span> &lt;span class="na">type&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;overlay&amp;#34;&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
 &lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">ion-content&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
 &lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">ion-list&lt;/span> &lt;span class="na">id&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;inbox-list&amp;#34;&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
-&lt;span class="c">&amp;lt;!--&lt;/span> &lt;span class="nx">Change&lt;/span> &lt;span class="nx">name&lt;/span> &lt;span class="nx">to&lt;/span> &lt;span class="nx">something&lt;/span> &lt;span class="nx">more&lt;/span> &lt;span class="nx">appropriate&lt;/span> &lt;span class="o">--&amp;gt;&lt;/span>
-&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">ion-list-header&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>&lt;span class="nx">Movie&lt;/span> &lt;span class="nx">Vue&lt;/span>&lt;span class="o">&amp;lt;&lt;/span>&lt;span class="err">/ion-list-header&amp;gt;&lt;/span>
-&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">ion-note&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>&lt;span class="nx">Discover&lt;/span> &lt;span class="nx">movies&lt;/span>&lt;span class="o">&amp;lt;&lt;/span>&lt;span class="err">/ion-note&amp;gt;&lt;/span>
-&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">ion-menu-toggle&lt;/span> &lt;span class="na">auto&lt;/span>&lt;span class="nt">-hide&lt;/span>&lt;span class="err">=&amp;#34;&lt;/span>&lt;span class="na">false&lt;/span>&lt;span class="err">&amp;#34;&lt;/span> &lt;span class="nt">v-for&lt;/span>&lt;span class="s">=&amp;#34;(p, i) in appPages&amp;#34; &lt;/span>&lt;span class="nt">:key&lt;/span>&lt;span class="s">=&amp;#34;i&amp;#34;&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
-&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">ion-item&lt;/span> &lt;span class="err">@&lt;/span>&lt;span class="na">click&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;selectedIndex = i&amp;#34;&lt;/span> &lt;span class="na">router&lt;/span>&lt;span class="nt">-direction&lt;/span>&lt;span class="err">=&amp;#34;&lt;/span>&lt;span class="na">root&lt;/span>&lt;span class="err">&amp;#34;&lt;/span> &lt;span class="nt">:router-link&lt;/span>&lt;span class="s">=&amp;#34;p.url&amp;#34;&lt;/span> &lt;span class="na">lines&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;none&amp;#34;&lt;/span> &lt;span class="na">detail&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;false&amp;#34;&lt;/span> &lt;span class="na">class&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;hydrated&amp;#34;&lt;/span> &lt;span class="o">:&lt;/span>&lt;span class="na">class&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;{ selected: selectedIndex === i }&amp;#34;&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
-&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">ion-icon&lt;/span> &lt;span class="na">slot&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;start&amp;#34;&lt;/span> &lt;span class="nt">:ios&lt;/span>&lt;span class="s">=&amp;#34;p.iosIcon&amp;#34;&lt;/span> &lt;span class="nt">:md&lt;/span>&lt;span class="s">=&amp;#34;p.mdIcon&amp;#34;&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>&lt;span class="o">&amp;lt;&lt;/span>&lt;span class="err">/ion-icon&amp;gt;&lt;/span>
-&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">ion-label&lt;/span>&lt;span class="p">&amp;gt;{{&lt;/span> &lt;span class="nx">p&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">title&lt;/span> &lt;span class="p">}}&lt;/span>&lt;span class="o">&amp;lt;&lt;/span>&lt;span class="err">/ion-label&amp;gt;&lt;/span>
-&lt;span class="o">&amp;lt;&lt;/span>&lt;span class="err">/ion-item&amp;gt;&lt;/span>
-&lt;span class="o">&amp;lt;&lt;/span>&lt;span class="err">/ion-menu-toggle&amp;gt;&lt;/span>
-&lt;span class="o">&amp;lt;&lt;/span>&lt;span class="err">/ion-list&amp;gt;&lt;/span>
-&lt;span class="c">&amp;lt;!--&lt;/span> &lt;span class="nx">Remove&lt;/span> &lt;span class="nx">Labels&lt;/span> &lt;span class="o">--&amp;gt;&lt;/span>
-&lt;span class="o">&amp;lt;&lt;/span>&lt;span class="err">/ion-content&amp;gt;&lt;/span>
-&lt;span class="o">&amp;lt;&lt;/span>&lt;span class="err">/ion-menu&amp;gt;&lt;/span>
-&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">ion-router-outlet&lt;/span> &lt;span class="na">id&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;main-content&amp;#34;&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>&lt;span class="o">&amp;lt;&lt;/span>&lt;span class="err">/ion-router-outlet&amp;gt;&lt;/span>
+&lt;span class="c">&amp;lt;!-- Change name to something more appropriate --&amp;gt;&lt;/span>
+&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">ion-list-header&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>Movie Vue&lt;span class="p">&amp;lt;/&lt;/span>&lt;span class="nt">ion-list-header&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">ion-note&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>Discover movies&lt;span class="p">&amp;lt;/&lt;/span>&lt;span class="nt">ion-note&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">ion-menu-toggle&lt;/span> &lt;span class="na">auto-hide&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;false&amp;#34;&lt;/span> &lt;span class="na">v-for&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;(p, i) in appPages&amp;#34;&lt;/span> &lt;span class="na">:key&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;i&amp;#34;&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">ion-item&lt;/span> &lt;span class="err">@&lt;/span>&lt;span class="na">click&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;selectedIndex = i&amp;#34;&lt;/span> &lt;span class="na">router-direction&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;root&amp;#34;&lt;/span>
+&lt;span class="na">:router-link&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;p.url&amp;#34;&lt;/span> &lt;span class="na">lines&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;none&amp;#34;&lt;/span> &lt;span class="na">detail&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;false&amp;#34;&lt;/span> &lt;span class="na">class&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;hydrated&amp;#34;&lt;/span>
+&lt;span class="na">:class&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;{ selected: selectedIndex === i }&amp;#34;&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">ion-icon&lt;/span> &lt;span class="na">slot&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;start&amp;#34;&lt;/span> &lt;span class="na">:ios&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;p.iosIcon&amp;#34;&lt;/span> &lt;span class="na">:md&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;p.mdIcon&amp;#34;&lt;/span>&lt;span class="p">&amp;gt;&amp;lt;/&lt;/span>&lt;span class="nt">ion-icon&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">ion-label&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>{{ p.title }}&lt;span class="p">&amp;lt;/&lt;/span>&lt;span class="nt">ion-label&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;span class="p">&amp;lt;/&lt;/span>&lt;span class="nt">ion-item&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;span class="p">&amp;lt;/&lt;/span>&lt;span class="nt">ion-menu-toggle&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;span class="p">&amp;lt;/&lt;/span>&lt;span class="nt">ion-list&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;span class="c">&amp;lt;!-- Remove Labels --&amp;gt;&lt;/span>
+&lt;span class="p">&amp;lt;/&lt;/span>&lt;span class="nt">ion-content&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;span class="p">&amp;lt;/&lt;/span>&lt;span class="nt">ion-menu&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">ion-router-outlet&lt;/span> &lt;span class="na">id&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;main-content&amp;#34;&lt;/span>&lt;span class="p">&amp;gt;&amp;lt;/&lt;/span>&lt;span class="nt">ion-router-outlet&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
 &lt;span class="p">&amp;lt;/&lt;/span>&lt;span class="nt">IonSplitPane&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
 &lt;span class="p">&amp;lt;/&lt;/span>&lt;span class="nt">IonApp&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
 &lt;span class="p">&amp;lt;/&lt;/span>&lt;span class="nt">template&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
 &lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">script&lt;/span> &lt;span class="na">lang&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;ts&amp;#34;&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
-&lt;span class="kr">import&lt;/span> &lt;span class="p">{&lt;/span> &lt;span class="nx">IonApp&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nx">IonContent&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nx">IonIcon&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nx">IonItem&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nx">IonLabel&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nx">IonList&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nx">IonListHeader&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nx">IonMenu&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nx">IonMenuToggle&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nx">IonNote&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nx">IonRouterOutlet&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nx">IonSplitPane&lt;/span> &lt;span class="p">}&lt;/span> &lt;span class="nx">from&lt;/span> &lt;span class="s1">&amp;#39;@ionic/vue&amp;#39;&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;span class="kr">import&lt;/span> &lt;span class="p">{&lt;/span> &lt;span class="nx">IonApp&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nx">IonContent&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nx">IonIcon&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nx">IonItem&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nx">IonLabel&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nx">IonList&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nx">IonListHeader&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;span class="nx">IonMenu&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nx">IonMenuToggle&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nx">IonNote&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nx">IonRouterOutlet&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nx">IonSplitPane&lt;/span> &lt;span class="p">}&lt;/span> &lt;span class="nx">from&lt;/span> &lt;span class="s1">&amp;#39;@ionic/vue&amp;#39;&lt;/span>&lt;span class="p">;&lt;/span>
 &lt;span class="kr">import&lt;/span> &lt;span class="p">{&lt;/span> &lt;span class="nx">defineComponent&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nx">ref&lt;/span> &lt;span class="p">}&lt;/span> &lt;span class="nx">from&lt;/span> &lt;span class="s1">&amp;#39;vue&amp;#39;&lt;/span>&lt;span class="p">;&lt;/span>
 &lt;span class="kr">import&lt;/span> &lt;span class="p">{&lt;/span> &lt;span class="nx">useRoute&lt;/span> &lt;span class="p">}&lt;/span> &lt;span class="nx">from&lt;/span> &lt;span class="s1">&amp;#39;vue-router&amp;#39;&lt;/span>&lt;span class="p">;&lt;/span>
 &lt;span class="c1">// Update the icons
-&lt;/span>&lt;span class="c1">&lt;/span>&lt;span class="kr">import&lt;/span> &lt;span class="p">{&lt;/span> &lt;span class="nx">heartOutline&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nx">heartSharp&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nx">flashOutline&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nx">flashSharp&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nx">diamondOutline&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nx">diamondSharp&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nx">rocketOutline&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nx">rocketSharp&lt;/span> &lt;span class="p">}&lt;/span> &lt;span class="nx">from&lt;/span> &lt;span class="s1">&amp;#39;ionicons/icons&amp;#39;&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;span class="c1">&lt;/span>&lt;span class="kr">import&lt;/span> &lt;span class="p">{&lt;/span> &lt;span class="nx">heartOutline&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nx">heartSharp&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nx">flashOutline&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nx">flashSharp&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;span class="nx">diamondOutline&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nx">diamondSharp&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nx">rocketOutline&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nx">rocketSharp&lt;/span> &lt;span class="p">}&lt;/span> &lt;span class="nx">from&lt;/span> &lt;span class="s1">&amp;#39;ionicons/icons&amp;#39;&lt;/span>&lt;span class="p">;&lt;/span>
 &lt;span class="kr">export&lt;/span> &lt;span class="k">default&lt;/span> &lt;span class="nx">defineComponent&lt;/span>&lt;span class="p">({&lt;/span>
 &lt;span class="nx">name&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="s1">&amp;#39;App&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span>
 &lt;span class="nx">components&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="p">{&lt;/span>
@@ -123,7 +127,8 @@ Download the app here - &lt;a href="https://github.com/Aveek-Saha/MovieVue/relea
 &lt;/span>&lt;span class="c1">&lt;/span>
 &lt;span class="kr">const&lt;/span> &lt;span class="nx">path&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="nb">window&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">location&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">pathname&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">split&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s1">&amp;#39;folder/&amp;#39;&lt;/span>&lt;span class="p">)[&lt;/span>&lt;span class="mi">1&lt;/span>&lt;span class="p">];&lt;/span>
 &lt;span class="k">if&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="nx">path&lt;/span> &lt;span class="o">!==&lt;/span> &lt;span class="kc">undefined&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
-&lt;span class="nx">selectedIndex&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">value&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="nx">appPages&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">findIndex&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nx">page&lt;/span> &lt;span class="p">=&amp;gt;&lt;/span> &lt;span class="nx">page&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">title&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">toLowerCase&lt;/span>&lt;span class="p">()&lt;/span> &lt;span class="o">===&lt;/span> &lt;span class="nx">path&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">toLowerCase&lt;/span>&lt;span class="p">());&lt;/span>
+&lt;span class="nx">selectedIndex&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">value&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="nx">appPages&lt;/span>
+&lt;span class="p">.&lt;/span>&lt;span class="nx">findIndex&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nx">page&lt;/span> &lt;span class="p">=&amp;gt;&lt;/span> &lt;span class="nx">page&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">title&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">toLowerCase&lt;/span>&lt;span class="p">()&lt;/span> &lt;span class="o">===&lt;/span> &lt;span class="nx">path&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">toLowerCase&lt;/span>&lt;span class="p">());&lt;/span>
 &lt;span class="p">}&lt;/span>
 &lt;span class="kr">const&lt;/span> &lt;span class="nx">route&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="nx">useRoute&lt;/span>&lt;span class="p">();&lt;/span>
 &lt;span class="k">return&lt;/span> &lt;span class="p">{&lt;/span>
@@ -167,22 +172,22 @@ Download the app here - &lt;a href="https://github.com/Aveek-Saha/MovieVue/relea
 &lt;h3 id="basic-ui">Basic UI&lt;/h3>
 &lt;p>For our main UI we&amp;rsquo;ll be using a card component that will contain all the information about the movies.&lt;/p>
 &lt;p>Create a new file &lt;code>./src/MovieCard.vue&lt;/code>&lt;/p>
-&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-vue" data-lang="vue">&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">template&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-html" data-lang="html">&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">template&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
 &lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">ion-card&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
-&lt;span class="c">&amp;lt;!--&lt;/span> &lt;span class="nx">Movie&lt;/span> &lt;span class="nx">poster&lt;/span> &lt;span class="nx">at&lt;/span> &lt;span class="nx">the&lt;/span> &lt;span class="nx">top&lt;/span> &lt;span class="k">of&lt;/span> &lt;span class="nx">the&lt;/span> &lt;span class="nx">card&lt;/span> &lt;span class="o">--&amp;gt;&lt;/span>
-&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">img&lt;/span> &lt;span class="nt">:src&lt;/span>&lt;span class="s">=&amp;#34;url&amp;#34;&lt;/span> &lt;span class="p">/&amp;gt;&lt;/span>
+&lt;span class="c">&amp;lt;!-- Movie poster at the top of the card --&amp;gt;&lt;/span>
+&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">img&lt;/span> &lt;span class="na">:src&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;url&amp;#34;&lt;/span> &lt;span class="p">/&amp;gt;&lt;/span>
 &lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">ion-card-header&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
-&lt;span class="c">&amp;lt;!--&lt;/span> &lt;span class="nx">Show&lt;/span> &lt;span class="nx">the&lt;/span> &lt;span class="nx">movie&lt;/span> &lt;span class="nx">title&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nx">Average&lt;/span> &lt;span class="nx">votes&lt;/span> &lt;span class="nx">and&lt;/span> &lt;span class="nx">description&lt;/span> &lt;span class="o">--&amp;gt;&lt;/span>
-&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">ion-card-title&lt;/span>&lt;span class="p">&amp;gt;{{&lt;/span> &lt;span class="nx">movie&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">title&lt;/span> &lt;span class="p">}}&lt;/span>&lt;span class="o">&amp;lt;&lt;/span>&lt;span class="err">/ion-card-title&amp;gt;&lt;/span>
+&lt;span class="c">&amp;lt;!-- Show the movie title, Average votes and description --&amp;gt;&lt;/span>
+&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">ion-card-title&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>{{ movie.title }}&lt;span class="p">&amp;lt;/&lt;/span>&lt;span class="nt">ion-card-title&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
 &lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">ion-card-subtitle&lt;/span>
-&lt;span class="p">&amp;gt;&lt;/span>&lt;span class="nx">Rating&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="p">{{&lt;/span> &lt;span class="nx">movie&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">vote_average&lt;/span> &lt;span class="p">}}&lt;/span>
-&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">ion-icon&lt;/span> &lt;span class="nt">:icon&lt;/span>&lt;span class="s">=&amp;#34;star&amp;#34;&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>&lt;span class="o">&amp;lt;&lt;/span>&lt;span class="err">/ion-icon&lt;/span>
-&lt;span class="o">&amp;gt;&amp;lt;&lt;/span>&lt;span class="err">/ion-card-subtitle&amp;gt;&lt;/span>
-&lt;span class="o">&amp;lt;&lt;/span>&lt;span class="err">/ion-card-header&amp;gt;&lt;/span>
+&lt;span class="p">&amp;gt;&lt;/span>Rating: {{ movie.vote_average }}
+&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">ion-icon&lt;/span> &lt;span class="na">:icon&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;star&amp;#34;&lt;/span>&lt;span class="p">&amp;gt;&amp;lt;/&lt;/span>&lt;span class="nt">ion-icon&lt;/span>
+&lt;span class="p">&amp;gt;&amp;lt;/&lt;/span>&lt;span class="nt">ion-card-subtitle&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;span class="p">&amp;lt;/&lt;/span>&lt;span class="nt">ion-card-header&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
 &lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">ion-card-content&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
-&lt;span class="p">{{&lt;/span> &lt;span class="nx">movie&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">overview&lt;/span> &lt;span class="p">}}&lt;/span>
-&lt;span class="o">&amp;lt;&lt;/span>&lt;span class="err">/ion-card-content&amp;gt;&lt;/span>
-&lt;span class="o">&amp;lt;&lt;/span>&lt;span class="err">/ion-card&amp;gt;&lt;/span>
+{{ movie.overview }}
+&lt;span class="p">&amp;lt;/&lt;/span>&lt;span class="nt">ion-card-content&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;span class="p">&amp;lt;/&lt;/span>&lt;span class="nt">ion-card&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
 &lt;span class="p">&amp;lt;/&lt;/span>&lt;span class="nt">template&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
 &lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">script&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
 &lt;span class="kr">import&lt;/span> &lt;span class="p">{&lt;/span>
@@ -224,34 +229,35 @@ Download the app here - &lt;a href="https://github.com/Aveek-Saha/MovieVue/relea
 &lt;pre>&lt;code>npm i axios
 &lt;/code>&lt;/pre>&lt;p>You can remove all styles from this section. Also we wont be using typescript here because I couldn&amp;rsquo;t get it to work with infinite scrolling, which we&amp;rsquo;ll be exploring later in this tutorial.&lt;/p>
 &lt;p>In &lt;code>./src/Folder.vue&lt;/code>&lt;/p>
-&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-vue" data-lang="vue">&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">template&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-html" data-lang="html">&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">template&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
 &lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">ion-page&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
-&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">ion-header&lt;/span> &lt;span class="nt">:translucent&lt;/span>&lt;span class="s">=&amp;#34;true&amp;#34;&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">ion-header&lt;/span> &lt;span class="na">:translucent&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;true&amp;#34;&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
 &lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">ion-toolbar&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
 &lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">ion-buttons&lt;/span> &lt;span class="na">slot&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;start&amp;#34;&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
-&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">ion-menu-button&lt;/span> &lt;span class="na">color&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;primary&amp;#34;&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>&lt;span class="o">&amp;lt;&lt;/span>&lt;span class="err">/ion-menu-button&amp;gt;&lt;/span>
-&lt;span class="o">&amp;lt;&lt;/span>&lt;span class="err">/ion-buttons&amp;gt;&lt;/span>
-&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">ion-title&lt;/span>&lt;span class="p">&amp;gt;{{&lt;/span> &lt;span class="nx">$route&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">params&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">id&lt;/span> &lt;span class="p">}}&lt;/span>&lt;span class="o">&amp;lt;&lt;/span>&lt;span class="err">/ion-title&amp;gt;&lt;/span>
-&lt;span class="o">&amp;lt;&lt;/span>&lt;span class="err">/ion-toolbar&amp;gt;&lt;/span>
-&lt;span class="o">&amp;lt;&lt;/span>&lt;span class="err">/ion-header&amp;gt;&lt;/span>
-&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">ion-content&lt;/span> &lt;span class="nt">:fullscreen&lt;/span>&lt;span class="s">=&amp;#34;true&amp;#34;&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">ion-menu-button&lt;/span> &lt;span class="na">color&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;primary&amp;#34;&lt;/span>&lt;span class="p">&amp;gt;&amp;lt;/&lt;/span>&lt;span class="nt">ion-menu-button&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;span class="p">&amp;lt;/&lt;/span>&lt;span class="nt">ion-buttons&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">ion-title&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>{{ $route.params.id }}&lt;span class="p">&amp;lt;/&lt;/span>&lt;span class="nt">ion-title&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;span class="p">&amp;lt;/&lt;/span>&lt;span class="nt">ion-toolbar&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;span class="p">&amp;lt;/&lt;/span>&lt;span class="nt">ion-header&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">ion-content&lt;/span> &lt;span class="na">:fullscreen&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;true&amp;#34;&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
 &lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">ion-header&lt;/span> &lt;span class="na">collapse&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;condense&amp;#34;&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
 &lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">ion-toolbar&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
-&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">ion-title&lt;/span> &lt;span class="na">size&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;large&amp;#34;&lt;/span>&lt;span class="p">&amp;gt;{{&lt;/span> &lt;span class="nx">$route&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">params&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">id&lt;/span> &lt;span class="p">}}&lt;/span>&lt;span class="o">&amp;lt;&lt;/span>&lt;span class="err">/ion-title&amp;gt;&lt;/span>
-&lt;span class="o">&amp;lt;&lt;/span>&lt;span class="err">/ion-toolbar&amp;gt;&lt;/span>
-&lt;span class="o">&amp;lt;&lt;/span>&lt;span class="err">/ion-header&amp;gt;&lt;/span>
+&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">ion-title&lt;/span> &lt;span class="na">size&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;large&amp;#34;&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>{{ $route.params.id }}&lt;span class="p">&amp;lt;/&lt;/span>&lt;span class="nt">ion-title&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;span class="p">&amp;lt;/&lt;/span>&lt;span class="nt">ion-toolbar&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;span class="p">&amp;lt;/&lt;/span>&lt;span class="nt">ion-header&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
 &lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">div&lt;/span> &lt;span class="na">id&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;container&amp;#34;&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
-&lt;span class="c">&amp;lt;!--&lt;/span> &lt;span class="nx">Loop&lt;/span> &lt;span class="nx">over&lt;/span> &lt;span class="nx">each&lt;/span> &lt;span class="nx">movie&lt;/span> &lt;span class="o">--&amp;gt;&lt;/span>
-&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">div&lt;/span> &lt;span class="nt">v-for&lt;/span>&lt;span class="s">=&amp;#34;movie in movies&amp;#34; :key=&amp;#34;movie.id&amp;#34;&amp;gt;
-&lt;/span>&lt;span class="s"> &amp;lt;MovieCard v-bind&lt;/span>&lt;span class="nt">:movie&lt;/span>&lt;span class="s">=&amp;#34;movie&amp;#34;&lt;/span>&lt;span class="p">&amp;gt;&amp;lt;/&lt;/span>&lt;span class="nt">MovieCard&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;span class="c">&amp;lt;!-- Loop over each movie --&amp;gt;&lt;/span>
+&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">div&lt;/span> &lt;span class="na">v-for&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;movie in movies&amp;#34;&lt;/span> &lt;span class="na">:key&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;movie.id&amp;#34;&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">MovieCard&lt;/span> &lt;span class="na">v-bind:movie&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;movie&amp;#34;&lt;/span>&lt;span class="p">&amp;gt;&amp;lt;/&lt;/span>&lt;span class="nt">MovieCard&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
 &lt;span class="p">&amp;lt;/&lt;/span>&lt;span class="nt">div&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
 &lt;span class="p">&amp;lt;/&lt;/span>&lt;span class="nt">div&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
-&lt;span class="err">&amp;lt;/&lt;/span>&lt;span class="na">ion&lt;/span>&lt;span class="nt">-content&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
-&lt;span class="o">&amp;lt;&lt;/span>&lt;span class="err">/ion-page&amp;gt;&lt;/span>
+&lt;span class="p">&amp;lt;/&lt;/span>&lt;span class="nt">ion-content&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;span class="p">&amp;lt;/&lt;/span>&lt;span class="nt">ion-page&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
 &lt;span class="p">&amp;lt;/&lt;/span>&lt;span class="nt">template&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
 &lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">script&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
 &lt;span class="c1">// Remove typescript
-&lt;/span>&lt;span class="c1">&lt;/span>&lt;span class="kr">import&lt;/span> &lt;span class="p">{&lt;/span> &lt;span class="nx">IonButtons&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nx">IonContent&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nx">IonHeader&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nx">IonMenuButton&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nx">IonPage&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nx">IonTitle&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nx">IonToolbar&lt;/span> &lt;span class="p">}&lt;/span> &lt;span class="nx">from&lt;/span> &lt;span class="s1">&amp;#39;@ionic/vue&amp;#39;&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;span class="c1">&lt;/span>&lt;span class="kr">import&lt;/span> &lt;span class="p">{&lt;/span> &lt;span class="nx">IonButtons&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nx">IonContent&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nx">IonHeader&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nx">IonMenuButton&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nx">IonPage&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;span class="nx">IonTitle&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nx">IonToolbar&lt;/span> &lt;span class="p">}&lt;/span> &lt;span class="nx">from&lt;/span> &lt;span class="s1">&amp;#39;@ionic/vue&amp;#39;&lt;/span>&lt;span class="p">;&lt;/span>
 &lt;span class="kr">import&lt;/span> &lt;span class="p">{&lt;/span> &lt;span class="nx">ref&lt;/span> &lt;span class="p">}&lt;/span> &lt;span class="nx">from&lt;/span> &lt;span class="s2">&amp;#34;vue&amp;#34;&lt;/span>&lt;span class="p">;&lt;/span>
 &lt;span class="c1">// Install Axios and import the Movie card component we just made
 &lt;/span>&lt;span class="c1">&lt;/span>&lt;span class="kr">import&lt;/span> &lt;span class="nx">MovieCard&lt;/span> &lt;span class="nx">from&lt;/span> &lt;span class="s2">&amp;#34;./MovieCard.vue&amp;#34;&lt;/span>&lt;span class="p">;&lt;/span>
@@ -324,7 +330,7 @@ Download the app here - &lt;a href="https://github.com/Aveek-Saha/MovieVue/relea
 &lt;span class="p">}&lt;/span>
 &lt;span class="p">&amp;lt;/&lt;/span>&lt;span class="nt">script&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
 &lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">style&lt;/span> &lt;span class="na">scoped&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
-&lt;span class="cm">/* Remove styles */&lt;/span>
+&lt;span class="c">/* Remove styles */&lt;/span>
 &lt;span class="p">&amp;lt;/&lt;/span>&lt;span class="nt">style&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
 &lt;/code>&lt;/pre>&lt;/div>&lt;p>After making these changes, you should get something that looks like this:&lt;/p>
 &lt;p>&lt;img src="" alt="Screenshot 4">&lt;/p>
@@ -334,40 +340,40 @@ Download the app here - &lt;a href="https://github.com/Aveek-Saha/MovieVue/relea
 &lt;p>Basically once the user is about to reach the end of the content that has loaded so far, we&amp;rsquo;ll send a request to the API for the next page, and add it to the list.&lt;/p>
 &lt;p>Luckily ionic has a component just for this.&lt;/p>
 &lt;p>In &lt;code>./src/Folder.vue&lt;/code>.&lt;/p>
-&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-vue" data-lang="vue">&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">template&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-html" data-lang="html">&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">template&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
 &lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">ion-page&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
-&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">ion-header&lt;/span> &lt;span class="nt">:translucent&lt;/span>&lt;span class="s">=&amp;#34;true&amp;#34;&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">ion-header&lt;/span> &lt;span class="na">:translucent&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;true&amp;#34;&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
 &lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">ion-toolbar&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
 &lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">ion-buttons&lt;/span> &lt;span class="na">slot&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;start&amp;#34;&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
-&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">ion-menu-button&lt;/span> &lt;span class="na">color&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;primary&amp;#34;&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>&lt;span class="o">&amp;lt;&lt;/span>&lt;span class="err">/ion-menu-button&amp;gt;&lt;/span>
-&lt;span class="o">&amp;lt;&lt;/span>&lt;span class="err">/ion-buttons&amp;gt;&lt;/span>
-&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">ion-title&lt;/span>&lt;span class="p">&amp;gt;{{&lt;/span> &lt;span class="nx">$route&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">params&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">id&lt;/span> &lt;span class="p">}}&lt;/span>&lt;span class="o">&amp;lt;&lt;/span>&lt;span class="err">/ion-title&amp;gt;&lt;/span>
-&lt;span class="o">&amp;lt;&lt;/span>&lt;span class="err">/ion-toolbar&amp;gt;&lt;/span>
-&lt;span class="o">&amp;lt;&lt;/span>&lt;span class="err">/ion-header&amp;gt;&lt;/span>
-&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">ion-content&lt;/span> &lt;span class="nt">:fullscreen&lt;/span>&lt;span class="s">=&amp;#34;true&amp;#34;&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">ion-menu-button&lt;/span> &lt;span class="na">color&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;primary&amp;#34;&lt;/span>&lt;span class="p">&amp;gt;&amp;lt;/&lt;/span>&lt;span class="nt">ion-menu-button&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;span class="p">&amp;lt;/&lt;/span>&lt;span class="nt">ion-buttons&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">ion-title&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>{{ $route.params.id }}&lt;span class="p">&amp;lt;/&lt;/span>&lt;span class="nt">ion-title&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;span class="p">&amp;lt;/&lt;/span>&lt;span class="nt">ion-toolbar&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;span class="p">&amp;lt;/&lt;/span>&lt;span class="nt">ion-header&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">ion-content&lt;/span> &lt;span class="na">:fullscreen&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;true&amp;#34;&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
 &lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">ion-header&lt;/span> &lt;span class="na">collapse&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;condense&amp;#34;&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
 &lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">ion-toolbar&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
-&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">ion-title&lt;/span> &lt;span class="na">size&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;large&amp;#34;&lt;/span>&lt;span class="p">&amp;gt;{{&lt;/span> &lt;span class="nx">$route&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">params&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">id&lt;/span> &lt;span class="p">}}&lt;/span>&lt;span class="o">&amp;lt;&lt;/span>&lt;span class="err">/ion-title&amp;gt;&lt;/span>
-&lt;span class="o">&amp;lt;&lt;/span>&lt;span class="err">/ion-toolbar&amp;gt;&lt;/span>
-&lt;span class="o">&amp;lt;&lt;/span>&lt;span class="err">/ion-header&amp;gt;&lt;/span>
+&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">ion-title&lt;/span> &lt;span class="na">size&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;large&amp;#34;&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>{{ $route.params.id }}&lt;span class="p">&amp;lt;/&lt;/span>&lt;span class="nt">ion-title&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;span class="p">&amp;lt;/&lt;/span>&lt;span class="nt">ion-toolbar&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;span class="p">&amp;lt;/&lt;/span>&lt;span class="nt">ion-header&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
 &lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">div&lt;/span> &lt;span class="na">id&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;container&amp;#34;&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
-&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">div&lt;/span> &lt;span class="nt">v-for&lt;/span>&lt;span class="s">=&amp;#34;movie in movies&amp;#34; :key=&amp;#34;movie.id&amp;#34;&amp;gt;
-&lt;/span>&lt;span class="s"> &amp;lt;MovieCard v-bind:movie=&amp;#34;movie&amp;#34;&amp;gt;&amp;lt;/MovieCard&amp;gt;
-&lt;/span>&lt;span class="s"> &amp;lt;/div&amp;gt;
-&lt;/span>&lt;span class="s"> &amp;lt;/div&amp;gt;
-&lt;/span>&lt;span class="s"> &amp;lt;!-- Add the infinite scroll component and call loadData --&amp;gt;
-&lt;/span>&lt;span class="s"> &amp;lt;ion-infinite-scroll
-&lt;/span>&lt;span class="s"> @ionInfinite=&amp;#34;loadData($event)&amp;#34;
-&lt;/span>&lt;span class="s"> threshold=&amp;#34;100px&amp;#34;
-&lt;/span>&lt;span class="s"> id=&amp;#34;infinite-scroll&amp;#34;
-&lt;/span>&lt;span class="s"> &lt;/span>&lt;span class="nt">:disabled&lt;/span>&lt;span class="s">=&amp;#34;isDisabled&amp;#34;&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">div&lt;/span> &lt;span class="na">v-for&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;movie in movies&amp;#34;&lt;/span> &lt;span class="na">:key&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;movie.id&amp;#34;&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">MovieCard&lt;/span> &lt;span class="na">v-bind:movie&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;movie&amp;#34;&lt;/span>&lt;span class="p">&amp;gt;&amp;lt;/&lt;/span>&lt;span class="nt">MovieCard&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;span class="p">&amp;lt;/&lt;/span>&lt;span class="nt">div&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;span class="p">&amp;lt;/&lt;/span>&lt;span class="nt">div&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;span class="c">&amp;lt;!-- Add the infinite scroll component and call loadData --&amp;gt;&lt;/span>
+&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">ion-infinite-scroll&lt;/span>
+&lt;span class="err">@&lt;/span>&lt;span class="na">ionInfinite&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;loadData($event)&amp;#34;&lt;/span>
+&lt;span class="na">threshold&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;100px&amp;#34;&lt;/span>
+&lt;span class="na">id&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;infinite-scroll&amp;#34;&lt;/span>
+&lt;span class="na">:disabled&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;isDisabled&amp;#34;&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
 &lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">ion-infinite-scroll-content&lt;/span>
-&lt;span class="na">loading&lt;/span>&lt;span class="nt">-spinner&lt;/span>&lt;span class="err">=&amp;#34;&lt;/span>&lt;span class="na">bubbles&lt;/span>&lt;span class="err">&amp;#34;&lt;/span>
-&lt;span class="na">loading&lt;/span>&lt;span class="nt">-text&lt;/span>&lt;span class="err">=&amp;#34;&lt;/span>&lt;span class="na">Loading&lt;/span> &lt;span class="na">more&lt;/span> &lt;span class="na">movies...&lt;/span>&lt;span class="err">&amp;#34;&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
-&lt;span class="o">&amp;lt;&lt;/span>&lt;span class="err">/ion-infinite-scroll-content&amp;gt;&lt;/span>
-&lt;span class="o">&amp;lt;&lt;/span>&lt;span class="err">/ion-infinite-scroll&amp;gt;&lt;/span>
-&lt;span class="o">&amp;lt;&lt;/span>&lt;span class="err">/ion-content&amp;gt;&lt;/span>
-&lt;span class="o">&amp;lt;&lt;/span>&lt;span class="err">/ion-page&amp;gt;&lt;/span>
+&lt;span class="na">loading-spinner&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;bubbles&amp;#34;&lt;/span>
+&lt;span class="na">loading-text&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;Loading more movies...&amp;#34;&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;span class="p">&amp;lt;/&lt;/span>&lt;span class="nt">ion-infinite-scroll-content&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;span class="p">&amp;lt;/&lt;/span>&lt;span class="nt">ion-infinite-scroll&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;span class="p">&amp;lt;/&lt;/span>&lt;span class="nt">ion-content&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;span class="p">&amp;lt;/&lt;/span>&lt;span class="nt">ion-page&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
 &lt;span class="p">&amp;lt;/&lt;/span>&lt;span class="nt">template&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
 &lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">script&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
 &lt;span class="c1">// Import the components
@@ -470,43 +476,43 @@ Download the app here - &lt;a href="https://github.com/Aveek-Saha/MovieVue/relea
 &lt;p>Another common feature in most mobile apps is the ability to refresh content when you swipe down at the top. This is useful because it&amp;rsquo;s a simple intuitive gesture to get updated content.&lt;/p>
 &lt;p>And wouldn&amp;rsquo;t you know it, Ionic has a component to help us with this too!&lt;/p>
 &lt;p>In &lt;code>./src/Folder.vue&lt;/code>.&lt;/p>
-&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-vue" data-lang="vue">&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">template&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-html" data-lang="html">&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">template&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
 &lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">ion-page&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
-&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">ion-header&lt;/span> &lt;span class="nt">:translucent&lt;/span>&lt;span class="s">=&amp;#34;true&amp;#34;&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">ion-header&lt;/span> &lt;span class="na">:translucent&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;true&amp;#34;&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
 &lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">ion-toolbar&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
 &lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">ion-buttons&lt;/span> &lt;span class="na">slot&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;start&amp;#34;&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
-&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">ion-menu-button&lt;/span> &lt;span class="na">color&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;primary&amp;#34;&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>&lt;span class="o">&amp;lt;&lt;/span>&lt;span class="err">/ion-menu-button&amp;gt;&lt;/span>
-&lt;span class="o">&amp;lt;&lt;/span>&lt;span class="err">/ion-buttons&amp;gt;&lt;/span>
-&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">ion-title&lt;/span>&lt;span class="p">&amp;gt;{{&lt;/span> &lt;span class="nx">$route&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">params&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">id&lt;/span> &lt;span class="p">}}&lt;/span>&lt;span class="o">&amp;lt;&lt;/span>&lt;span class="err">/ion-title&amp;gt;&lt;/span>
-&lt;span class="o">&amp;lt;&lt;/span>&lt;span class="err">/ion-toolbar&amp;gt;&lt;/span>
-&lt;span class="o">&amp;lt;&lt;/span>&lt;span class="err">/ion-header&amp;gt;&lt;/span>
-&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">ion-content&lt;/span> &lt;span class="nt">:fullscreen&lt;/span>&lt;span class="s">=&amp;#34;true&amp;#34;&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
-&lt;span class="c">&amp;lt;!--&lt;/span> &lt;span class="nx">Add&lt;/span> &lt;span class="nx">refresher&lt;/span> &lt;span class="nx">component&lt;/span> &lt;span class="o">--&amp;gt;&lt;/span>
-&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">ion-refresher&lt;/span> &lt;span class="na">slot&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;fixed&amp;#34;&lt;/span> &lt;span class="nt">@ionRefresh&lt;/span>&lt;span class="s">=&amp;#34;doRefresh($event)&amp;#34;&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
-&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">ion-refresher-content&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>&lt;span class="o">&amp;lt;&lt;/span>&lt;span class="err">/ion-refresher-content&amp;gt;&lt;/span>
-&lt;span class="o">&amp;lt;&lt;/span>&lt;span class="err">/ion-refresher&amp;gt;&lt;/span>
+&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">ion-menu-button&lt;/span> &lt;span class="na">color&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;primary&amp;#34;&lt;/span>&lt;span class="p">&amp;gt;&amp;lt;/&lt;/span>&lt;span class="nt">ion-menu-button&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;span class="p">&amp;lt;/&lt;/span>&lt;span class="nt">ion-buttons&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">ion-title&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>{{ $route.params.id }}&lt;span class="p">&amp;lt;/&lt;/span>&lt;span class="nt">ion-title&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;span class="p">&amp;lt;/&lt;/span>&lt;span class="nt">ion-toolbar&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;span class="p">&amp;lt;/&lt;/span>&lt;span class="nt">ion-header&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">ion-content&lt;/span> &lt;span class="na">:fullscreen&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;true&amp;#34;&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;span class="c">&amp;lt;!-- Add refresher component --&amp;gt;&lt;/span>
+&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">ion-refresher&lt;/span> &lt;span class="na">slot&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;fixed&amp;#34;&lt;/span> &lt;span class="err">@&lt;/span>&lt;span class="na">ionRefresh&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;doRefresh($event)&amp;#34;&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">ion-refresher-content&lt;/span>&lt;span class="p">&amp;gt;&amp;lt;/&lt;/span>&lt;span class="nt">ion-refresher-content&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;span class="p">&amp;lt;/&lt;/span>&lt;span class="nt">ion-refresher&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
 &lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">ion-header&lt;/span> &lt;span class="na">collapse&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;condense&amp;#34;&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
 &lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">ion-toolbar&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
-&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">ion-title&lt;/span> &lt;span class="na">size&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;large&amp;#34;&lt;/span>&lt;span class="p">&amp;gt;{{&lt;/span> &lt;span class="nx">$route&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">params&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">id&lt;/span> &lt;span class="p">}}&lt;/span>&lt;span class="o">&amp;lt;&lt;/span>&lt;span class="err">/ion-title&amp;gt;&lt;/span>
-&lt;span class="o">&amp;lt;&lt;/span>&lt;span class="err">/ion-toolbar&amp;gt;&lt;/span>
-&lt;span class="o">&amp;lt;&lt;/span>&lt;span class="err">/ion-header&amp;gt;&lt;/span>
+&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">ion-title&lt;/span> &lt;span class="na">size&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;large&amp;#34;&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>{{ $route.params.id }}&lt;span class="p">&amp;lt;/&lt;/span>&lt;span class="nt">ion-title&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;span class="p">&amp;lt;/&lt;/span>&lt;span class="nt">ion-toolbar&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;span class="p">&amp;lt;/&lt;/span>&lt;span class="nt">ion-header&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
 &lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">div&lt;/span> &lt;span class="na">id&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;container&amp;#34;&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
-&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">div&lt;/span> &lt;span class="nt">v-for&lt;/span>&lt;span class="s">=&amp;#34;movie in movies&amp;#34; :key=&amp;#34;movie.id&amp;#34;&amp;gt;
-&lt;/span>&lt;span class="s"> &amp;lt;MovieCard v-bind:movie=&amp;#34;movie&amp;#34;&amp;gt;&amp;lt;/MovieCard&amp;gt;
-&lt;/span>&lt;span class="s"> &amp;lt;/div&amp;gt;
-&lt;/span>&lt;span class="s"> &amp;lt;/div&amp;gt;
-&lt;/span>&lt;span class="s"> &amp;lt;ion-infinite-scroll
-&lt;/span>&lt;span class="s"> @ionInfinite=&amp;#34;loadData($event)&amp;#34;
-&lt;/span>&lt;span class="s"> threshold=&amp;#34;100px&amp;#34;
-&lt;/span>&lt;span class="s"> id=&amp;#34;infinite-scroll&amp;#34;
-&lt;/span>&lt;span class="s"> &lt;/span>&lt;span class="nt">:disabled&lt;/span>&lt;span class="s">=&amp;#34;isDisabled&amp;#34;&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">div&lt;/span> &lt;span class="na">v-for&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;movie in movies&amp;#34;&lt;/span> &lt;span class="na">:key&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;movie.id&amp;#34;&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">MovieCard&lt;/span> &lt;span class="na">v-bind:movie&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;movie&amp;#34;&lt;/span>&lt;span class="p">&amp;gt;&amp;lt;/&lt;/span>&lt;span class="nt">MovieCard&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;span class="p">&amp;lt;/&lt;/span>&lt;span class="nt">div&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;span class="p">&amp;lt;/&lt;/span>&lt;span class="nt">div&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">ion-infinite-scroll&lt;/span>
+&lt;span class="err">@&lt;/span>&lt;span class="na">ionInfinite&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;loadData($event)&amp;#34;&lt;/span>
+&lt;span class="na">threshold&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;100px&amp;#34;&lt;/span>
+&lt;span class="na">id&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;infinite-scroll&amp;#34;&lt;/span>
+&lt;span class="na">:disabled&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;isDisabled&amp;#34;&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
 &lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">ion-infinite-scroll-content&lt;/span>
-&lt;span class="na">loading&lt;/span>&lt;span class="nt">-spinner&lt;/span>&lt;span class="err">=&amp;#34;&lt;/span>&lt;span class="na">bubbles&lt;/span>&lt;span class="err">&amp;#34;&lt;/span>
-&lt;span class="na">loading&lt;/span>&lt;span class="nt">-text&lt;/span>&lt;span class="err">=&amp;#34;&lt;/span>&lt;span class="na">Loading&lt;/span> &lt;span class="na">more&lt;/span> &lt;span class="na">movies...&lt;/span>&lt;span class="err">&amp;#34;&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
-&lt;span class="o">&amp;lt;&lt;/span>&lt;span class="err">/ion-infinite-scroll-content&amp;gt;&lt;/span>
-&lt;span class="o">&amp;lt;&lt;/span>&lt;span class="err">/ion-infinite-scroll&amp;gt;&lt;/span>
-&lt;span class="o">&amp;lt;&lt;/span>&lt;span class="err">/ion-content&amp;gt;&lt;/span>
-&lt;span class="o">&amp;lt;&lt;/span>&lt;span class="err">/ion-page&amp;gt;&lt;/span>
+&lt;span class="na">loading-spinner&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;bubbles&amp;#34;&lt;/span>
+&lt;span class="na">loading-text&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;Loading more movies...&amp;#34;&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;span class="p">&amp;lt;/&lt;/span>&lt;span class="nt">ion-infinite-scroll-content&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;span class="p">&amp;lt;/&lt;/span>&lt;span class="nt">ion-infinite-scroll&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;span class="p">&amp;lt;/&lt;/span>&lt;span class="nt">ion-content&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;span class="p">&amp;lt;/&lt;/span>&lt;span class="nt">ion-page&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
 &lt;span class="p">&amp;lt;/&lt;/span>&lt;span class="nt">template&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
 &lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">script&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
 &lt;span class="c1">// Import the components
