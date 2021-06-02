@@ -1,4 +1,632 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>GitHub on Aveek's Blog</title><link>https://home.aveek.io/blog/tags/github/</link><description>Recent content in GitHub on Aveek's Blog</description><generator>Hugo -- gohugo.io</generator><managingEditor>aveek.s98@gmail.com (Aveek Saha)</managingEditor><webMaster>aveek.s98@gmail.com (Aveek Saha)</webMaster><lastBuildDate>Fri, 16 Oct 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://home.aveek.io/blog/tags/github/index.xml" rel="self" type="application/rss+xml"/><item><title>Create a bot that updates a pinned gist</title><link>https://home.aveek.io/blog/post/pinned-gist-bot/</link><pubDate>Fri, 16 Oct 2020 00:00:00 +0000</pubDate><author>aveek.s98@gmail.com (Aveek Saha)</author><guid>https://home.aveek.io/blog/post/pinned-gist-bot/</guid><description>&lt;p>Get the code here: &lt;a href="https://github.com/Aveek-Saha/blog-box">&lt;code>blog-box&lt;/code>&lt;/a>&lt;/p>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>GitHub on Aveek's Blog</title><link>https://home.aveek.io/blog/tags/github/</link><description>Recent content in GitHub on Aveek's Blog</description><generator>Hugo -- gohugo.io</generator><managingEditor>aveek.s98@gmail.com (Aveek Saha)</managingEditor><webMaster>aveek.s98@gmail.com (Aveek Saha)</webMaster><lastBuildDate>Thu, 18 Mar 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://home.aveek.io/blog/tags/github/index.xml" rel="self" type="application/rss+xml"/><item><title>Getting started with Ionic 5 and Vue</title><link>https://home.aveek.io/blog/post/getting-started-with-ionic-vue/</link><pubDate>Thu, 18 Mar 2021 00:00:00 +0000</pubDate><author>aveek.s98@gmail.com (Aveek Saha)</author><guid>https://home.aveek.io/blog/post/getting-started-with-ionic-vue/</guid><description>&lt;p>If you want the code for this project, fork this GitHub repo - &lt;a href="https://github.com/Aveek-Saha/MovieVue/">&lt;code>Movie Vue&lt;/code>&lt;/a> &lt;!-- raw HTML omitted -->
+Download the app here - &lt;a href="https://github.com/Aveek-Saha/MovieVue/releases/">&lt;code>Download&lt;/code>&lt;/a>&lt;/p>
+&lt;h1 id="introduction">Introduction&lt;/h1>
+&lt;p>Javascript has come a long way from when it used to be just a way to make web pages more dynamic, now we can use it to write server side code and even make desktop and mobile applications. The later is what what we&amp;rsquo;ll be exploring today, using &lt;a href="https://ionicframework.com/">&lt;code>Ionic&lt;/code>&lt;/a> and &lt;a href="https://vuejs.org/">&lt;code>Vue.js&lt;/code>&lt;/a>.&lt;/p>
+&lt;p>In this tutorial we&amp;rsquo;ll be focusing on learning how to use &lt;code>Ionic&lt;/code>, and it assumes you have basic knowledge of &lt;code>Vue&lt;/code> concepts. If you want to learn &lt;code>Vue&lt;/code> check out this tutorial: &lt;a href="https://home.aveek.io/blog/post/getting-started-with-vuejs-and-the-github-api/">&lt;code>Getting started with Vue and the GitHub API&lt;/code>&lt;/a>, where I go over all the basic concepts in &lt;code>Vue&lt;/code>.&lt;/p>
+&lt;h2 id="what-is-ionic">What is Ionic?&lt;/h2>
+&lt;p>From the ionic team:&lt;/p>
+&lt;blockquote>
+&lt;p>Ionic is an open source mobile UI toolkit for building high quality, cross-platform native and web app experiences.&lt;/p>
+&lt;/blockquote>
+&lt;p>Ionic will provide us with UI components that will look at home on mobile platforms, and function virtually indistinguishably from any native app.&lt;/p>
+&lt;p>Ionic gives you a choice between Angular, React, Vue, or vanilla JavaScript. However, note that not all components are available for all frameworks, so take a look at all the components you want to use and check if they&amp;rsquo;re available for your framework before you start.&lt;/p>
+&lt;p>With Ionic you can also use native device functionality, like accessing the camera or using the location on a mobile service, though take note that this service is a part of their enterprise edition.&lt;/p>
+&lt;h2 id="what-are-we-building">What are we building?&lt;/h2>
+&lt;p>We&amp;rsquo;ll be building a mobile application where users can see a list of movies that are currently playing, popular movies, top rated movies and new movies that are going to release.&lt;/p>
+&lt;p>App Features:&lt;/p>
+&lt;ol>
+&lt;li>A slide out menu from where you can see the different movie lists, Now Playing, Popular, Upcoming, or Top Rated.&lt;/li>
+&lt;li>Each movie will have a background image, the title, the average rating of the movie and the description.&lt;/li>
+&lt;li>Infinite scroll, once you reach the end of the page, new content automatically loads.&lt;/li>
+&lt;li>Swipe down on any page to refresh it.&lt;/li>
+&lt;li>Show region specific movies&lt;/li>
+&lt;/ol>
+&lt;p>To get our movies, we&amp;rsquo;ll be using the &lt;a href="https://developers.themoviedb.org/3/movies/get-now-playing">&lt;code>TMDb api&lt;/code>&lt;/a> and to get our location we&amp;rsquo;ll be using &lt;a href="http://ip-api.com/json/">&lt;code>ip-api&lt;/code>&lt;/a>.&lt;/p>
+&lt;p>You&amp;rsquo;ll need an API key for the &lt;code>TMDb api&lt;/code> before we start, so make sure to grab that.&lt;/p>
+&lt;h2 id="final-result">Final Result&lt;/h2>
+&lt;p>&lt;img src="https://home.aveek.io/blog/ionicvue/screen.gif" alt="Movie Vue Demo">&lt;/p>
+&lt;h1 id="setup">Setup&lt;/h1>
+&lt;h3 id="install-the-ionic-cli">Install the ionic cli&lt;/h3>
+&lt;pre>&lt;code>npm install -g @ionic/cli
+&lt;/code>&lt;/pre>&lt;h3 id="start-an-ionic-app">Start an ionic app&lt;/h3>
+&lt;p>We&amp;rsquo;ll be using the Side menu starter and we&amp;rsquo;ll set our framework of choice to Vue&lt;/p>
+&lt;pre>&lt;code>ionic start MovieVue sidemenu --type vue
+&lt;/code>&lt;/pre>&lt;h3 id="serve-for-live-reload">Serve for live reload&lt;/h3>
+&lt;p>Run this command, and it&amp;rsquo;ll start a live server so you can see your changes live while you&amp;rsquo;re coding.&lt;/p>
+&lt;pre>&lt;code>ionic serve
+&lt;/code>&lt;/pre>&lt;p>When viewing the page, I&amp;rsquo;d recommend using the dev tools on your browser to set your device to a mobile device, that way you&amp;rsquo;ll get a more realistic picture of what it&amp;rsquo;s going to look like on an actual phone.&lt;/p>
+&lt;h1 id="code">Code&lt;/h1>
+&lt;p>Upon serving, your app will look something like this&lt;/p>
+&lt;p>&lt;img src="" alt="Screenshot 1">&lt;/p>
+&lt;p>&lt;img src="" alt="Screenshot 2">&lt;/p>
+&lt;p>Most of our changes will be in the &lt;code>./src&lt;/code> folder&lt;/p>
+&lt;h3 id="organizing-the-side-menu">Organizing the Side menu&lt;/h3>
+&lt;p>First thing we&amp;rsquo;ll do is clean up the side menu. We need only 4 sections in the side menu, and we can get rid of all the labels.&lt;/p>
+&lt;p>These changes have to be made to the &lt;code>./src/App.vue&lt;/code>.&lt;/p>
+&lt;p>We&amp;rsquo;ll only be modifying the template and the script here, so you can leave the styles unchanged.&lt;/p>
+&lt;p>Well need to rename the tabs to match the content we&amp;rsquo;ll be showing. The icons are a little mismatched too, so let&amp;rsquo;s fix that while we&amp;rsquo;re at it.&lt;/p>
+&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-vue" data-lang="vue">&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">template&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">IonApp&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">IonSplitPane&lt;/span> &lt;span class="na">content&lt;/span>&lt;span class="nt">-id&lt;/span>&lt;span class="err">=&amp;#34;&lt;/span>&lt;span class="na">main&lt;/span>&lt;span class="nt">-content&lt;/span>&lt;span class="err">&amp;#34;&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">ion-menu&lt;/span> &lt;span class="na">content&lt;/span>&lt;span class="nt">-id&lt;/span>&lt;span class="err">=&amp;#34;&lt;/span>&lt;span class="na">main&lt;/span>&lt;span class="nt">-content&lt;/span>&lt;span class="err">&amp;#34;&lt;/span> &lt;span class="na">type&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;overlay&amp;#34;&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">ion-content&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">ion-list&lt;/span> &lt;span class="na">id&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;inbox-list&amp;#34;&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;span class="c">&amp;lt;!--&lt;/span> &lt;span class="nx">Change&lt;/span> &lt;span class="nx">name&lt;/span> &lt;span class="nx">to&lt;/span> &lt;span class="nx">something&lt;/span> &lt;span class="nx">more&lt;/span> &lt;span class="nx">appropriate&lt;/span> &lt;span class="o">--&amp;gt;&lt;/span>
+&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">ion-list-header&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>&lt;span class="nx">Movie&lt;/span> &lt;span class="nx">Vue&lt;/span>&lt;span class="o">&amp;lt;&lt;/span>&lt;span class="err">/ion-list-header&amp;gt;&lt;/span>
+&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">ion-note&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>&lt;span class="nx">Discover&lt;/span> &lt;span class="nx">movies&lt;/span>&lt;span class="o">&amp;lt;&lt;/span>&lt;span class="err">/ion-note&amp;gt;&lt;/span>
+&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">ion-menu-toggle&lt;/span> &lt;span class="na">auto&lt;/span>&lt;span class="nt">-hide&lt;/span>&lt;span class="err">=&amp;#34;&lt;/span>&lt;span class="na">false&lt;/span>&lt;span class="err">&amp;#34;&lt;/span> &lt;span class="nt">v-for&lt;/span>&lt;span class="s">=&amp;#34;(p, i) in appPages&amp;#34; &lt;/span>&lt;span class="nt">:key&lt;/span>&lt;span class="s">=&amp;#34;i&amp;#34;&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">ion-item&lt;/span> &lt;span class="err">@&lt;/span>&lt;span class="na">click&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;selectedIndex = i&amp;#34;&lt;/span> &lt;span class="na">router&lt;/span>&lt;span class="nt">-direction&lt;/span>&lt;span class="err">=&amp;#34;&lt;/span>&lt;span class="na">root&lt;/span>&lt;span class="err">&amp;#34;&lt;/span> &lt;span class="nt">:router-link&lt;/span>&lt;span class="s">=&amp;#34;p.url&amp;#34;&lt;/span> &lt;span class="na">lines&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;none&amp;#34;&lt;/span> &lt;span class="na">detail&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;false&amp;#34;&lt;/span> &lt;span class="na">class&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;hydrated&amp;#34;&lt;/span> &lt;span class="o">:&lt;/span>&lt;span class="na">class&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;{ selected: selectedIndex === i }&amp;#34;&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">ion-icon&lt;/span> &lt;span class="na">slot&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;start&amp;#34;&lt;/span> &lt;span class="nt">:ios&lt;/span>&lt;span class="s">=&amp;#34;p.iosIcon&amp;#34;&lt;/span> &lt;span class="nt">:md&lt;/span>&lt;span class="s">=&amp;#34;p.mdIcon&amp;#34;&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>&lt;span class="o">&amp;lt;&lt;/span>&lt;span class="err">/ion-icon&amp;gt;&lt;/span>
+&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">ion-label&lt;/span>&lt;span class="p">&amp;gt;{{&lt;/span> &lt;span class="nx">p&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">title&lt;/span> &lt;span class="p">}}&lt;/span>&lt;span class="o">&amp;lt;&lt;/span>&lt;span class="err">/ion-label&amp;gt;&lt;/span>
+&lt;span class="o">&amp;lt;&lt;/span>&lt;span class="err">/ion-item&amp;gt;&lt;/span>
+&lt;span class="o">&amp;lt;&lt;/span>&lt;span class="err">/ion-menu-toggle&amp;gt;&lt;/span>
+&lt;span class="o">&amp;lt;&lt;/span>&lt;span class="err">/ion-list&amp;gt;&lt;/span>
+&lt;span class="c">&amp;lt;!--&lt;/span> &lt;span class="nx">Remove&lt;/span> &lt;span class="nx">Labels&lt;/span> &lt;span class="o">--&amp;gt;&lt;/span>
+&lt;span class="o">&amp;lt;&lt;/span>&lt;span class="err">/ion-content&amp;gt;&lt;/span>
+&lt;span class="o">&amp;lt;&lt;/span>&lt;span class="err">/ion-menu&amp;gt;&lt;/span>
+&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">ion-router-outlet&lt;/span> &lt;span class="na">id&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;main-content&amp;#34;&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>&lt;span class="o">&amp;lt;&lt;/span>&lt;span class="err">/ion-router-outlet&amp;gt;&lt;/span>
+&lt;span class="p">&amp;lt;/&lt;/span>&lt;span class="nt">IonSplitPane&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;span class="p">&amp;lt;/&lt;/span>&lt;span class="nt">IonApp&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;span class="p">&amp;lt;/&lt;/span>&lt;span class="nt">template&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">script&lt;/span> &lt;span class="na">lang&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;ts&amp;#34;&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;span class="kr">import&lt;/span> &lt;span class="p">{&lt;/span> &lt;span class="nx">IonApp&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nx">IonContent&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nx">IonIcon&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nx">IonItem&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nx">IonLabel&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nx">IonList&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nx">IonListHeader&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nx">IonMenu&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nx">IonMenuToggle&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nx">IonNote&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nx">IonRouterOutlet&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nx">IonSplitPane&lt;/span> &lt;span class="p">}&lt;/span> &lt;span class="nx">from&lt;/span> &lt;span class="s1">&amp;#39;@ionic/vue&amp;#39;&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;span class="kr">import&lt;/span> &lt;span class="p">{&lt;/span> &lt;span class="nx">defineComponent&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nx">ref&lt;/span> &lt;span class="p">}&lt;/span> &lt;span class="nx">from&lt;/span> &lt;span class="s1">&amp;#39;vue&amp;#39;&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;span class="kr">import&lt;/span> &lt;span class="p">{&lt;/span> &lt;span class="nx">useRoute&lt;/span> &lt;span class="p">}&lt;/span> &lt;span class="nx">from&lt;/span> &lt;span class="s1">&amp;#39;vue-router&amp;#39;&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;span class="c1">// Update the icons
+&lt;/span>&lt;span class="c1">&lt;/span>&lt;span class="kr">import&lt;/span> &lt;span class="p">{&lt;/span> &lt;span class="nx">heartOutline&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nx">heartSharp&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nx">flashOutline&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nx">flashSharp&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nx">diamondOutline&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nx">diamondSharp&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nx">rocketOutline&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nx">rocketSharp&lt;/span> &lt;span class="p">}&lt;/span> &lt;span class="nx">from&lt;/span> &lt;span class="s1">&amp;#39;ionicons/icons&amp;#39;&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;span class="kr">export&lt;/span> &lt;span class="k">default&lt;/span> &lt;span class="nx">defineComponent&lt;/span>&lt;span class="p">({&lt;/span>
+&lt;span class="nx">name&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="s1">&amp;#39;App&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;span class="nx">components&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;span class="nx">IonApp&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;span class="nx">IonContent&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;span class="nx">IonIcon&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;span class="nx">IonItem&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;span class="nx">IonLabel&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;span class="nx">IonList&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;span class="nx">IonListHeader&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;span class="nx">IonMenu&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;span class="nx">IonMenuToggle&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;span class="nx">IonNote&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;span class="nx">IonRouterOutlet&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;span class="nx">IonSplitPane&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;span class="p">},&lt;/span>
+&lt;span class="nx">setup&lt;/span>&lt;span class="p">()&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;span class="kr">const&lt;/span> &lt;span class="nx">selectedIndex&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="nx">ref&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="mi">0&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;span class="c1">// Rename the tabs and update the icons
+&lt;/span>&lt;span class="c1">&lt;/span> &lt;span class="kr">const&lt;/span> &lt;span class="nx">appPages&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="p">[&lt;/span>
+&lt;span class="p">{&lt;/span>
+&lt;span class="nx">title&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="s1">&amp;#39;Now Playing&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;span class="nx">url&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="s1">&amp;#39;/folder/Now Playing&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;span class="nx">iosIcon&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="nx">flashOutline&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;span class="nx">mdIcon&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="nx">flashSharp&lt;/span>
+&lt;span class="p">},&lt;/span>
+&lt;span class="p">{&lt;/span>
+&lt;span class="nx">title&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="s1">&amp;#39;Popular&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;span class="nx">url&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="s1">&amp;#39;/folder/Popular&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;span class="nx">iosIcon&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="nx">heartOutline&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;span class="nx">mdIcon&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="nx">heartSharp&lt;/span>
+&lt;span class="p">},&lt;/span>
+&lt;span class="p">{&lt;/span>
+&lt;span class="nx">title&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="s1">&amp;#39;Top Rated&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;span class="nx">url&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="s1">&amp;#39;/folder/Top Rated&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;span class="nx">iosIcon&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="nx">diamondOutline&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;span class="nx">mdIcon&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="nx">diamondSharp&lt;/span>
+&lt;span class="p">},&lt;/span>
+&lt;span class="p">{&lt;/span>
+&lt;span class="nx">title&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="s1">&amp;#39;Upcoming&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;span class="nx">url&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="s1">&amp;#39;/folder/Upcoming&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;span class="nx">iosIcon&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="nx">rocketOutline&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;span class="nx">mdIcon&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="nx">rocketSharp&lt;/span>
+&lt;span class="p">}&lt;/span>
+&lt;span class="p">];&lt;/span>
+&lt;span class="c1">// Remove Labels
+&lt;/span>&lt;span class="c1">&lt;/span>
+&lt;span class="kr">const&lt;/span> &lt;span class="nx">path&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="nb">window&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">location&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">pathname&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">split&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s1">&amp;#39;folder/&amp;#39;&lt;/span>&lt;span class="p">)[&lt;/span>&lt;span class="mi">1&lt;/span>&lt;span class="p">];&lt;/span>
+&lt;span class="k">if&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="nx">path&lt;/span> &lt;span class="o">!==&lt;/span> &lt;span class="kc">undefined&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;span class="nx">selectedIndex&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">value&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="nx">appPages&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">findIndex&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nx">page&lt;/span> &lt;span class="p">=&amp;gt;&lt;/span> &lt;span class="nx">page&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">title&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">toLowerCase&lt;/span>&lt;span class="p">()&lt;/span> &lt;span class="o">===&lt;/span> &lt;span class="nx">path&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">toLowerCase&lt;/span>&lt;span class="p">());&lt;/span>
+&lt;span class="p">}&lt;/span>
+&lt;span class="kr">const&lt;/span> &lt;span class="nx">route&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="nx">useRoute&lt;/span>&lt;span class="p">();&lt;/span>
+&lt;span class="k">return&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;span class="nx">selectedIndex&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;span class="nx">appPages&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;span class="c1">// Update the icons
+&lt;/span>&lt;span class="c1">&lt;/span> &lt;span class="nx">heartOutline&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;span class="nx">heartSharp&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;span class="nx">flashOutline&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;span class="nx">flashSharp&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;span class="nx">diamondOutline&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;span class="nx">diamondSharp&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;span class="nx">rocketOutline&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;span class="nx">rocketSharp&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;span class="nx">isSelected&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="nx">url&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="nx">string&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">=&amp;gt;&lt;/span> &lt;span class="nx">url&lt;/span> &lt;span class="o">===&lt;/span> &lt;span class="nx">route&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">path&lt;/span> &lt;span class="o">?&lt;/span> &lt;span class="s1">&amp;#39;selected&amp;#39;&lt;/span> &lt;span class="o">:&lt;/span> &lt;span class="s1">&amp;#39;&amp;#39;&lt;/span>
+&lt;span class="p">}&lt;/span>
+&lt;span class="p">}&lt;/span>
+&lt;span class="p">});&lt;/span>
+&lt;span class="p">&amp;lt;/&lt;/span>&lt;span class="nt">script&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>Now we need to update the script at &lt;code>.src/router/index.ts&lt;/code> to change the default route. This will ensure it opens the page we want when it starts up.&lt;/p>
+&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-ts" data-lang="ts">&lt;span class="kr">import&lt;/span> &lt;span class="p">{&lt;/span> &lt;span class="nx">createRouter&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nx">createWebHistory&lt;/span> &lt;span class="p">}&lt;/span> &lt;span class="nx">from&lt;/span> &lt;span class="s1">&amp;#39;@ionic/vue-router&amp;#39;&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;span class="kr">import&lt;/span> &lt;span class="p">{&lt;/span> &lt;span class="nx">RouteRecordRaw&lt;/span> &lt;span class="p">}&lt;/span> &lt;span class="nx">from&lt;/span> &lt;span class="s1">&amp;#39;vue-router&amp;#39;&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;span class="kr">const&lt;/span> &lt;span class="nx">routes&lt;/span>: &lt;span class="kt">Array&lt;/span>&lt;span class="o">&amp;lt;&lt;/span>&lt;span class="nx">RouteRecordRaw&lt;/span>&lt;span class="o">&amp;gt;&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="p">[&lt;/span>
+&lt;span class="p">{&lt;/span>
+&lt;span class="nx">path&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="s1">&amp;#39;&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;span class="c1">// Change the default route
+&lt;/span>&lt;span class="c1">&lt;/span> &lt;span class="nx">redirect&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="s1">&amp;#39;/folder/Now Playing&amp;#39;&lt;/span>
+&lt;span class="p">},&lt;/span>
+&lt;span class="p">{&lt;/span>
+&lt;span class="nx">path&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="s1">&amp;#39;/folder/:id&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;span class="nx">component&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="p">()&lt;/span> &lt;span class="o">=&amp;gt;&lt;/span> &lt;span class="kr">import&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="s1">&amp;#39;../views/Folder.vue&amp;#39;&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;span class="p">}&lt;/span>
+&lt;span class="p">]&lt;/span>
+&lt;span class="kr">const&lt;/span> &lt;span class="nx">router&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="nx">createRouter&lt;/span>&lt;span class="p">({&lt;/span>
+&lt;span class="nx">history&lt;/span>: &lt;span class="kt">createWebHistory&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nx">process&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">env&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">BASE_URL&lt;/span>&lt;span class="p">),&lt;/span>
+&lt;span class="nx">routes&lt;/span>
+&lt;span class="p">})&lt;/span>
+&lt;span class="kr">export&lt;/span> &lt;span class="k">default&lt;/span> &lt;span class="nx">router&lt;/span>
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>After these changes it should look something like this&lt;/p>
+&lt;p>&lt;img src="" alt="Screenshot 3">&lt;/p>
+&lt;h3 id="basic-ui">Basic UI&lt;/h3>
+&lt;p>For our main UI we&amp;rsquo;ll be using a card component that will contain all the information about the movies.&lt;/p>
+&lt;p>Create a new file &lt;code>./src/MovieCard.vue&lt;/code>&lt;/p>
+&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-vue" data-lang="vue">&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">template&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">ion-card&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;span class="c">&amp;lt;!--&lt;/span> &lt;span class="nx">Movie&lt;/span> &lt;span class="nx">poster&lt;/span> &lt;span class="nx">at&lt;/span> &lt;span class="nx">the&lt;/span> &lt;span class="nx">top&lt;/span> &lt;span class="k">of&lt;/span> &lt;span class="nx">the&lt;/span> &lt;span class="nx">card&lt;/span> &lt;span class="o">--&amp;gt;&lt;/span>
+&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">img&lt;/span> &lt;span class="nt">:src&lt;/span>&lt;span class="s">=&amp;#34;url&amp;#34;&lt;/span> &lt;span class="p">/&amp;gt;&lt;/span>
+&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">ion-card-header&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;span class="c">&amp;lt;!--&lt;/span> &lt;span class="nx">Show&lt;/span> &lt;span class="nx">the&lt;/span> &lt;span class="nx">movie&lt;/span> &lt;span class="nx">title&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nx">Average&lt;/span> &lt;span class="nx">votes&lt;/span> &lt;span class="nx">and&lt;/span> &lt;span class="nx">description&lt;/span> &lt;span class="o">--&amp;gt;&lt;/span>
+&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">ion-card-title&lt;/span>&lt;span class="p">&amp;gt;{{&lt;/span> &lt;span class="nx">movie&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">title&lt;/span> &lt;span class="p">}}&lt;/span>&lt;span class="o">&amp;lt;&lt;/span>&lt;span class="err">/ion-card-title&amp;gt;&lt;/span>
+&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">ion-card-subtitle&lt;/span>
+&lt;span class="p">&amp;gt;&lt;/span>&lt;span class="nx">Rating&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="p">{{&lt;/span> &lt;span class="nx">movie&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">vote_average&lt;/span> &lt;span class="p">}}&lt;/span>
+&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">ion-icon&lt;/span> &lt;span class="nt">:icon&lt;/span>&lt;span class="s">=&amp;#34;star&amp;#34;&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>&lt;span class="o">&amp;lt;&lt;/span>&lt;span class="err">/ion-icon&lt;/span>
+&lt;span class="o">&amp;gt;&amp;lt;&lt;/span>&lt;span class="err">/ion-card-subtitle&amp;gt;&lt;/span>
+&lt;span class="o">&amp;lt;&lt;/span>&lt;span class="err">/ion-card-header&amp;gt;&lt;/span>
+&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">ion-card-content&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;span class="p">{{&lt;/span> &lt;span class="nx">movie&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">overview&lt;/span> &lt;span class="p">}}&lt;/span>
+&lt;span class="o">&amp;lt;&lt;/span>&lt;span class="err">/ion-card-content&amp;gt;&lt;/span>
+&lt;span class="o">&amp;lt;&lt;/span>&lt;span class="err">/ion-card&amp;gt;&lt;/span>
+&lt;span class="p">&amp;lt;/&lt;/span>&lt;span class="nt">template&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">script&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;span class="kr">import&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;span class="nx">IonCard&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;span class="nx">IonCardContent&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;span class="nx">IonCardSubtitle&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;span class="nx">IonCardTitle&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;span class="nx">IonIcon&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;span class="p">}&lt;/span> &lt;span class="nx">from&lt;/span> &lt;span class="s2">&amp;#34;@ionic/vue&amp;#34;&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;span class="kr">import&lt;/span> &lt;span class="p">{&lt;/span> &lt;span class="nx">star&lt;/span> &lt;span class="p">}&lt;/span> &lt;span class="nx">from&lt;/span> &lt;span class="s2">&amp;#34;ionicons/icons&amp;#34;&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;span class="kr">import&lt;/span> &lt;span class="p">{&lt;/span> &lt;span class="nx">defineComponent&lt;/span> &lt;span class="p">}&lt;/span> &lt;span class="nx">from&lt;/span> &lt;span class="s2">&amp;#34;vue&amp;#34;&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;span class="kr">export&lt;/span> &lt;span class="k">default&lt;/span> &lt;span class="nx">defineComponent&lt;/span>&lt;span class="p">({&lt;/span>
+&lt;span class="nx">components&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;span class="nx">IonCard&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;span class="nx">IonCardContent&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;span class="nx">IonCardSubtitle&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;span class="nx">IonCardTitle&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;span class="nx">IonIcon&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;span class="p">},&lt;/span>
+&lt;span class="c1">// Movie props from the parent component
+&lt;/span>&lt;span class="c1">&lt;/span> &lt;span class="nx">props&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="p">[&lt;/span>&lt;span class="s2">&amp;#34;movie&amp;#34;&lt;/span>&lt;span class="p">],&lt;/span>
+&lt;span class="nx">setup&lt;/span>&lt;span class="p">()&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;span class="k">return&lt;/span> &lt;span class="p">{&lt;/span> &lt;span class="nx">star&lt;/span> &lt;span class="p">};&lt;/span>
+&lt;span class="p">},&lt;/span>
+&lt;span class="nx">data&lt;/span>&lt;span class="p">()&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;span class="k">return&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;span class="c1">// Use a placeholder in case there is no poster
+&lt;/span>&lt;span class="c1">&lt;/span> &lt;span class="nx">url&lt;/span>&lt;span class="o">:&lt;/span>
+&lt;span class="k">this&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">movie&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">backdrop_path&lt;/span> &lt;span class="o">!=&lt;/span> &lt;span class="kc">null&lt;/span>
+&lt;span class="o">?&lt;/span> &lt;span class="s2">&amp;#34;https://image.tmdb.org/t/p/original/&amp;#34;&lt;/span> &lt;span class="o">+&lt;/span>
+&lt;span class="k">this&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">movie&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">backdrop_path&lt;/span>
+&lt;span class="o">:&lt;/span> &lt;span class="s2">&amp;#34;./assets/placeholder.jpg&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;span class="p">};&lt;/span>
+&lt;span class="p">},&lt;/span>
+&lt;span class="p">});&lt;/span>
+&lt;span class="p">&amp;lt;/&lt;/span>&lt;span class="nt">script&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;/code>&lt;/pre>&lt;/div>&lt;h3 id="display-movie-cards">Display Movie cards&lt;/h3>
+&lt;p>Now we need to query the &lt;code>TMDb&lt;/code> API to get the list of movies for each tab. We&amp;rsquo;ll need axios for this so we&amp;rsquo;ll install it before proceeding.&lt;/p>
+&lt;pre>&lt;code>npm i axios
+&lt;/code>&lt;/pre>&lt;p>You can remove all styles from this section. Also we wont be using typescript here because I couldn&amp;rsquo;t get it to work with infinite scrolling, which we&amp;rsquo;ll be exploring later in this tutorial.&lt;/p>
+&lt;p>In &lt;code>./src/Folder.vue&lt;/code>&lt;/p>
+&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-vue" data-lang="vue">&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">template&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">ion-page&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">ion-header&lt;/span> &lt;span class="nt">:translucent&lt;/span>&lt;span class="s">=&amp;#34;true&amp;#34;&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">ion-toolbar&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">ion-buttons&lt;/span> &lt;span class="na">slot&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;start&amp;#34;&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">ion-menu-button&lt;/span> &lt;span class="na">color&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;primary&amp;#34;&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>&lt;span class="o">&amp;lt;&lt;/span>&lt;span class="err">/ion-menu-button&amp;gt;&lt;/span>
+&lt;span class="o">&amp;lt;&lt;/span>&lt;span class="err">/ion-buttons&amp;gt;&lt;/span>
+&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">ion-title&lt;/span>&lt;span class="p">&amp;gt;{{&lt;/span> &lt;span class="nx">$route&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">params&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">id&lt;/span> &lt;span class="p">}}&lt;/span>&lt;span class="o">&amp;lt;&lt;/span>&lt;span class="err">/ion-title&amp;gt;&lt;/span>
+&lt;span class="o">&amp;lt;&lt;/span>&lt;span class="err">/ion-toolbar&amp;gt;&lt;/span>
+&lt;span class="o">&amp;lt;&lt;/span>&lt;span class="err">/ion-header&amp;gt;&lt;/span>
+&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">ion-content&lt;/span> &lt;span class="nt">:fullscreen&lt;/span>&lt;span class="s">=&amp;#34;true&amp;#34;&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">ion-header&lt;/span> &lt;span class="na">collapse&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;condense&amp;#34;&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">ion-toolbar&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">ion-title&lt;/span> &lt;span class="na">size&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;large&amp;#34;&lt;/span>&lt;span class="p">&amp;gt;{{&lt;/span> &lt;span class="nx">$route&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">params&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">id&lt;/span> &lt;span class="p">}}&lt;/span>&lt;span class="o">&amp;lt;&lt;/span>&lt;span class="err">/ion-title&amp;gt;&lt;/span>
+&lt;span class="o">&amp;lt;&lt;/span>&lt;span class="err">/ion-toolbar&amp;gt;&lt;/span>
+&lt;span class="o">&amp;lt;&lt;/span>&lt;span class="err">/ion-header&amp;gt;&lt;/span>
+&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">div&lt;/span> &lt;span class="na">id&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;container&amp;#34;&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;span class="c">&amp;lt;!--&lt;/span> &lt;span class="nx">Loop&lt;/span> &lt;span class="nx">over&lt;/span> &lt;span class="nx">each&lt;/span> &lt;span class="nx">movie&lt;/span> &lt;span class="o">--&amp;gt;&lt;/span>
+&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">div&lt;/span> &lt;span class="nt">v-for&lt;/span>&lt;span class="s">=&amp;#34;movie in movies&amp;#34; :key=&amp;#34;movie.id&amp;#34;&amp;gt;
+&lt;/span>&lt;span class="s"> &amp;lt;MovieCard v-bind&lt;/span>&lt;span class="nt">:movie&lt;/span>&lt;span class="s">=&amp;#34;movie&amp;#34;&lt;/span>&lt;span class="p">&amp;gt;&amp;lt;/&lt;/span>&lt;span class="nt">MovieCard&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;span class="p">&amp;lt;/&lt;/span>&lt;span class="nt">div&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;span class="p">&amp;lt;/&lt;/span>&lt;span class="nt">div&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;span class="err">&amp;lt;/&lt;/span>&lt;span class="na">ion&lt;/span>&lt;span class="nt">-content&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;span class="o">&amp;lt;&lt;/span>&lt;span class="err">/ion-page&amp;gt;&lt;/span>
+&lt;span class="p">&amp;lt;/&lt;/span>&lt;span class="nt">template&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">script&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;span class="c1">// Remove typescript
+&lt;/span>&lt;span class="c1">&lt;/span>&lt;span class="kr">import&lt;/span> &lt;span class="p">{&lt;/span> &lt;span class="nx">IonButtons&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nx">IonContent&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nx">IonHeader&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nx">IonMenuButton&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nx">IonPage&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nx">IonTitle&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nx">IonToolbar&lt;/span> &lt;span class="p">}&lt;/span> &lt;span class="nx">from&lt;/span> &lt;span class="s1">&amp;#39;@ionic/vue&amp;#39;&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;span class="kr">import&lt;/span> &lt;span class="p">{&lt;/span> &lt;span class="nx">ref&lt;/span> &lt;span class="p">}&lt;/span> &lt;span class="nx">from&lt;/span> &lt;span class="s2">&amp;#34;vue&amp;#34;&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;span class="c1">// Install Axios and import the Movie card component we just made
+&lt;/span>&lt;span class="c1">&lt;/span>&lt;span class="kr">import&lt;/span> &lt;span class="nx">MovieCard&lt;/span> &lt;span class="nx">from&lt;/span> &lt;span class="s2">&amp;#34;./MovieCard.vue&amp;#34;&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;span class="kr">import&lt;/span> &lt;span class="nx">axios&lt;/span> &lt;span class="nx">from&lt;/span> &lt;span class="s2">&amp;#34;axios&amp;#34;&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;span class="kr">export&lt;/span> &lt;span class="k">default&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;span class="nx">name&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="s1">&amp;#39;Folder&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;span class="nx">components&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;span class="nx">IonButtons&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;span class="nx">IonContent&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;span class="nx">IonHeader&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;span class="nx">IonMenuButton&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;span class="nx">IonPage&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;span class="nx">IonTitle&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;span class="nx">IonToolbar&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;span class="c1">// Add the MovieCard component
+&lt;/span>&lt;span class="c1">&lt;/span> &lt;span class="nx">MovieCard&lt;/span>
+&lt;span class="p">},&lt;/span>
+&lt;span class="nx">data&lt;/span>&lt;span class="p">()&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;span class="k">return&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;span class="nx">movies&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="nx">ref&lt;/span>&lt;span class="p">([]),&lt;/span>
+&lt;span class="c1">// Page to fetch
+&lt;/span>&lt;span class="c1">&lt;/span> &lt;span class="nx">pageNumber&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="mi">1&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;span class="c1">// Total number of pages present
+&lt;/span>&lt;span class="c1">&lt;/span> &lt;span class="nx">maxPages&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="mi">1&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;span class="c1">// Get the endpoint from the route parameter
+&lt;/span>&lt;span class="c1">&lt;/span> &lt;span class="nx">endpoint&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="k">this&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">$route&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">params&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">id&lt;/span>
+&lt;span class="p">.&lt;/span>&lt;span class="nx">toLowerCase&lt;/span>&lt;span class="p">()&lt;/span>
+&lt;span class="p">.&lt;/span>&lt;span class="nx">split&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s2">&amp;#34; &amp;#34;&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;span class="p">.&lt;/span>&lt;span class="nx">join&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s2">&amp;#34;_&amp;#34;&lt;/span>&lt;span class="p">),&lt;/span>
+&lt;span class="c1">// Which Country the user is in
+&lt;/span>&lt;span class="c1">&lt;/span> &lt;span class="nx">country&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="s2">&amp;#34;&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;span class="p">};&lt;/span>
+&lt;span class="p">},&lt;/span>
+&lt;span class="nx">methods&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;span class="nx">async&lt;/span> &lt;span class="nx">fetch&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nx">pageNumber&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;span class="c1">// Get Movies corresponding to which tab is open, Now playing, Upcoming, etc
+&lt;/span>&lt;span class="c1">&lt;/span> &lt;span class="kr">const&lt;/span> &lt;span class="nx">movies&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="nx">await&lt;/span> &lt;span class="nx">axios&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">get&lt;/span>&lt;span class="p">(&lt;/span>
+&lt;span class="s2">&amp;#34;https://api.themoviedb.org/3/movie/&amp;#34;&lt;/span> &lt;span class="o">+&lt;/span>
+&lt;span class="k">this&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">endpoint&lt;/span> &lt;span class="o">+&lt;/span>
+&lt;span class="s2">&amp;#34;?api_key=&amp;lt;Your API KEY here&amp;gt;&amp;amp;language=en-US&amp;amp;page=&amp;#34;&lt;/span> &lt;span class="o">+&lt;/span>
+&lt;span class="nx">pageNumber&lt;/span> &lt;span class="o">+&lt;/span>
+&lt;span class="s2">&amp;#34;&amp;amp;region=&amp;#34;&lt;/span> &lt;span class="o">+&lt;/span>
+&lt;span class="k">this&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">country&lt;/span>
+&lt;span class="p">);&lt;/span>
+&lt;span class="c1">// Populate movie list
+&lt;/span>&lt;span class="c1">&lt;/span> &lt;span class="k">this&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">movies&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="nx">movies&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">data&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">results&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;span class="c1">// Increase page counter by 1
+&lt;/span>&lt;span class="c1">&lt;/span> &lt;span class="k">this&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">pageNumber&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="nx">movies&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">data&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">page&lt;/span> &lt;span class="o">+&lt;/span> &lt;span class="mi">1&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;span class="c1">// Get total number of pages in response
+&lt;/span>&lt;span class="c1">&lt;/span> &lt;span class="k">this&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">maxPages&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="nx">movies&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">data&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">total_pages&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;span class="p">}&lt;/span>
+&lt;span class="p">},&lt;/span>
+&lt;span class="nx">mounted&lt;/span>&lt;span class="p">()&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;span class="c1">// Fetch movies when mounted
+&lt;/span>&lt;span class="c1">&lt;/span> &lt;span class="k">this&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">fetch&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="k">this&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">pageNumber&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;span class="p">},&lt;/span>
+&lt;span class="nx">watch&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;span class="nx">$route&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nx">to&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nx">from&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;span class="c1">// Trigger when the route changes. i.e. when user switches tabs
+&lt;/span>&lt;span class="c1">&lt;/span> &lt;span class="k">this&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">endpoint&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="k">this&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">$route&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">params&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">id&lt;/span>
+&lt;span class="p">.&lt;/span>&lt;span class="nx">toLowerCase&lt;/span>&lt;span class="p">()&lt;/span>
+&lt;span class="p">.&lt;/span>&lt;span class="nx">split&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s2">&amp;#34; &amp;#34;&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;span class="p">.&lt;/span>&lt;span class="nx">join&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s2">&amp;#34;_&amp;#34;&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;span class="k">this&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">pageNumber&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="mi">1&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;span class="k">this&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">maxPages&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="mi">1&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;span class="c1">// Fetch movies when route changes
+&lt;/span>&lt;span class="c1">&lt;/span> &lt;span class="k">this&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">fetch&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="k">this&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">pageNumber&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;span class="p">}&lt;/span>
+&lt;span class="p">}&lt;/span>
+&lt;span class="p">}&lt;/span>
+&lt;span class="p">&amp;lt;/&lt;/span>&lt;span class="nt">script&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">style&lt;/span> &lt;span class="na">scoped&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;span class="cm">/* Remove styles */&lt;/span>
+&lt;span class="p">&amp;lt;/&lt;/span>&lt;span class="nt">style&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>After making these changes, you should get something that looks like this:&lt;/p>
+&lt;p>&lt;img src="" alt="Screenshot 4">&lt;/p>
+&lt;h3 id="infinite-scrolling">Infinite scrolling&lt;/h3>
+&lt;p>Now that we have our basic UI set up, we can focus on some quality of life improvements. When you query the &lt;code>TMDb&lt;/code> api, you get a subset of the total movies in any category. This is because that&amp;rsquo;s just one page. The movie lists are split into several pages, and that&amp;rsquo;s good for us because it would take a long time to load such a huge amount of data at once.&lt;/p>
+&lt;p>However the user should have a way to see more content gradually until there is nothing else in the movie list. For this we&amp;rsquo;ll set up infinite scrolling.&lt;/p>
+&lt;p>Basically once the user is about to reach the end of the content that has loaded so far, we&amp;rsquo;ll send a request to the API for the next page, and add it to the list.&lt;/p>
+&lt;p>Luckily ionic has a component just for this.&lt;/p>
+&lt;p>In &lt;code>./src/Folder.vue&lt;/code>.&lt;/p>
+&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-vue" data-lang="vue">&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">template&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">ion-page&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">ion-header&lt;/span> &lt;span class="nt">:translucent&lt;/span>&lt;span class="s">=&amp;#34;true&amp;#34;&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">ion-toolbar&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">ion-buttons&lt;/span> &lt;span class="na">slot&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;start&amp;#34;&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">ion-menu-button&lt;/span> &lt;span class="na">color&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;primary&amp;#34;&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>&lt;span class="o">&amp;lt;&lt;/span>&lt;span class="err">/ion-menu-button&amp;gt;&lt;/span>
+&lt;span class="o">&amp;lt;&lt;/span>&lt;span class="err">/ion-buttons&amp;gt;&lt;/span>
+&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">ion-title&lt;/span>&lt;span class="p">&amp;gt;{{&lt;/span> &lt;span class="nx">$route&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">params&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">id&lt;/span> &lt;span class="p">}}&lt;/span>&lt;span class="o">&amp;lt;&lt;/span>&lt;span class="err">/ion-title&amp;gt;&lt;/span>
+&lt;span class="o">&amp;lt;&lt;/span>&lt;span class="err">/ion-toolbar&amp;gt;&lt;/span>
+&lt;span class="o">&amp;lt;&lt;/span>&lt;span class="err">/ion-header&amp;gt;&lt;/span>
+&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">ion-content&lt;/span> &lt;span class="nt">:fullscreen&lt;/span>&lt;span class="s">=&amp;#34;true&amp;#34;&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">ion-header&lt;/span> &lt;span class="na">collapse&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;condense&amp;#34;&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">ion-toolbar&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">ion-title&lt;/span> &lt;span class="na">size&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;large&amp;#34;&lt;/span>&lt;span class="p">&amp;gt;{{&lt;/span> &lt;span class="nx">$route&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">params&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">id&lt;/span> &lt;span class="p">}}&lt;/span>&lt;span class="o">&amp;lt;&lt;/span>&lt;span class="err">/ion-title&amp;gt;&lt;/span>
+&lt;span class="o">&amp;lt;&lt;/span>&lt;span class="err">/ion-toolbar&amp;gt;&lt;/span>
+&lt;span class="o">&amp;lt;&lt;/span>&lt;span class="err">/ion-header&amp;gt;&lt;/span>
+&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">div&lt;/span> &lt;span class="na">id&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;container&amp;#34;&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">div&lt;/span> &lt;span class="nt">v-for&lt;/span>&lt;span class="s">=&amp;#34;movie in movies&amp;#34; :key=&amp;#34;movie.id&amp;#34;&amp;gt;
+&lt;/span>&lt;span class="s"> &amp;lt;MovieCard v-bind:movie=&amp;#34;movie&amp;#34;&amp;gt;&amp;lt;/MovieCard&amp;gt;
+&lt;/span>&lt;span class="s"> &amp;lt;/div&amp;gt;
+&lt;/span>&lt;span class="s"> &amp;lt;/div&amp;gt;
+&lt;/span>&lt;span class="s"> &amp;lt;!-- Add the infinite scroll component and call loadData --&amp;gt;
+&lt;/span>&lt;span class="s"> &amp;lt;ion-infinite-scroll
+&lt;/span>&lt;span class="s"> @ionInfinite=&amp;#34;loadData($event)&amp;#34;
+&lt;/span>&lt;span class="s"> threshold=&amp;#34;100px&amp;#34;
+&lt;/span>&lt;span class="s"> id=&amp;#34;infinite-scroll&amp;#34;
+&lt;/span>&lt;span class="s"> &lt;/span>&lt;span class="nt">:disabled&lt;/span>&lt;span class="s">=&amp;#34;isDisabled&amp;#34;&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">ion-infinite-scroll-content&lt;/span>
+&lt;span class="na">loading&lt;/span>&lt;span class="nt">-spinner&lt;/span>&lt;span class="err">=&amp;#34;&lt;/span>&lt;span class="na">bubbles&lt;/span>&lt;span class="err">&amp;#34;&lt;/span>
+&lt;span class="na">loading&lt;/span>&lt;span class="nt">-text&lt;/span>&lt;span class="err">=&amp;#34;&lt;/span>&lt;span class="na">Loading&lt;/span> &lt;span class="na">more&lt;/span> &lt;span class="na">movies...&lt;/span>&lt;span class="err">&amp;#34;&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;span class="o">&amp;lt;&lt;/span>&lt;span class="err">/ion-infinite-scroll-content&amp;gt;&lt;/span>
+&lt;span class="o">&amp;lt;&lt;/span>&lt;span class="err">/ion-infinite-scroll&amp;gt;&lt;/span>
+&lt;span class="o">&amp;lt;&lt;/span>&lt;span class="err">/ion-content&amp;gt;&lt;/span>
+&lt;span class="o">&amp;lt;&lt;/span>&lt;span class="err">/ion-page&amp;gt;&lt;/span>
+&lt;span class="p">&amp;lt;/&lt;/span>&lt;span class="nt">template&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">script&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;span class="c1">// Import the components
+&lt;/span>&lt;span class="c1">&lt;/span>&lt;span class="kr">import&lt;/span> &lt;span class="p">{&lt;/span> &lt;span class="nx">IonButtons&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nx">IonContent&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nx">IonHeader&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nx">IonMenuButton&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nx">IonPage&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nx">IonTitle&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nx">IonToolbar&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;span class="nx">IonInfiniteScroll&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nx">IonInfiniteScrollContent&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="p">}&lt;/span> &lt;span class="nx">from&lt;/span> &lt;span class="s1">&amp;#39;@ionic/vue&amp;#39;&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;span class="kr">import&lt;/span> &lt;span class="p">{&lt;/span> &lt;span class="nx">ref&lt;/span> &lt;span class="p">}&lt;/span> &lt;span class="nx">from&lt;/span> &lt;span class="s2">&amp;#34;vue&amp;#34;&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;span class="kr">import&lt;/span> &lt;span class="nx">MovieCard&lt;/span> &lt;span class="nx">from&lt;/span> &lt;span class="s2">&amp;#34;./MovieCard.vue&amp;#34;&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;span class="kr">import&lt;/span> &lt;span class="nx">axios&lt;/span> &lt;span class="nx">from&lt;/span> &lt;span class="s2">&amp;#34;axios&amp;#34;&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;span class="kr">export&lt;/span> &lt;span class="k">default&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;span class="nx">name&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="s1">&amp;#39;Folder&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;span class="nx">components&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;span class="nx">IonButtons&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;span class="nx">IonContent&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;span class="nx">IonHeader&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;span class="nx">IonMenuButton&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;span class="nx">IonPage&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;span class="nx">IonTitle&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;span class="nx">IonToolbar&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;span class="nx">MovieCard&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;span class="c1">// Add the infinite scroll components
+&lt;/span>&lt;span class="c1">&lt;/span> &lt;span class="nx">IonInfiniteScroll&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;span class="nx">IonInfiniteScrollContent&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;span class="p">},&lt;/span>
+&lt;span class="nx">data&lt;/span>&lt;span class="p">()&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;span class="k">return&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;span class="nx">movies&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="nx">ref&lt;/span>&lt;span class="p">([]),&lt;/span>
+&lt;span class="nx">pageNumber&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="mi">1&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;span class="nx">maxPages&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="mi">1&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;span class="nx">endpoint&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="k">this&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">$route&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">params&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">id&lt;/span>
+&lt;span class="p">.&lt;/span>&lt;span class="nx">toLowerCase&lt;/span>&lt;span class="p">()&lt;/span>
+&lt;span class="p">.&lt;/span>&lt;span class="nx">split&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s2">&amp;#34; &amp;#34;&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;span class="p">.&lt;/span>&lt;span class="nx">join&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s2">&amp;#34;_&amp;#34;&lt;/span>&lt;span class="p">),&lt;/span>
+&lt;span class="nx">country&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="s2">&amp;#34;&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;span class="p">};&lt;/span>
+&lt;span class="p">},&lt;/span>
+&lt;span class="nx">methods&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;span class="nx">async&lt;/span> &lt;span class="nx">fetch&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nx">pageNumber&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;span class="kr">const&lt;/span> &lt;span class="nx">movies&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="nx">await&lt;/span> &lt;span class="nx">axios&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">get&lt;/span>&lt;span class="p">(&lt;/span>
+&lt;span class="s2">&amp;#34;https://api.themoviedb.org/3/movie/&amp;#34;&lt;/span> &lt;span class="o">+&lt;/span>
+&lt;span class="k">this&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">endpoint&lt;/span> &lt;span class="o">+&lt;/span>
+&lt;span class="s2">&amp;#34;?api_key=&amp;lt;Your API KEY here&amp;gt;&amp;amp;language=en-US&amp;amp;page=&amp;#34;&lt;/span> &lt;span class="o">+&lt;/span>
+&lt;span class="nx">pageNumber&lt;/span> &lt;span class="o">+&lt;/span>
+&lt;span class="s2">&amp;#34;&amp;amp;region=&amp;#34;&lt;/span> &lt;span class="o">+&lt;/span>
+&lt;span class="k">this&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">country&lt;/span>
+&lt;span class="p">);&lt;/span>
+&lt;span class="k">this&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">movies&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="nx">movies&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">data&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">results&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;span class="k">this&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">pageNumber&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="nx">movies&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">data&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">page&lt;/span> &lt;span class="o">+&lt;/span> &lt;span class="mi">1&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;span class="k">this&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">maxPages&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="nx">movies&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">data&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">total_pages&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;span class="p">},&lt;/span>
+&lt;span class="nx">async&lt;/span> &lt;span class="nx">pushData&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nx">pageNumber&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;span class="c1">// Get the next page
+&lt;/span>&lt;span class="c1">&lt;/span> &lt;span class="kr">const&lt;/span> &lt;span class="nx">movies&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="nx">await&lt;/span> &lt;span class="nx">axios&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">get&lt;/span>&lt;span class="p">(&lt;/span>
+&lt;span class="s2">&amp;#34;https://api.themoviedb.org/3/movie/&amp;#34;&lt;/span> &lt;span class="o">+&lt;/span>
+&lt;span class="k">this&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">endpoint&lt;/span> &lt;span class="o">+&lt;/span>
+&lt;span class="s2">&amp;#34;?api_key=&amp;lt;Your API KEY here&amp;gt;&amp;amp;language=en-US&amp;amp;page=&amp;#34;&lt;/span> &lt;span class="o">+&lt;/span>
+&lt;span class="nx">pageNumber&lt;/span> &lt;span class="o">+&lt;/span>
+&lt;span class="s2">&amp;#34;&amp;amp;region=&amp;#34;&lt;/span> &lt;span class="o">+&lt;/span>
+&lt;span class="k">this&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">country&lt;/span>
+&lt;span class="p">);&lt;/span>
+&lt;span class="c1">// Add movies to current list
+&lt;/span>&lt;span class="c1">&lt;/span> &lt;span class="k">this&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">movies&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="k">this&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">movies&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">concat&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nx">movies&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">data&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">results&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;span class="k">this&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">pageNumber&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="nx">movies&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">data&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">page&lt;/span> &lt;span class="o">+&lt;/span> &lt;span class="mi">1&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;span class="k">this&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">maxPages&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="nx">movies&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">data&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">total_pages&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;span class="p">},&lt;/span>
+&lt;span class="nx">async&lt;/span> &lt;span class="nx">loadData&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nx">ev&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;span class="c1">// Load the new data once we reach the end of the page
+&lt;/span>&lt;span class="c1">&lt;/span> &lt;span class="kr">const&lt;/span> &lt;span class="nx">res&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="nx">await&lt;/span> &lt;span class="k">this&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">pushData&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="k">this&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">pageNumber&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;span class="nx">console&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">log&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s2">&amp;#34;Loaded data&amp;#34;&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;span class="nx">console&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">log&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nx">res&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;span class="nx">ev&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">target&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">complete&lt;/span>&lt;span class="p">();&lt;/span>
+&lt;span class="c1">// Once the last page has been fetched, we&amp;#39;ll disable infinite loading
+&lt;/span>&lt;span class="c1">&lt;/span> &lt;span class="k">if&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="k">this&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">pageNumber&lt;/span> &lt;span class="o">&amp;gt;=&lt;/span> &lt;span class="k">this&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">maxPages&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;span class="nx">ev&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">target&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">disabled&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="kc">true&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;span class="p">}&lt;/span>
+&lt;span class="p">},&lt;/span>
+&lt;span class="p">},&lt;/span>
+&lt;span class="nx">mounted&lt;/span>&lt;span class="p">()&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;span class="k">this&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">fetch&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="k">this&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">pageNumber&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;span class="p">},&lt;/span>
+&lt;span class="nx">watch&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;span class="nx">$route&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nx">to&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nx">from&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;span class="c1">// Trigger when the route changes. i.e. when user switches tabs
+&lt;/span>&lt;span class="c1">&lt;/span> &lt;span class="k">this&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">endpoint&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="k">this&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">$route&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">params&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">id&lt;/span>
+&lt;span class="p">.&lt;/span>&lt;span class="nx">toLowerCase&lt;/span>&lt;span class="p">()&lt;/span>
+&lt;span class="p">.&lt;/span>&lt;span class="nx">split&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s2">&amp;#34; &amp;#34;&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;span class="p">.&lt;/span>&lt;span class="nx">join&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s2">&amp;#34;_&amp;#34;&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;span class="k">this&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">pageNumber&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="mi">1&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;span class="k">this&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">maxPages&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="mi">1&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;span class="c1">// Fetch movies when route changes
+&lt;/span>&lt;span class="c1">&lt;/span> &lt;span class="k">this&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">fetch&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="k">this&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">pageNumber&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;span class="p">}&lt;/span>
+&lt;span class="p">}&lt;/span>
+&lt;span class="p">}&lt;/span>
+&lt;span class="p">&amp;lt;/&lt;/span>&lt;span class="nt">script&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">style&lt;/span> &lt;span class="na">scoped&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;span class="p">&amp;lt;/&lt;/span>&lt;span class="nt">style&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>After you make these changes, you should see something like this&lt;/p>
+&lt;p>&lt;img src="" alt="Screenshot 5">&lt;/p>
+&lt;h3 id="swipe-down-to-reload">Swipe down to reload&lt;/h3>
+&lt;p>Another common feature in most mobile apps is the ability to refresh content when you swipe down at the top. This is useful because it&amp;rsquo;s a simple intuitive gesture to get updated content.&lt;/p>
+&lt;p>And wouldn&amp;rsquo;t you know it, Ionic has a component to help us with this too!&lt;/p>
+&lt;p>In &lt;code>./src/Folder.vue&lt;/code>.&lt;/p>
+&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-vue" data-lang="vue">&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">template&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">ion-page&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">ion-header&lt;/span> &lt;span class="nt">:translucent&lt;/span>&lt;span class="s">=&amp;#34;true&amp;#34;&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">ion-toolbar&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">ion-buttons&lt;/span> &lt;span class="na">slot&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;start&amp;#34;&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">ion-menu-button&lt;/span> &lt;span class="na">color&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;primary&amp;#34;&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>&lt;span class="o">&amp;lt;&lt;/span>&lt;span class="err">/ion-menu-button&amp;gt;&lt;/span>
+&lt;span class="o">&amp;lt;&lt;/span>&lt;span class="err">/ion-buttons&amp;gt;&lt;/span>
+&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">ion-title&lt;/span>&lt;span class="p">&amp;gt;{{&lt;/span> &lt;span class="nx">$route&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">params&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">id&lt;/span> &lt;span class="p">}}&lt;/span>&lt;span class="o">&amp;lt;&lt;/span>&lt;span class="err">/ion-title&amp;gt;&lt;/span>
+&lt;span class="o">&amp;lt;&lt;/span>&lt;span class="err">/ion-toolbar&amp;gt;&lt;/span>
+&lt;span class="o">&amp;lt;&lt;/span>&lt;span class="err">/ion-header&amp;gt;&lt;/span>
+&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">ion-content&lt;/span> &lt;span class="nt">:fullscreen&lt;/span>&lt;span class="s">=&amp;#34;true&amp;#34;&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;span class="c">&amp;lt;!--&lt;/span> &lt;span class="nx">Add&lt;/span> &lt;span class="nx">refresher&lt;/span> &lt;span class="nx">component&lt;/span> &lt;span class="o">--&amp;gt;&lt;/span>
+&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">ion-refresher&lt;/span> &lt;span class="na">slot&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;fixed&amp;#34;&lt;/span> &lt;span class="nt">@ionRefresh&lt;/span>&lt;span class="s">=&amp;#34;doRefresh($event)&amp;#34;&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">ion-refresher-content&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>&lt;span class="o">&amp;lt;&lt;/span>&lt;span class="err">/ion-refresher-content&amp;gt;&lt;/span>
+&lt;span class="o">&amp;lt;&lt;/span>&lt;span class="err">/ion-refresher&amp;gt;&lt;/span>
+&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">ion-header&lt;/span> &lt;span class="na">collapse&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;condense&amp;#34;&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">ion-toolbar&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">ion-title&lt;/span> &lt;span class="na">size&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;large&amp;#34;&lt;/span>&lt;span class="p">&amp;gt;{{&lt;/span> &lt;span class="nx">$route&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">params&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">id&lt;/span> &lt;span class="p">}}&lt;/span>&lt;span class="o">&amp;lt;&lt;/span>&lt;span class="err">/ion-title&amp;gt;&lt;/span>
+&lt;span class="o">&amp;lt;&lt;/span>&lt;span class="err">/ion-toolbar&amp;gt;&lt;/span>
+&lt;span class="o">&amp;lt;&lt;/span>&lt;span class="err">/ion-header&amp;gt;&lt;/span>
+&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">div&lt;/span> &lt;span class="na">id&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;container&amp;#34;&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">div&lt;/span> &lt;span class="nt">v-for&lt;/span>&lt;span class="s">=&amp;#34;movie in movies&amp;#34; :key=&amp;#34;movie.id&amp;#34;&amp;gt;
+&lt;/span>&lt;span class="s"> &amp;lt;MovieCard v-bind:movie=&amp;#34;movie&amp;#34;&amp;gt;&amp;lt;/MovieCard&amp;gt;
+&lt;/span>&lt;span class="s"> &amp;lt;/div&amp;gt;
+&lt;/span>&lt;span class="s"> &amp;lt;/div&amp;gt;
+&lt;/span>&lt;span class="s"> &amp;lt;ion-infinite-scroll
+&lt;/span>&lt;span class="s"> @ionInfinite=&amp;#34;loadData($event)&amp;#34;
+&lt;/span>&lt;span class="s"> threshold=&amp;#34;100px&amp;#34;
+&lt;/span>&lt;span class="s"> id=&amp;#34;infinite-scroll&amp;#34;
+&lt;/span>&lt;span class="s"> &lt;/span>&lt;span class="nt">:disabled&lt;/span>&lt;span class="s">=&amp;#34;isDisabled&amp;#34;&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">ion-infinite-scroll-content&lt;/span>
+&lt;span class="na">loading&lt;/span>&lt;span class="nt">-spinner&lt;/span>&lt;span class="err">=&amp;#34;&lt;/span>&lt;span class="na">bubbles&lt;/span>&lt;span class="err">&amp;#34;&lt;/span>
+&lt;span class="na">loading&lt;/span>&lt;span class="nt">-text&lt;/span>&lt;span class="err">=&amp;#34;&lt;/span>&lt;span class="na">Loading&lt;/span> &lt;span class="na">more&lt;/span> &lt;span class="na">movies...&lt;/span>&lt;span class="err">&amp;#34;&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;span class="o">&amp;lt;&lt;/span>&lt;span class="err">/ion-infinite-scroll-content&amp;gt;&lt;/span>
+&lt;span class="o">&amp;lt;&lt;/span>&lt;span class="err">/ion-infinite-scroll&amp;gt;&lt;/span>
+&lt;span class="o">&amp;lt;&lt;/span>&lt;span class="err">/ion-content&amp;gt;&lt;/span>
+&lt;span class="o">&amp;lt;&lt;/span>&lt;span class="err">/ion-page&amp;gt;&lt;/span>
+&lt;span class="p">&amp;lt;/&lt;/span>&lt;span class="nt">template&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">script&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;span class="c1">// Import the components
+&lt;/span>&lt;span class="c1">&lt;/span>&lt;span class="kr">import&lt;/span> &lt;span class="p">{&lt;/span> &lt;span class="nx">IonButtons&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nx">IonContent&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nx">IonHeader&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nx">IonMenuButton&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nx">IonPage&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nx">IonTitle&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nx">IonToolbar&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;span class="nx">IonInfiniteScroll&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nx">IonInfiniteScrollContent&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nx">IonRefresher&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nx">IonRefresherContent&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="p">}&lt;/span> &lt;span class="nx">from&lt;/span> &lt;span class="s1">&amp;#39;@ionic/vue&amp;#39;&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;span class="kr">import&lt;/span> &lt;span class="p">{&lt;/span> &lt;span class="nx">ref&lt;/span> &lt;span class="p">}&lt;/span> &lt;span class="nx">from&lt;/span> &lt;span class="s2">&amp;#34;vue&amp;#34;&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;span class="kr">import&lt;/span> &lt;span class="nx">MovieCard&lt;/span> &lt;span class="nx">from&lt;/span> &lt;span class="s2">&amp;#34;./MovieCard.vue&amp;#34;&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;span class="kr">import&lt;/span> &lt;span class="nx">axios&lt;/span> &lt;span class="nx">from&lt;/span> &lt;span class="s2">&amp;#34;axios&amp;#34;&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;span class="kr">export&lt;/span> &lt;span class="k">default&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;span class="nx">name&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="s1">&amp;#39;Folder&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;span class="nx">components&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;span class="nx">IonButtons&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;span class="nx">IonContent&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;span class="nx">IonHeader&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;span class="nx">IonMenuButton&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;span class="nx">IonPage&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;span class="nx">IonTitle&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;span class="nx">IonToolbar&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;span class="nx">MovieCard&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;span class="nx">IonInfiniteScroll&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;span class="nx">IonInfiniteScrollContent&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;span class="c1">// Add the refresher components
+&lt;/span>&lt;span class="c1">&lt;/span> &lt;span class="nx">IonRefresher&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;span class="nx">IonRefresherContent&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;span class="p">},&lt;/span>
+&lt;span class="nx">data&lt;/span>&lt;span class="p">()&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;span class="k">return&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;span class="nx">movies&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="nx">ref&lt;/span>&lt;span class="p">([]),&lt;/span>
+&lt;span class="nx">pageNumber&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="mi">1&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;span class="nx">maxPages&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="mi">1&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;span class="nx">endpoint&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="k">this&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">$route&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">params&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">id&lt;/span>
+&lt;span class="p">.&lt;/span>&lt;span class="nx">toLowerCase&lt;/span>&lt;span class="p">()&lt;/span>
+&lt;span class="p">.&lt;/span>&lt;span class="nx">split&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s2">&amp;#34; &amp;#34;&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;span class="p">.&lt;/span>&lt;span class="nx">join&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s2">&amp;#34;_&amp;#34;&lt;/span>&lt;span class="p">),&lt;/span>
+&lt;span class="nx">country&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="s2">&amp;#34;&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;span class="p">};&lt;/span>
+&lt;span class="p">},&lt;/span>
+&lt;span class="nx">methods&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;span class="nx">async&lt;/span> &lt;span class="nx">fetch&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nx">pageNumber&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;span class="kr">const&lt;/span> &lt;span class="nx">movies&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="nx">await&lt;/span> &lt;span class="nx">axios&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">get&lt;/span>&lt;span class="p">(&lt;/span>
+&lt;span class="s2">&amp;#34;https://api.themoviedb.org/3/movie/&amp;#34;&lt;/span> &lt;span class="o">+&lt;/span>
+&lt;span class="k">this&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">endpoint&lt;/span> &lt;span class="o">+&lt;/span>
+&lt;span class="s2">&amp;#34;?api_key=&amp;lt;Your API KEY here&amp;gt;&amp;amp;language=en-US&amp;amp;page=&amp;#34;&lt;/span> &lt;span class="o">+&lt;/span>
+&lt;span class="nx">pageNumber&lt;/span> &lt;span class="o">+&lt;/span>
+&lt;span class="s2">&amp;#34;&amp;amp;region=&amp;#34;&lt;/span> &lt;span class="o">+&lt;/span>
+&lt;span class="k">this&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">country&lt;/span>
+&lt;span class="p">);&lt;/span>
+&lt;span class="k">this&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">movies&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="nx">movies&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">data&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">results&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;span class="k">this&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">pageNumber&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="nx">movies&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">data&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">page&lt;/span> &lt;span class="o">+&lt;/span> &lt;span class="mi">1&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;span class="k">this&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">maxPages&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="nx">movies&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">data&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">total_pages&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;span class="p">},&lt;/span>
+&lt;span class="nx">async&lt;/span> &lt;span class="nx">pushData&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nx">pageNumber&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;span class="kr">const&lt;/span> &lt;span class="nx">movies&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="nx">await&lt;/span> &lt;span class="nx">axios&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">get&lt;/span>&lt;span class="p">(&lt;/span>
+&lt;span class="s2">&amp;#34;https://api.themoviedb.org/3/movie/&amp;#34;&lt;/span> &lt;span class="o">+&lt;/span>
+&lt;span class="k">this&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">endpoint&lt;/span> &lt;span class="o">+&lt;/span>
+&lt;span class="s2">&amp;#34;?api_key=&amp;lt;Your API KEY here&amp;gt;&amp;amp;language=en-US&amp;amp;page=&amp;#34;&lt;/span> &lt;span class="o">+&lt;/span>
+&lt;span class="nx">pageNumber&lt;/span> &lt;span class="o">+&lt;/span>
+&lt;span class="s2">&amp;#34;&amp;amp;region=&amp;#34;&lt;/span> &lt;span class="o">+&lt;/span>
+&lt;span class="k">this&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">country&lt;/span>
+&lt;span class="p">);&lt;/span>
+&lt;span class="k">this&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">movies&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="k">this&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">movies&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">concat&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nx">movies&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">data&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">results&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;span class="k">this&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">pageNumber&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="nx">movies&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">data&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">page&lt;/span> &lt;span class="o">+&lt;/span> &lt;span class="mi">1&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;span class="k">this&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">maxPages&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="nx">movies&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">data&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">total_pages&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;span class="p">},&lt;/span>
+&lt;span class="nx">async&lt;/span> &lt;span class="nx">loadData&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nx">ev&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;span class="kr">const&lt;/span> &lt;span class="nx">res&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="nx">await&lt;/span> &lt;span class="k">this&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">pushData&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="k">this&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">pageNumber&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;span class="nx">console&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">log&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s2">&amp;#34;Loaded data&amp;#34;&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;span class="nx">console&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">log&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nx">res&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;span class="nx">console&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">log&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="k">this&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">pageNumber&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;span class="nx">ev&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">target&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">complete&lt;/span>&lt;span class="p">();&lt;/span>
+&lt;span class="k">if&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="k">this&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">pageNumber&lt;/span> &lt;span class="o">&amp;gt;=&lt;/span> &lt;span class="k">this&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">maxPages&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;span class="nx">ev&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">target&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">disabled&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="kc">true&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;span class="p">}&lt;/span>
+&lt;span class="p">},&lt;/span>
+&lt;span class="nx">async&lt;/span> &lt;span class="nx">doRefresh&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nx">event&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;span class="c1">// Get the movies from the first page again
+&lt;/span>&lt;span class="c1">&lt;/span> &lt;span class="kr">const&lt;/span> &lt;span class="nx">res&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="nx">await&lt;/span> &lt;span class="k">this&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">fetch&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="mi">1&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;span class="nx">console&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">log&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nx">res&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;span class="nx">event&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">target&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">complete&lt;/span>&lt;span class="p">();&lt;/span>
+&lt;span class="p">},&lt;/span>
+&lt;span class="p">},&lt;/span>
+&lt;span class="nx">mounted&lt;/span>&lt;span class="p">()&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;span class="k">this&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">fetch&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="k">this&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">pageNumber&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;span class="p">},&lt;/span>
+&lt;span class="nx">watch&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;span class="nx">$route&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nx">to&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nx">from&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;span class="k">this&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">endpoint&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="k">this&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">$route&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">params&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">id&lt;/span>
+&lt;span class="p">.&lt;/span>&lt;span class="nx">toLowerCase&lt;/span>&lt;span class="p">()&lt;/span>
+&lt;span class="p">.&lt;/span>&lt;span class="nx">split&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s2">&amp;#34; &amp;#34;&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;span class="p">.&lt;/span>&lt;span class="nx">join&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s2">&amp;#34;_&amp;#34;&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;span class="k">this&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">pageNumber&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="mi">1&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;span class="k">this&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">maxPages&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="mi">1&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;span class="k">this&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">fetch&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="k">this&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">pageNumber&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;span class="p">}&lt;/span>
+&lt;span class="p">}&lt;/span>
+&lt;span class="p">}&lt;/span>
+&lt;span class="p">&amp;lt;/&lt;/span>&lt;span class="nt">script&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">style&lt;/span> &lt;span class="na">scoped&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;span class="p">&amp;lt;/&lt;/span>&lt;span class="nt">style&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>When you pull down from the top you should see something like the image below. When you release it, the content on the page should refresh.&lt;/p>
+&lt;p>&lt;img src="" alt="Screenshot 6">&lt;/p>
+&lt;h3 id="scroll-to-top-when-tab-changes">Scroll to top when tab changes&lt;/h3>
+&lt;p>If you&amp;rsquo;re interacting with your app now, you might have noticed something. When you scroll down on one tab, Lets say &lt;code>Popular&lt;/code> and then switch to another tab, say &lt;code>Upcoming&lt;/code>, the scrollbar stays at the same position. This makes for a weird user experience, ideally we want it to auto scroll to the top whenever we switch tabs so that we can see the list of movies from the beginning instead of some random place on the page.&lt;/p>
+&lt;h1 id="build">Build&lt;/h1>
+&lt;p>ionic build&lt;/p>
+&lt;p>ionic cap add android&lt;/p>
+&lt;!-- raw HTML omitted -->
+&lt;ol start="6">
+&lt;li>Download android studio
+Use standard install type&lt;/li>
+&lt;/ol>
+&lt;p>ionic cap open android&lt;/p>
+&lt;p>wait for gradle to sync&lt;/p>
+&lt;p>open SDK tools if needed&lt;/p>
+&lt;p>Build, then run&lt;/p>
+&lt;p>Icons in the app &amp;gt; res &amp;gt; mipmap folder&lt;/p>
+&lt;p>select image using path&lt;/p>
+&lt;p>build &amp;gt; Build bundles/ apk &amp;gt; Build Apk&lt;/p>
+&lt;p>build under path&lt;/p>
+&lt;p>MovieVue\android\app\build\outputs\apk\debug&lt;/p></description></item><item><title>Create a bot that updates a pinned gist</title><link>https://home.aveek.io/blog/post/pinned-gist-bot/</link><pubDate>Fri, 16 Oct 2020 00:00:00 +0000</pubDate><author>aveek.s98@gmail.com (Aveek Saha)</author><guid>https://home.aveek.io/blog/post/pinned-gist-bot/</guid><description>&lt;p>Get the code here: &lt;a href="https://github.com/Aveek-Saha/blog-box">&lt;code>blog-box&lt;/code>&lt;/a>&lt;/p>
 &lt;h1 id="introduction">Introduction&lt;/h1>
 &lt;p>I recently came across this &lt;a href="https://github.com/matchai/awesome-pinned-gists">awesome list for pinned gists&lt;/a> and it piqued my curiosity. So this is basically a collection of repositories that allow you to automatically update a gist periodically with some information. This gist can then be pinned to your GitHub page for people to see when they visit your profile.&lt;/p>
 &lt;p>For those of you that havent heard of gists, they&amp;rsquo;re a service provided by GitHub, you can check it out &lt;a href="https://gist.github.com/">here&lt;/a>. They&amp;rsquo;re basically a collection of files that can be forked and cloned like a GitHub repo.&lt;/p>
