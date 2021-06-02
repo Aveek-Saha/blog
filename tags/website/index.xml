@@ -39,10 +39,10 @@ Download the app here - &lt;a href="https://github.com/Aveek-Saha/MovieVue/relea
 &lt;p>Upon serving, your app will look something like this&lt;/p>
 &lt;div class="gallery caption-position-bottom caption-effect-slide hover-effect-zoom hover-transition" itemscope itemtype="http://schema.org/ImageGallery">
 &lt;link rel="stylesheet" href="https://home.aveek.io/blog/css/hugo-easy-gallery.css" />
-&lt;div class="box" >
+&lt;div class="box" style="max-width:400px">
 &lt;figure itemprop="associatedMedia" itemscope itemtype="http://schema.org/ImageObject">
-&lt;div class="img" style="background-image: url('/ionicvue/screenshot1-thumb.png');">
-&lt;img itemprop="thumbnail" src="https://home.aveek.io/blog/ionicvue/screenshot1-thumb.png" alt="Page"/>
+&lt;div class="img" style="background-image: url('/ionicvue/screenshot1.png');">
+&lt;img itemprop="thumbnail" src="https://home.aveek.io/blog/ionicvue/screenshot1.png" alt="Page"/>
 &lt;/div>
 &lt;figcaption>
 &lt;p>Page&lt;/p>
@@ -50,10 +50,10 @@ Download the app here - &lt;a href="https://github.com/Aveek-Saha/MovieVue/relea
 &lt;a href="https://home.aveek.io/blog/ionicvue/screenshot1.png" itemprop="contentUrl">&lt;/a>
 &lt;/figure>
 &lt;/div>
-&lt;div class="box" >
+&lt;div class="box" style="max-width:400px">
 &lt;figure itemprop="associatedMedia" itemscope itemtype="http://schema.org/ImageObject">
-&lt;div class="img" style="background-image: url('/ionicvue/screenshot2-thumb.png');">
-&lt;img itemprop="thumbnail" src="https://home.aveek.io/blog/ionicvue/screenshot2-thumb.png" alt="Side menu"/>
+&lt;div class="img" style="background-image: url('/ionicvue/screenshot2.png');">
+&lt;img itemprop="thumbnail" src="https://home.aveek.io/blog/ionicvue/screenshot2.png" alt="Side menu"/>
 &lt;/div>
 &lt;figcaption>
 &lt;p>Side menu&lt;/p>
@@ -191,10 +191,10 @@ Download the app here - &lt;a href="https://github.com/Aveek-Saha/MovieVue/relea
 &lt;span class="p">})&lt;/span>
 &lt;span class="kr">export&lt;/span> &lt;span class="k">default&lt;/span> &lt;span class="nx">router&lt;/span>
 &lt;/code>&lt;/pre>&lt;/div>&lt;p>After these changes it should look something like this&lt;/p>
-&lt;div class="box" >
+&lt;div class="box" style="max-width:400px">
 &lt;figure itemprop="associatedMedia" itemscope itemtype="http://schema.org/ImageObject">
 &lt;div class="img">
-&lt;img itemprop="thumbnail" src="https://home.aveek.io/blog/ionicvue/screenshot3-thumb.png" alt="Side menu"/>
+&lt;img itemprop="thumbnail" src="https://home.aveek.io/blog/ionicvue/screenshot3.png" alt="Side menu"/>
 &lt;/div>
 &lt;figcaption>
 &lt;p>Side menu&lt;/p>
@@ -366,10 +366,10 @@ Download the app here - &lt;a href="https://github.com/Aveek-Saha/MovieVue/relea
 &lt;span class="c">/* Remove styles */&lt;/span>
 &lt;span class="p">&amp;lt;/&lt;/span>&lt;span class="nt">style&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
 &lt;/code>&lt;/pre>&lt;/div>&lt;p>After making these changes, you should get something that looks like this:&lt;/p>
-&lt;div class="box" >
+&lt;div class="box" style="max-width:400px">
 &lt;figure itemprop="associatedMedia" itemscope itemtype="http://schema.org/ImageObject">
 &lt;div class="img">
-&lt;img itemprop="thumbnail" src="https://home.aveek.io/blog/ionicvue/screenshot4-thumb.png" alt="Side menu"/>
+&lt;img itemprop="thumbnail" src="https://home.aveek.io/blog/ionicvue/screenshot4.png" alt="Side menu"/>
 &lt;/div>
 &lt;figcaption>
 &lt;p>Side menu&lt;/p>
@@ -514,10 +514,10 @@ Download the app here - &lt;a href="https://github.com/Aveek-Saha/MovieVue/relea
 &lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">style&lt;/span> &lt;span class="na">scoped&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
 &lt;span class="p">&amp;lt;/&lt;/span>&lt;span class="nt">style&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
 &lt;/code>&lt;/pre>&lt;/div>&lt;p>After you make these changes, you should see something like this&lt;/p>
-&lt;div class="box" >
+&lt;div class="box" style="max-width:400px">
 &lt;figure itemprop="associatedMedia" itemscope itemtype="http://schema.org/ImageObject">
 &lt;div class="img">
-&lt;img itemprop="thumbnail" src="https://home.aveek.io/blog/ionicvue/screenshot5-thumb.png" alt="Side menu"/>
+&lt;img itemprop="thumbnail" src="https://home.aveek.io/blog/ionicvue/screenshot5.png" alt="Side menu"/>
 &lt;/div>
 &lt;figcaption>
 &lt;p>Side menu&lt;/p>
@@ -666,10 +666,10 @@ Download the app here - &lt;a href="https://github.com/Aveek-Saha/MovieVue/relea
 &lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">style&lt;/span> &lt;span class="na">scoped&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
 &lt;span class="p">&amp;lt;/&lt;/span>&lt;span class="nt">style&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
 &lt;/code>&lt;/pre>&lt;/div>&lt;p>When you pull down from the top you should see something like the image below. When you release it, the content on the page should refresh.&lt;/p>
-&lt;div class="box" >
+&lt;div class="box" style="max-width:400px">
 &lt;figure itemprop="associatedMedia" itemscope itemtype="http://schema.org/ImageObject">
 &lt;div class="img">
-&lt;img itemprop="thumbnail" src="https://home.aveek.io/blog/ionicvue/screenshot6_LI-thumb.jpg" alt="Side menu"/>
+&lt;img itemprop="thumbnail" src="https://home.aveek.io/blog/ionicvue/screenshot6_LI.jpg" alt="Side menu"/>
 &lt;/div>
 &lt;figcaption>
 &lt;p>Side menu&lt;/p>
