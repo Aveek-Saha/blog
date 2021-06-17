@@ -6,7 +6,7 @@ date: 2020-10-16
 tags: [ "GitHub" , "javascript" , "nodejs", "github-actions" ]
 ---
  
-Get the code here: [blog-box](https://github.com/Aveek-Saha/blog-box)
+Get the code here: [`blog-box`](https://github.com/Aveek-Saha/blog-box)
  
  
 <!--more-->
