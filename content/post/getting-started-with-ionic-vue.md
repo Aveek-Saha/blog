@@ -44,10 +44,7 @@ To get our movies, we'll be using the [`TMDb api`](https://developers.themoviedb
 
 ### Result
 
-{{ <video controls> }}
-    <source src="/ionicvue/screenrecord.mp4" type="video/mp4">
-    Your browser does not support the video tag.
-{{ </video> }} 
+{{ <video controls src="/ionicvue/screenrecord.mp4" type="video/mp4"> </video> }}
 
 
 
