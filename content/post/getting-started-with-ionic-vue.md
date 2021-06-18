@@ -28,6 +28,25 @@ Ionic gives you a choice between Angular, React, Vue, or vanilla JavaScript. How
 
 With Ionic you can also use native device functionality, like accessing the camera or using the location on a mobile service, though take note that this service is a part of their enterprise edition.
 
+# What are we building?
+
+We'll be building a mobile application where users can see a list of movies that are currently playing, popular movies, top rated movies and new movies that are going to release.
+
+App Features:
+1. A slide out menu from where you can see the different movie lists, Now Playing, Popular, Upcoming, or Top Rated.
+1. Each movie will have a background image, the title, the average rating of the movie and the description.
+1. Infinite scroll, once you reach the end of the page, new content automatically loads.
+1. Swipe down on any page to refresh it.
+1. Show region specific movies
+
+To get our movies, we'll be using the [`TMDb api`](https://developers.themoviedb.org/3/movies/get-now-playing) and to get our location we'll be using [`ip-api`](http://ip-api.com/json/).
+
+<!-- <video width="320" height="240" controls>
+  <source src="movie.mp4" type="video/mp4">
+  <source src="movie.ogg" type="video/ogg">
+Your browser does not support the video tag.
+</video> -->
+
 
 
 1. Install ionic cli
