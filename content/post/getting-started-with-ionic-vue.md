@@ -1,7 +1,7 @@
 ---
 title: Getting started with Ionic 5 and Vue
 subtitle: A beginners guide on how to build a mobile application with Ionic and Vue
-date: 2022-11-10
+date: 2020-11-10
 # bigimg: [{src: "/img/duskplayer.png", desc: "Screenshot"}]
 tags: [ "Ionic" , "Vue" , "GitHub" , "Website" ]
 ---
@@ -41,11 +41,12 @@ App Features:
 
 To get our movies, we'll be using the [`TMDb api`](https://developers.themoviedb.org/3/movies/get-now-playing) and to get our location we'll be using [`ip-api`](http://ip-api.com/json/).
 
-<!-- <video width="320" height="240" controls>
-  <source src="movie.mp4" type="video/mp4">
-  <source src="movie.ogg" type="video/ogg">
+
+### Result`
+<video controls>
+  <source src="/ionicvue/screenrecord.mp4" type="video/mp4">
 Your browser does not support the video tag.
-</video> -->
+</video>
 
 
 
