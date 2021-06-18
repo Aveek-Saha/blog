@@ -1,5 +1,5 @@
 ---
-title: Getting started with Vuejs and the GitHub API
+title: Getting started with Vue and the GitHub API
 subtitle: A beginners tutorial on how to make a web app with Vue.js
 date: 2018-11-10
 # bigimg: [{src: "/img/duskplayer.png", desc: "Screenshot"}]
