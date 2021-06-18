@@ -42,11 +42,12 @@ App Features:
 To get our movies, we'll be using the [`TMDb api`](https://developers.themoviedb.org/3/movies/get-now-playing) and to get our location we'll be using [`ip-api`](http://ip-api.com/json/).
 
 
-### Result`
-<video controls>
-  <source src="/ionicvue/screenrecord.mp4" type="video/mp4">
-Your browser does not support the video tag.
-</video>
+### Result
+
+{{ <video controls> }}
+    <source src="/ionicvue/screenrecord.mp4" type="video/mp4">
+    Your browser does not support the video tag.
+{{ </video> }} 
 
 
 
