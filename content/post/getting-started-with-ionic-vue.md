@@ -44,7 +44,8 @@ To get our movies, we'll be using the [`TMDb api`](https://developers.themoviedb
 
 ### Result
 
-{{ <video controls src="/ionicvue/screenrecord.mp4" type="video/mp4"> </video> }}
+
+![Movie Vue Demo](/ionicvue/screen.gif)
 
 
 
