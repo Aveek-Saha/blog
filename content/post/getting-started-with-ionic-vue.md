@@ -1,7 +1,7 @@
 ---
 title: Getting started with Ionic 5 and Vue
 subtitle: A beginners guide on how to build a mobile application with Ionic and Vue
-date: 2020-11-10
+date: 2022-11-10
 # bigimg: [{src: "/img/duskplayer.png", desc: "Screenshot"}]
 tags: [ "Ionic" , "Vue" , "GitHub" , "Website" ]
 ---
@@ -17,7 +17,7 @@ Javascript has come a long way from when it used to be just a way to make web pa
 
 In this tutorial we'll be focusing on learning how to use `Ionic`, and it assumes you have basic knowledge of `Vue` concepts. If you want to learn `Vue` check out this tutorial: [`Getting started with Vue and the GitHub API`](https://home.aveek.io/blog/post/getting-started-with-vuejs-and-the-github-api/), where I go over all the basic concepts in `Vue`.
 
-# What is Ionic?
+## What is Ionic?
 
 From the ionic team:
 > Ionic is an open source mobile UI toolkit for building high quality, cross-platform native and web app experiences.
@@ -28,7 +28,7 @@ Ionic gives you a choice between Angular, React, Vue, or vanilla JavaScript. How
 
 With Ionic you can also use native device functionality, like accessing the camera or using the location on a mobile service, though take note that this service is a part of their enterprise edition.
 
-# What are we building?
+## What are we building?
 
 We'll be building a mobile application where users can see a list of movies that are currently playing, popular movies, top rated movies and new movies that are going to release.
 
@@ -41,30 +41,41 @@ App Features:
 
 To get our movies, we'll be using the [`TMDb api`](https://developers.themoviedb.org/3/movies/get-now-playing) and to get our location we'll be using [`ip-api`](http://ip-api.com/json/).
 
+You'll need an API key for the `TMDb api` before we start, so make sure to grab that.
 
-### Result
-
+## Final Result
 
 ![Movie Vue Demo](/ionicvue/screen.gif)
 
 
+# Setup
 
-1. Install ionic cli
-2. Start an iconic app
+### Install the ionic cli
+
+
+### Start an ionic app
 ```
 npm install -g @ionic/cli
 ionic start MovieVue sidemenu --type vue
 ```
 
-3. cd into it and run
-ionic serve
+### Serve for live reload
 
-4. do coding
+```
+ionic serve
+```
+
+# Code
+
+
 
 5. Build
 ionic build
 
 ionic cap add android
+
+
+<!-- For next tutorial -->
 
 6. Download android studio
 Use standard install type 
