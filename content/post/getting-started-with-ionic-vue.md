@@ -295,6 +295,131 @@ export default defineComponent({
 
 ### Display Movie cards
 
+Now we need to query the `TMDb` API to get the list of movies for each tab. We'll need axios for this so we'll install it before proceeding.
+
+```
+npm i axios
+```
+
+You can remove all styles from this section. Also we wont be using typescript here because I couldn't get it to work with infinite scrolling, which we'll be exploring later in this tutorial.
+
+In `./src/Folder.vue`
+```vue
+<template>
+  <ion-page>
+    <ion-header :translucent="true">
+      <ion-toolbar>
+        <ion-buttons slot="start">
+          <ion-menu-button color="primary"></ion-menu-button>
+        </ion-buttons>
+        <ion-title>{{ $route.params.id }}</ion-title>
+      </ion-toolbar>
+    </ion-header>
+    
+    <ion-content :fullscreen="true">
+      <ion-header collapse="condense">
+        <ion-toolbar>
+          <ion-title size="large">{{ $route.params.id }}</ion-title>
+        </ion-toolbar>
+      </ion-header>
+    
+      <div id="container">
+        <!-- Loop over each movie -->
+        <div v-for="movie in movies" :key="movie.id">
+          <MovieCard v-bind:movie="movie"></MovieCard>
+        </div>
+      </div>
+    </ion-content>
+  </ion-page>
+</template>
+
+<script>
+// Remove typescript
+import { IonButtons, IonContent, IonHeader, IonMenuButton, IonPage, IonTitle, IonToolbar } from '@ionic/vue';
+
+import { ref } from "vue";
+// Install Axios and import the Movie card component we just made
+import MovieCard from "./MovieCard.vue";
+import axios from "axios";
+
+export default {
+  name: 'Folder',
+  components: {
+    IonButtons,
+    IonContent,
+    IonHeader,
+    IonMenuButton,
+    IonPage,
+    IonTitle,
+    IonToolbar,
+    // Add the MovieCard component
+    MovieCard
+  },
+  data() {
+    return {
+      movies: ref([]),
+      // Page to fetch
+      pageNumber: 1,
+      // Total number of pages present
+      maxPages: 1,
+      // Get the endpoint from the route parameter
+      endpoint: this.$route.params.id
+                .toLowerCase()
+                .split(" ")
+                .join("_"),
+      // Which Country the user is in
+      country: "",
+    };
+  },
+  methods: {
+    async fetch(pageNumber) {
+      // Get Movies corresponding to which tab is open, Now playing, Upcoming, etc
+      const movies = await axios.get(
+          "https://api.themoviedb.org/3/movie/" +
+              this.endpoint +
+              "?api_key=3580bf75aaa90303fa62f491cfec60b9&language=en-US&page=" +
+              pageNumber +
+              "&region=" +
+              this.country
+      );
+      // Populate movie list
+      this.movies = movies.data.results;
+      // Increase page counter by 1
+      this.pageNumber = movies.data.page + 1;
+      // Get total number of pages in response
+      this.maxPages = movies.data.total_pages;
+    }
+  },
+  mounted() {
+    // Fetch movies when mounted
+    this.fetch(this.pageNumber);
+  },
+  watch: {
+    $route(to, from) {
+      // Trigger when the route changes. i.e. when user switches tabs
+      this.endpoint = this.$route.params.id
+          .toLowerCase()
+          .split(" ")
+          .join("_");
+      this.pageNumber = 1;
+      this.maxPages = 1;
+
+      // Fetch movies when route changes
+      this.fetch(this.pageNumber);
+    }
+  }
+}
+</script>
+
+<style scoped>
+/* Remove styles */
+</style>
+```
+
+After making these changes, you should get something that looks like this:
+
+![Screenshot 4]()
+
 
 
 
