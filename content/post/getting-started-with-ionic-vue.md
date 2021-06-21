@@ -1,7 +1,7 @@
 ---
 title: Getting started with Ionic 5 and Vue
 subtitle: A beginners guide on how to build a mobile application with Ionic and Vue
-date: 2022-11-10
+date: 2021-03-18
 # bigimg: [{src: "/img/duskplayer.png", desc: "Screenshot"}]
 tags: [ "Ionic" , "Vue" , "GitHub" , "Website" ]
 ---
