@@ -420,6 +420,161 @@ After making these changes, you should get something that looks like this:
 
 ![Screenshot 4]()
 
+### Infinite scrolling
+
+Now that we have our basic UI set up, we can focus on some quality of life improvements. When you query the `TMDb` api, you get a subset of the total movies in any category. This is because that's just one page. The movie lists are split into several pages, and that's good for us because it would take a long time to load such a huge amount of data at once.
+
+However the user should have a way to see more content gradually until there is nothing else in the movie list. For this we'll set up infinite scrolling.
+
+Basically once the user is about to reach the end of the content that has loaded so far, we'll send a request to the API for the next page, and add it to the list.
+
+Luckily ionic has a component just for this.
+
+In `./src/Folder.vue`.
+
+```vue
+<template>
+  <ion-page>
+    <ion-header :translucent="true">
+      <ion-toolbar>
+        <ion-buttons slot="start">
+          <ion-menu-button color="primary"></ion-menu-button>
+        </ion-buttons>
+        <ion-title>{{ $route.params.id }}</ion-title>
+      </ion-toolbar>
+    </ion-header>
+    
+    <ion-content :fullscreen="true">
+      <ion-header collapse="condense">
+        <ion-toolbar>
+          <ion-title size="large">{{ $route.params.id }}</ion-title>
+        </ion-toolbar>
+      </ion-header>
+    
+      <div id="container">
+        <div v-for="movie in movies" :key="movie.id">
+          <MovieCard v-bind:movie="movie"></MovieCard>
+        </div>
+      </div>
+      <!-- Add the infinite scroll component and call loadData -->
+      <ion-infinite-scroll
+          @ionInfinite="loadData($event)"
+          threshold="100px"
+          id="infinite-scroll"
+          :disabled="isDisabled">
+          <ion-infinite-scroll-content
+              loading-spinner="bubbles"
+              loading-text="Loading more movies...">
+          </ion-infinite-scroll-content>
+      </ion-infinite-scroll>
+    </ion-content>
+  </ion-page>
+</template>
+
+<script>
+// Import the components
+import { IonButtons, IonContent, IonHeader, IonMenuButton, IonPage, IonTitle, IonToolbar, 
+IonInfiniteScroll, IonInfiniteScrollContent, } from '@ionic/vue';
+
+import { ref } from "vue";
+import MovieCard from "./MovieCard.vue";
+import axios from "axios";
+
+export default {
+  name: 'Folder',
+  components: {
+    IonButtons,
+    IonContent,
+    IonHeader,
+    IonMenuButton,
+    IonPage,
+    IonTitle,
+    IonToolbar,
+    MovieCard,
+    // Add the infinite scroll components
+    IonInfiniteScroll,
+    IonInfiniteScrollContent,
+  },
+  data() {
+    return {
+      movies: ref([]),
+      pageNumber: 1,
+      maxPages: 1,
+      endpoint: this.$route.params.id
+                .toLowerCase()
+                .split(" ")
+                .join("_"),
+      country: "",
+    };
+  },
+  methods: {
+    async fetch(pageNumber) {
+      const movies = await axios.get(
+          "https://api.themoviedb.org/3/movie/" +
+              this.endpoint +
+              "?api_key=3580bf75aaa90303fa62f491cfec60b9&language=en-US&page=" +
+              pageNumber +
+              "&region=" +
+              this.country
+      );
+      this.movies = movies.data.results;
+      this.pageNumber = movies.data.page + 1;
+      this.maxPages = movies.data.total_pages;
+    },
+    async pushData(pageNumber) {
+      // Get the next page
+      const movies = await axios.get(
+          "https://api.themoviedb.org/3/movie/" +
+              this.endpoint +
+              "?api_key=3580bf75aaa90303fa62f491cfec60b9&language=en-US&page=" +
+              pageNumber +
+              "&region=" +
+              this.country
+      );
+      this.movies = this.movies.concat(movies.data.results);
+      this.pageNumber = movies.data.page + 1;
+      this.maxPages = movies.data.total_pages;
+    },
+    async loadData(ev) {
+      // Load the new data once we reach the end of the page
+      const res = await this.pushData(this.pageNumber);
+      console.log("Loaded data");
+      console.log(res);
+      ev.target.complete();
+
+      // Once the last page has been fetched, we'll disable infinite loading
+      if (this.pageNumber >= this.maxPages) {
+          ev.target.disabled = true;
+      }
+    },
+  },
+  mounted() {
+    this.fetch(this.pageNumber);
+  },
+  watch: {
+    $route(to, from) {
+      // Trigger when the route changes. i.e. when user switches tabs
+      this.endpoint = this.$route.params.id
+          .toLowerCase()
+          .split(" ")
+          .join("_");
+      this.pageNumber = 1;
+      this.maxPages = 1;
+
+      // Fetch movies when route changes
+      this.fetch(this.pageNumber);
+    }
+  }
+}
+</script>
+
+<style scoped>
+</style>
+```
+
+After you make these changes, you should see something like this
+
+![Screenshot 5]()
 
 
 
