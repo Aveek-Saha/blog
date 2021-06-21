@@ -81,6 +81,155 @@ Upon serving, your app will look something like this
 
 ![Screenshot 2]()
 
+Most of our changes will be in the `./src` folder
+
+### Organizing the Side menu
+
+First thing we'll do is clean up the side menu. We need only 4 sections in the side menu, and we can get rid of all the labels.
+
+These changes have to be made to the `./src/App.vue`.
+
+We'll only be modifying the template and the script here, so you can leave the styles unchanged. 
+
+Well need to rename the tabs to match the content we'll be showing. The icons are a little mismatched too, so let's fix that while we're at it.
+
+```vue
+<template>
+  <IonApp>
+    <IonSplitPane content-id="main-content">
+      <ion-menu content-id="main-content" type="overlay">
+        <ion-content>
+          <ion-list id="inbox-list">
+            <!-- Change name to something more appropriate -->
+            <ion-list-header>Movie Vue</ion-list-header>
+            <ion-note>Discover movies</ion-note>
+  
+            <ion-menu-toggle auto-hide="false" v-for="(p, i) in appPages" :key="i">
+              <ion-item @click="selectedIndex = i" router-direction="root" :router-link="p.url" lines="none" detail="false" class="hydrated" :class="{ selected: selectedIndex === i }">
+                <ion-icon slot="start" :ios="p.iosIcon" :md="p.mdIcon"></ion-icon>
+                <ion-label>{{ p.title }}</ion-label>
+              </ion-item>
+            </ion-menu-toggle>
+          </ion-list>
+          <!-- Remove Labels -->
+        </ion-content>
+      </ion-menu>
+      <ion-router-outlet id="main-content"></ion-router-outlet>
+    </IonSplitPane>
+  </IonApp>
+</template>
+
+<script lang="ts">
+import { IonApp, IonContent, IonIcon, IonItem, IonLabel, IonList, IonListHeader, IonMenu, IonMenuToggle, IonNote, IonRouterOutlet, IonSplitPane } from '@ionic/vue';
+import { defineComponent, ref } from 'vue';
+import { useRoute } from 'vue-router';
+// Update the icons
+import {  heartOutline, heartSharp, flashOutline, flashSharp, diamondOutline, diamondSharp, rocketOutline, rocketSharp } from 'ionicons/icons';
+
+export default defineComponent({
+  name: 'App',
+  components: {
+    IonApp, 
+    IonContent, 
+    IonIcon, 
+    IonItem, 
+    IonLabel, 
+    IonList, 
+    IonListHeader, 
+    IonMenu, 
+    IonMenuToggle, 
+    IonNote, 
+    IonRouterOutlet, 
+    IonSplitPane,
+  },
+  setup() {
+    const selectedIndex = ref(0);
+    // Rename the tabs and update the icons
+    const appPages = [
+      {
+        title: 'Now Playing',
+        url: '/folder/Now Playing',
+        iosIcon: flashOutline,
+        mdIcon: flashSharp
+      },
+      {
+        title: 'Popular',
+        url: '/folder/Popular',
+        iosIcon: heartOutline,
+        mdIcon: heartSharp
+      },
+      {
+        title: 'Top Rated',
+        url: '/folder/Top Rated',
+        iosIcon: diamondOutline,
+        mdIcon: diamondSharp
+      },
+      {
+        title: 'Upcoming',
+        url: '/folder/Upcoming',
+        iosIcon: rocketOutline,
+        mdIcon: rocketSharp
+      }
+    ];
+    // Remove Labels
+    
+    const path = window.location.pathname.split('folder/')[1];
+    if (path !== undefined) {
+      selectedIndex.value = appPages.findIndex(page => page.title.toLowerCase() === path.toLowerCase());
+    }
+    
+    const route = useRoute();
+    
+    return { 
+      selectedIndex,
+      appPages,
+      // Update the icons
+      heartOutline,
+      heartSharp,
+      flashOutline,
+      flashSharp,
+      diamondOutline,
+      diamondSharp,
+      rocketOutline,
+      rocketSharp,
+      isSelected: (url: string) => url === route.path ? 'selected' : ''
+    }
+  }
+});
+</script>
+```
+
+Now we need to update the script at `.src/router/index.ts` to change the default route. This will ensure it opens the page we want when it starts up.
+
+```ts
+import { createRouter, createWebHistory } from '@ionic/vue-router';
+import { RouteRecordRaw } from 'vue-router';
+
+const routes: Array<RouteRecordRaw> = [
+  {
+    path: '',
+    // Change the default route
+    redirect: '/folder/Now Playing'
+  },
+  {
+    path: '/folder/:id',
+    component: () => import ('../views/Folder.vue')
+  }
+]
+
+const router = createRouter({
+  history: createWebHistory(process.env.BASE_URL),
+  routes
+})
+
+export default router
+
+```
+After these changes it should look something like this
+
+![Screenshot 3]()
+
+
 
 
 
