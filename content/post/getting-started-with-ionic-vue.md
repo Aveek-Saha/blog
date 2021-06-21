@@ -52,24 +52,39 @@ You'll need an API key for the `TMDb api` before we start, so make sure to grab 
 
 ### Install the ionic cli
 
-
-### Start an ionic app
 ```
 npm install -g @ionic/cli
+```
+
+### Start an ionic app
+
+We'll be using the Side menu starter and we'll set our framework of choice to Vue
+
+```
 ionic start MovieVue sidemenu --type vue
 ```
 
 ### Serve for live reload
 
+Run this command, and it'll start a live server so you can see your changes live while you're coding.
 ```
 ionic serve
 ```
 
+When viewing the page, I'd recommend using the dev tools on your browser to set your device to a mobile device, that way you'll get a more realistic picture of what it's going to look like on an actual phone.
+
 # Code
 
+Upon serving, your app will look something like this
+
+![Screenshot 1]()
+
+![Screenshot 2]()
 
 
-5. Build
+
+
+# Build
 ionic build
 
 ionic cap add android
