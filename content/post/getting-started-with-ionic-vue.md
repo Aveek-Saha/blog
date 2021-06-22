@@ -77,9 +77,9 @@ When viewing the page, I'd recommend using the dev tools on your browser to set 
 
 Upon serving, your app will look something like this
 
-![Screenshot 1]()
+![Screenshot 1](screenshot1.png)
 
-![Screenshot 2]()
+![Screenshot 2](screenshot2.png)
 
 Most of our changes will be in the `./src` folder
 
@@ -232,7 +232,7 @@ export default router
 ```
 After these changes it should look something like this
 
-![Screenshot 3]()
+![Screenshot 3](screenshot3.png)
 
 ### Basic UI
 
@@ -424,7 +424,7 @@ export default {
 
 After making these changes, you should get something that looks like this:
 
-![Screenshot 4]()
+![Screenshot 4](screenshot4.png)
 
 ### Infinite scrolling
 
@@ -581,7 +581,7 @@ export default {
 
 After you make these changes, you should see something like this
 
-![Screenshot 5]()
+![Screenshot 5](screenshot5.png)
 
 ### Swipe down to reload
 
@@ -738,7 +738,7 @@ export default {
 
 When you pull down from the top you should see something like the image below. When you release it, the content on the page should refresh.
 
-![Screenshot 6]()
+![Screenshot 6](screenshot6_LI.jpg)
 
 ### Scroll to top when tab changes
 
