@@ -93,7 +93,7 @@ We'll only be modifying the template and the script here, so you can leave the s
 
 Well need to rename the tabs to match the content we'll be showing. The icons are a little mismatched too, so let's fix that while we're at it.
 
-```vue
+```html
 <template>
   <IonApp>
     <IonSplitPane content-id="main-content">
@@ -105,7 +105,9 @@ Well need to rename the tabs to match the content we'll be showing. The icons ar
             <ion-note>Discover movies</ion-note>
   
             <ion-menu-toggle auto-hide="false" v-for="(p, i) in appPages" :key="i">
-              <ion-item @click="selectedIndex = i" router-direction="root" :router-link="p.url" lines="none" detail="false" class="hydrated" :class="{ selected: selectedIndex === i }">
+              <ion-item @click="selectedIndex = i" router-direction="root" 
+              :router-link="p.url" lines="none" detail="false" class="hydrated" 
+              :class="{ selected: selectedIndex === i }">
                 <ion-icon slot="start" :ios="p.iosIcon" :md="p.mdIcon"></ion-icon>
                 <ion-label>{{ p.title }}</ion-label>
               </ion-item>
@@ -120,11 +122,13 @@ Well need to rename the tabs to match the content we'll be showing. The icons ar
 </template>
 
 <script lang="ts">
-import { IonApp, IonContent, IonIcon, IonItem, IonLabel, IonList, IonListHeader, IonMenu, IonMenuToggle, IonNote, IonRouterOutlet, IonSplitPane } from '@ionic/vue';
+import { IonApp, IonContent, IonIcon, IonItem, IonLabel, IonList, IonListHeader, 
+IonMenu, IonMenuToggle, IonNote, IonRouterOutlet, IonSplitPane } from '@ionic/vue';
 import { defineComponent, ref } from 'vue';
 import { useRoute } from 'vue-router';
 // Update the icons
-import {  heartOutline, heartSharp, flashOutline, flashSharp, diamondOutline, diamondSharp, rocketOutline, rocketSharp } from 'ionicons/icons';
+import {  heartOutline, heartSharp, flashOutline, flashSharp, 
+diamondOutline, diamondSharp, rocketOutline, rocketSharp } from 'ionicons/icons';
 
 export default defineComponent({
   name: 'App',
@@ -175,7 +179,8 @@ export default defineComponent({
     
     const path = window.location.pathname.split('folder/')[1];
     if (path !== undefined) {
-      selectedIndex.value = appPages.findIndex(page => page.title.toLowerCase() === path.toLowerCase());
+      selectedIndex.value = appPages
+      .findIndex(page => page.title.toLowerCase() === path.toLowerCase());
     }
     
     const route = useRoute();
@@ -235,7 +240,7 @@ For our main UI we'll be using a card component that will contain all the inform
 
 Create a new file `./src/MovieCard.vue`
 
-```vue
+```html
 <template>
     <ion-card>
         <!-- Movie poster at the top of the card -->
@@ -304,7 +309,7 @@ npm i axios
 You can remove all styles from this section. Also we wont be using typescript here because I couldn't get it to work with infinite scrolling, which we'll be exploring later in this tutorial.
 
 In `./src/Folder.vue`
-```vue
+```html
 <template>
   <ion-page>
     <ion-header :translucent="true">
@@ -335,7 +340,8 @@ In `./src/Folder.vue`
 
 <script>
 // Remove typescript
-import { IonButtons, IonContent, IonHeader, IonMenuButton, IonPage, IonTitle, IonToolbar } from '@ionic/vue';
+import { IonButtons, IonContent, IonHeader, IonMenuButton, IonPage, 
+IonTitle, IonToolbar } from '@ionic/vue';
 
 import { ref } from "vue";
 // Install Axios and import the Movie card component we just made
@@ -432,7 +438,7 @@ Luckily ionic has a component just for this.
 
 In `./src/Folder.vue`.
 
-```vue
+```html
 <template>
   <ion-page>
     <ion-header :translucent="true">
@@ -584,7 +590,7 @@ Another common feature in most mobile apps is the ability to refresh content whe
 And wouldn't you know it, Ionic has a component to help us with this too!
 
 In `./src/Folder.vue`.
-```vue
+```html
 <template>
   <ion-page>
     <ion-header :translucent="true">
