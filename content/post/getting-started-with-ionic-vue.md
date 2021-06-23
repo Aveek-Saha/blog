@@ -79,8 +79,8 @@ Upon serving, your app will look something like this
 
 
 {{< gallery >}}
-{{< figure link="/ionicvue/screenshot1.png" caption="Page" width="400px">}}
-{{< figure link="/ionicvue/screenshot2.png" caption="Side menu" width="400px">}}
+{{< figure link="/ionicvue/screenshot1.png" width="200px">}}
+{{< figure link="/ionicvue/screenshot2.png" width="200px">}}
 {{< /gallery >}}
 
 Most of our changes will be in the `./src` folder
@@ -234,7 +234,7 @@ export default router
 ```
 After these changes it should look something like this
 
-{{< figure link="/ionicvue/screenshot3.png" caption="Side menu" width="400px">}}
+{{< figure link="/ionicvue/screenshot3.png" width="200px">}}
 
 ### Basic UI
 
@@ -426,7 +426,7 @@ export default {
 
 After making these changes, you should get something that looks like this:
 
-{{< figure link="/ionicvue/screenshot4.png" caption="Side menu" width="400px">}}
+{{< figure link="/ionicvue/screenshot4.png" caption="Side menu" width="200px">}}
 
 ### Infinite scrolling
 
@@ -583,7 +583,7 @@ export default {
 
 After you make these changes, you should see something like this
 
-{{< figure link="/ionicvue/screenshot5.png" caption="Side menu" width="400px">}}
+{{< figure link="/ionicvue/screenshot5.png" width="200px">}}
 
 ### Swipe down to reload
 
@@ -740,7 +740,7 @@ export default {
 
 When you pull down from the top you should see something like the image below. When you release it, the content on the page should refresh.
 
-{{< figure link="/ionicvue/screenshot6_LI.jpg" caption="Side menu" width="400px">}}
+{{< figure link="/ionicvue/screenshot6_LI.jpg"width="200px">}}
 
 ### Scroll to top when tab changes
 
