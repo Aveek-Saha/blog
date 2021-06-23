@@ -77,9 +77,11 @@ When viewing the page, I'd recommend using the dev tools on your browser to set 
 
 Upon serving, your app will look something like this
 
-![Screenshot 1](/ionicvue/screenshot1.png)
 
-![Screenshot 2](/ionicvue/screenshot2.png)
+{{< gallery >}}
+{{< figure link="/ionicvue/screenshot1.png" caption="Page" thumb="-thumb">}}
+{{< figure link="/ionicvue/screenshot2.png" caption="Side menu" thumb="-thumb">}}
+{{< /gallery >}}
 
 Most of our changes will be in the `./src` folder
 
@@ -232,7 +234,7 @@ export default router
 ```
 After these changes it should look something like this
 
-![Screenshot 3](/ionicvue/screenshot3.png)
+{{< figure link="/ionicvue/screenshot3.png" caption="Side menu" thumb="-thumb">}}
 
 ### Basic UI
 
@@ -424,7 +426,7 @@ export default {
 
 After making these changes, you should get something that looks like this:
 
-![Screenshot 4](/ionicvue/screenshot4.png)
+{{< figure link="/ionicvue/screenshot4.png" caption="Side menu" thumb="-thumb">}}
 
 ### Infinite scrolling
 
@@ -581,7 +583,7 @@ export default {
 
 After you make these changes, you should see something like this
 
-![Screenshot 5](/ionicvue/screenshot5.png)
+{{< figure link="/ionicvue/screenshot5.png" caption="Side menu" thumb="-thumb">}}
 
 ### Swipe down to reload
 
@@ -738,7 +740,7 @@ export default {
 
 When you pull down from the top you should see something like the image below. When you release it, the content on the page should refresh.
 
-![Screenshot 6](/ionicvue/screenshot6_LI.jpg)
+{{< figure link="/ionicvue/screenshot6_LI.jpg" caption="Side menu" thumb="-thumb">}}
 
 ### Scroll to top when tab changes
 
