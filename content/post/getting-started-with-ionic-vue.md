@@ -91,6 +91,7 @@ We'll only be modifying the template and the script here, so you can leave the s
 
 Well need to rename the tabs to match the content we'll be showing. The icons are a little mismatched too, so let's fix that while we're at it.
 
+**Template**
 ```html
 <template>
   <IonApp>
@@ -118,8 +119,10 @@ Well need to rename the tabs to match the content we'll be showing. The icons ar
     </IonSplitPane>
   </IonApp>
 </template>
+```
 
-<script lang="ts">
+**Script**
+```js
 import { IonApp, IonContent, IonIcon, IonItem, IonLabel, IonList, IonListHeader, 
 IonMenu, IonMenuToggle, IonNote, IonRouterOutlet, IonSplitPane } from '@ionic/vue';
 import { defineComponent, ref } from 'vue';
@@ -199,7 +202,6 @@ export default defineComponent({
     }
   }
 });
-</script>
 ```
 
 Now we need to update the script at `.src/router/index.ts` to change the default route. This will ensure it opens the page we want when it starts up.
@@ -259,6 +261,7 @@ Create a new file `./src/MovieCard.vue`
 </template>
 
 <script>
+// Remove typescript
 import {
     IonCard,
     IonCardContent,
