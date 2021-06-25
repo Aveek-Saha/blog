@@ -6,7 +6,8 @@ date: 2021-03-18
 tags: [ "Ionic" , "Vue" , "GitHub" , "Website" ]
 ---
 
-If you want the code for this project, fork this GitHub repo - [`Movie Vue`](https://github.com/Aveek-Saha/MovieVue/) <br>
+If you want the code for this project, fork this GitHub repo - [`Movie Vue`](https://github.com/Aveek-Saha/MovieVue/).
+
 Download the app here - [`Download`](https://github.com/Aveek-Saha/MovieVue/releases/)
 
 <!--more-->
@@ -79,7 +80,7 @@ Upon serving, your app will look something like this
 
 {{< figure link="/ionicvue/screenshot2.png" width="200px">}}
 
-Most of our changes will be in the `./src` folder
+Most of our code changes will be in the `./src` folder. As the tutorial progresses from one step to the next, I'll be putting up the entire code, with comments before the lines that have changed from the last step. So if you're following along step by step, you can just change those lines
 
 ### Organizing the Side menu
 
@@ -902,5 +903,12 @@ export default {
 </style>
 ```
 
+# Conclusion
 
+If you've followed along so far, congratulations, you've successfully made an Ionic App. "But wait, wasn't this supposed to run on `Android`??", I hear you say. And you'd be correct, we've been running an app we made for a phone on our web browser, there are a few more steps required to actually make this app installable on a real Android phone. 
 
+We'll be going over those steps in the next part of this tutorial [`Building and deploying Ionic apps`]()
+
+If you want the full code for this tutorial, click here: [MovieVue](https://github.com/Aveek-Saha/MovieVue)
+
+<br>
